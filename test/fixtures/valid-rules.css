@@ -1,0 +1,18 @@
+/** @define ValidRules */
+
+.ValidRules {
+  color: green;
+}
+
+.ValidRules-child,
+.ValidRules-child2 {
+  color: green;
+}
+
+.ValidRules.is-active {
+  color: green;
+}
+
+.ValidRules .Another {
+  color: green;
+}

@@ -1,0 +1,32 @@
+{
+  "name": "postcss-bem-linter",
+  "version": "0.1.0",
+  "description": "A BEM linter for postcss",
+  "files": [
+    "index.js",
+    "lib"
+  ],
+  "devDependencies": {
+    "jscs": "^1.6.2",
+    "jscs-jsdoc": "0.0.13",
+    "mocha": "~1.14.0",
+    "postcss": "^2.2.5"
+  },
+  "scripts": {
+    "checkstyle": "jscs *.js **/*.js --config=jscs.config.js",
+    "start": "mocha --reporter spec --watch",
+    "test": "npm run checkstyle && mocha --no-colors"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/necolas/postcss-bem-linter.git"
+  },
+  "keywords": [
+    "css",
+    "postcss",
+    "bem",
+    "lint",
+    "test"
+  ]
+}

@@ -1,0 +1,5 @@
+/** @define StrictInvalidSelector; use strict */
+
+.StrictInvalidSelector .Another {
+  color: green;
+}

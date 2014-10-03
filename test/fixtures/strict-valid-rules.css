@@ -1,0 +1,13 @@
+/** @define StrictValidRules; use strict */
+
+.StrictValidRules {
+  color: green;
+}
+
+.StrictValidRules.is-active {
+  color: green;
+}
+
+.StrictValidRules .StrictValidRules--modifier {
+  color: green;
+}
