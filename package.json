@@ -10,7 +10,7 @@
     "jscs": "^1.6.2",
     "jscs-jsdoc": "0.0.13",
     "mocha": "~1.14.0",
-    "postcss": "^2.2.5"
+    "postcss": "^3.0.2"
   },
   "scripts": {
     "checkstyle": "jscs *.js **/*.js --config=jscs.config.js",
