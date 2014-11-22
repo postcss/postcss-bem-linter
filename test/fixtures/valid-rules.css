@@ -16,3 +16,12 @@
 .ValidRules .Another {
   color: green;
 }
+
+@keyframes grow {
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
