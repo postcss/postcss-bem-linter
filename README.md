@@ -72,7 +72,7 @@ var bemLinter = require('postcss-bem-linter');
 
 files.forEach(function (file) {
   var css = fs.readFileSync(file, 'utf-8');
-  postcss().use(bemLinter).process(css);
+  postcss().use(bemLinter()).process(css);
 });
 ```
 
