@@ -37,7 +37,7 @@ describe('linting', function () {
       assertFailure('all-invalid-selector-component');
     });
 
-    it('custom properties must being with the component name', function () {
+    it('custom properties must begin with the component name', function () {
       assertSuccess('all-valid-root-vars');
       assertFailure('all-invalid-root-vars');
       assertFailure('all-invalid-root-property');
