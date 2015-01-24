@@ -25,7 +25,7 @@ var RE_DIRECTIVE = /\* @define ([A-Z][a-zA-Z]+)(?:; (use strict))?\s*/;
  */
 function conformance(options) {
   return function (styles) {
-    var firstNode = styles.rules[0];
+    var firstNode = styles.nodes[0];
     var initialComment;
 
     if (firstNode.type !== 'comment') {
