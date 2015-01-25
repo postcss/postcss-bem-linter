@@ -32,9 +32,7 @@ function conformance(options) {
       return;
     }
 
-    var isComponent = initialComment.match(RE_DIRECTIVE);
-
-    if (!isComponent) {
+    if (!initialComment.match(RE_DIRECTIVE)) {
       console.warn(
         'WARNING: invalid component name in definition /*' +
         initialComment + '*/.',
