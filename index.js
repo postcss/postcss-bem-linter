@@ -26,18 +26,13 @@ var RE_DIRECTIVE = /\* @define ([A-Z][a-zA-Z]+)(?:; (use strict))?\s*/;
 function conformance(options) {
   return function (styles) {
     var firstNode = styles.nodes[0];
-    var initialComment;
+    var initialComment = firstNode.text;
 
-    if (firstNode.type !== 'comment') {
+    if (firstNode.type !== 'comment' || !initialComment.match(/@define/)) {
       return;
-    } else {
-      initialComment = firstNode.text;
     }
 
-    var isDefinition = (initialComment && initialComment.match(/@define/));
-    var isComponent = (initialComment && initialComment.match(RE_DIRECTIVE));
-    if (!isDefinition) { return; }
-    if (isDefinition && !isComponent) {
+    if (!initialComment.match(RE_DIRECTIVE)) {
       console.warn(
         'WARNING: invalid component name in definition /*' +
         initialComment + '*/.',
