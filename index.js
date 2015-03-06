@@ -24,6 +24,7 @@ var RE_DIRECTIVE = /\* @define ([A-Z][a-zA-Z]+)(?:; (use strict))?\s*/;
  * @param {Object} options
  */
 function conformance(options) {
+  options = options || {};
   return function (styles) {
     var firstNode = styles.nodes[0];
     var initialComment;
@@ -50,7 +51,7 @@ function conformance(options) {
     var isStrict = initialComment.match(RE_DIRECTIVE)[2] === 'use strict';
 
     validateRules(styles);
-    validateSelectors(styles, componentName, isStrict);
+    validateSelectors(styles, componentName, isStrict, options.pattern);
     validateCustomProperties(styles, componentName);
   };
 }

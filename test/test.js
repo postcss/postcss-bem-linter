@@ -3,21 +3,21 @@ var linter = require('..');
 var fs = require('fs');
 var postcss = require('postcss');
 
-function processFixture(name) {
+function processFixture(name, opts) {
   var css = fs.readFileSync('test/fixtures/' + name + '.css', 'utf8').trim();
-  return postcss().use(linter()).process(css);
+  return postcss().use(linter(opts)).process(css);
 }
 
-function assertSuccess(fixture) {
+function assertSuccess(fixture, opts) {
   var result = function () {
-    processFixture(fixture);
+    processFixture(fixture, opts);
   };
   assert.doesNotThrow(result);
 }
 
-function assertFailure(fixture) {
+function assertFailure(fixture, opts) {
   var result = function () {
-    processFixture(fixture);
+    processFixture(fixture, opts);
   };
   assert.throws(result);
 }
@@ -54,6 +54,18 @@ describe('linting', function () {
     it('selectors must only contain valid component classes', function () {
       assertSuccess('strict-valid-rules');
       assertFailure('strict-invalid-selector');
+    });
+  });
+});
+
+describe('linting alternate patterns', function () {
+  describe('a user-defined pattern', function () {
+    assertSuccess('strict-valid-altpattern', function(componentName) {
+      var OPTIONAL_PART =  '(?:\\-[a-zA-Z0-9]+)?';
+      var OPTIONAL_MODIFIER = '(?:\\-\\-[a-zA-Z0-9]+)?';
+      var OPTIONAL_STATE = '(?:\\.is\\-[a-zA-Z0-9]+)?';
+      var OPTIONAL = OPTIONAL_PART + OPTIONAL_MODIFIER + OPTIONAL_STATE;
+      return new RegExp('\\.nm-' + componentName + '\\b' + OPTIONAL, 'g');
     });
   });
 });
