@@ -24,8 +24,8 @@ var RE_DIRECTIVE = /\*\s*@define ([-_a-zA-Z0-9]+)\s*(?:;\s*(use strict))?\s*/;
  * Then call all of the validators.
  *
  * @param {Object} [patterns = 'suit']
- * @param {RegExp} [options.componentName]
- * @param {Object|Function} [options.selectors]
+ * @param {RegExp} [patterns.componentName]
+ * @param {Object|Function} [patterns.selectors]
  */
 function conformance(patterns) {
   patterns = patterns || 'suit';
