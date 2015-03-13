@@ -7,9 +7,9 @@
     "lib"
   ],
   "devDependencies": {
-    "jscs": "^1.6.2",
-    "jscs-jsdoc": "0.0.13",
-    "mocha": "~1.14.0",
+    "jscs": "^1.11.0",
+    "jscs-jsdoc": "^0.4.0",
+    "mocha": "^2.0.0",
     "postcss": "^4.0.0"
   },
   "scripts": {
