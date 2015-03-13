@@ -7,6 +7,7 @@
 var validateCustomProperties = require('./lib/validate-properties');
 var validateSelectors = require('./lib/validate-selectors');
 var validateRules = require('./lib/validate-rules');
+var presetPatterns = require('./lib/preset-patterns');
 
 /**
  * Module exports
@@ -14,43 +15,46 @@ var validateRules = require('./lib/validate-rules');
 
 module.exports = conformance;
 
-/**
- * Constants
- */
-
-var RE_DIRECTIVE = /\* @define ([A-Z][a-zA-Z]+)(?:; (use strict))?\s*/;
+var RE_DIRECTIVE = /\*\s*@define ([-_a-zA-Z0-9]+)\s*(?:;\s*(use strict))?\s*/;
 
 /**
- * @param {Object} options
+ * Check patterns or setup defaults. If the input CSS does not have a
+ * directive defining a component name according to the specified pattern,
+ * do nothing -- or warn, if the directive is there but the name does not match.
+ * Then call all of the validators.
+ *
+ * @param {Object} [patterns = 'suit']
+ * @param {RegExp} [patterns.componentName]
+ * @param {Object|Function} [patterns.selectors]
  */
-function conformance(options) {
+function conformance(patterns) {
+  patterns = patterns || 'suit';
+  if (typeof patterns === 'string') {
+    patterns = presetPatterns[patterns];
+  }
+  var componentNamePattern = patterns.componentName || /[-_a-zA-Z0-9]+/;
+
   return function (styles) {
     var firstNode = styles.nodes[0];
-    var initialComment;
+    if (firstNode.type !== 'comment') { return; }
 
-    if (firstNode.type !== 'comment') {
-      return;
-    } else {
-      initialComment = firstNode.text;
-    }
+    var initialComment = firstNode.text;
+    if (!initialComment || !initialComment.match(RE_DIRECTIVE)) { return; }
 
-    var isDefinition = (initialComment && initialComment.match(/@define/));
-    var isComponent = (initialComment && initialComment.match(RE_DIRECTIVE));
-    if (!isDefinition) { return; }
-    if (isDefinition && !isComponent) {
-      console.warn(
-        'WARNING: invalid component name in definition /*' +
+    var componentName = initialComment.match(RE_DIRECTIVE)[1].trim();
+    if (!componentName.match(componentNamePattern)) {
+      throw firstNode.error(
+        'Invalid component name in definition /*' +
         initialComment + '*/.',
-        'Component names must be pascal-case, e.g., ComponentName.'
+        'Component names must match the pattern ' + componentNamePattern
       );
       return;
     }
 
-    var componentName = initialComment.match(RE_DIRECTIVE)[1].trim();
     var isStrict = initialComment.match(RE_DIRECTIVE)[2] === 'use strict';
 
     validateRules(styles);
-    validateSelectors(styles, componentName, isStrict);
+    validateSelectors(styles, componentName, isStrict, patterns.selectors);
     validateCustomProperties(styles, componentName);
   };
 }
