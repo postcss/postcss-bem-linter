@@ -45,6 +45,16 @@ postcss().use(bemLinter([pattern]));
 
 ### Defining your pattern
 
+Patterns consist of regular expressions that describe valid selector sequences.
+
+Please note that *patterns define sequences, not just simple selectors*. So if, for example,
+you would like to be able to chain state classes to your component classes, as in
+`.Component.is-open`, your pattern needs to allow for this chaining.
+
+Also note that *pseudo-classes and pseudo-elements must be at the end of sequences, and
+will be ignored*. Instead of `.Component:first-child.is-open` you should use
+`.Component.is-open:first-child`. The former will cause an error.
+
 #### Preset Patterns
 
 You can use a preset pattern by passing a string. The following preset patterns are available:
