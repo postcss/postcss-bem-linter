@@ -34,7 +34,7 @@ describe('selector validation', function () {
       assertFailure('/** @define Foo */ .Foo {}', patternA);
     });
 
-    it('accepts any chained selectors in non-strict mode', function () {
+    it('accepts any combined selectors in non-strict mode', function () {
       var s = selectorTester('/** @define Foo */');
 
       assertSuccess(s('.f-Foo .f-Foo'), patternA);
@@ -54,12 +54,12 @@ describe('selector validation', function () {
     describe('in strict mode', function () {
       var s = selectorTester('/** @define Foo; use strict */');
 
-      it('accepts valid chained selectors', function () {
+      it('accepts valid combined selectors', function () {
         assertSuccess(s('.f-Foo .f-Foo'), patternA);
         assertSuccess(s('.f-Foo > .f-Foo'), patternA);
       });
 
-      it('rejects invalid chained selectors', function () {
+      it('rejects invalid combined selectors', function () {
         assertFailure(s('.f-Foo > div'), patternA);
         assertFailure(s('.f-Foo + #baz'), patternA);
         assertFailure(s('.f-Foo~li>a.link#baz.foo'), patternA);
@@ -68,20 +68,20 @@ describe('selector validation', function () {
   });
 
   describe(
-    'with different `initial` and `chainable` selector patterns',
+    'with different `initial` and `combined` selector patterns',
     function () {
     var patternB = {
       selectors: {
         initial: function (cmpt) {
           return new RegExp('^\\.' + cmpt + '(?:-[a-z]+)?$');
         },
-        chainable: function (cmpt) {
+        combined: function (cmpt) {
           return new RegExp('^\\.c-' + cmpt + '(?:-[a-z]+)?$');
         }
       }
     };
 
-    it('accepts any chained selectors in non-strict mode', function () {
+    it('accepts any combined selectors in non-strict mode', function () {
       var s = selectorTester('/** @define Foo */');
 
       assertSuccess(s('.Foo .c-Foo'), patternB);
@@ -94,13 +94,13 @@ describe('selector validation', function () {
     describe('in strict mode', function () {
       var s = selectorTester('/** @define Foo; use strict */');
 
-      it('accepts valid chained selectors', function () {
+      it('accepts valid combined selectors', function () {
         assertSuccess(s('.Foo .c-Foo'), patternB);
         assertSuccess(s('.Foo-bar > .c-Foo-bar'), patternB);
         assertSuccess(s('.Foo-bar>.c-Foo-bar'), patternB);
       });
 
-      it('rejects invalid chained selectors', function () {
+      it('rejects invalid combined selectors', function () {
         assertFailure(s('.Foo .cc-Foo'), patternB);
         assertFailure(s('.Foo > .Foo-F'), patternB);
       });

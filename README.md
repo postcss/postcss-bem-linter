@@ -5,8 +5,8 @@
 A [PostCSS](https://github.com/postcss/postcss) plugin to lint *BEM-style* CSS.
 
 *BEM-style* describes CSS that follows a more-or-less strict set of conventions determining
-what selectors can be used. Typically, these conventions require that classes be namespaced
-according to the component (or "block") that contains them, and that all characters after the
+what selectors can be used. Typically, these conventions require that classes begin with
+the name of the component (or "block") that contains them, and that all characters after the
 namespace follow a specified pattern. Original BEM methodology refers to "blocks", "elements",
 and "modifiers"; SUIT refers to "components", "descendants", and "modifiers". You might have your
 own terms for similar concepts.
@@ -25,7 +25,8 @@ npm install postcss-bem-linter
 
 **Default mode**:
 
-* Only allow selectors that *begin* with a selector sequence matching the defined convention.
+* Only allow selectors that *begin* with a selector sequence matching the defined convention
+  (ignoring sequences are combinators).
 * Only allow custom-property names that *begin* with the defined `ComponentName`.
 * The `:root` selector can only contain custom-properties.
 * The `:root` cannot be combined with other selectors.
@@ -33,9 +34,9 @@ npm install postcss-bem-linter
 **Strict mode**:
 
 * All the tests in "default mode".
-* Disallow selectors that contain chained selector sequences that do not match the
-  defined convention. (The convention for chained sequences can be the same as or different from
-  that for initial sequences.)
+* Disallow selector sequences *after combinators* that do not match the
+  defined convention. (The convention for sequences after combinators can be the same as
+  or different from that for initial sequences.)
 
 ## Use
 
@@ -73,14 +74,14 @@ You can define a custom pattern by passing an object with the following properti
   Default is `/[-_a-zA-Z0-9]+/`.
 - `selectors`: Either of the following:
   - A single function that accepts a component name and returns a regular expression describing
-    all valid selectors.
-  - An object consisting of two methods, `initial` and `chainable`. Both methods accept a
+    all valid selector sequences.
+  - An object consisting of two methods, `initial` and `combined`. Both methods accept a
     component name and return a regular expression. `initial` returns a description of valid
-    initial selector sequences — those occurring at the beginning of a selector. `chainable` returns
-    a description of valid chainable selector sequences — those occurring after the first sequence.
-    Two things to note: In non-strict mode, *any* chained sequences are accepted.
-    And if you do not specify a chainable pattern, in strict mode it is assumed that chained
-    selectors must match the same pattern as initial selectors.
+    initial selector sequences — those occurring at the beginning of a selector, before any
+    combinators. `combined` returns a description of valid selector sequences allowed *after* combinators.
+    Two things to note: In non-strict mode, *any* combined sequences are accepted.
+    And if you do not specify a combined pattern, in strict mode it is assumed that combined
+    sequences must match the same pattern as initial sequences.
 
 So you might call the plugin in any of the following ways:
 
@@ -97,22 +98,22 @@ bemLinter({
   componentName: /[A-Z]+/
 });
 
-// define a single RegExp for all selector sequences, initial or chained
+// define a single RegExp for all selector sequences, initial or combined
 bemLinter({
   selectors: function(componentName) {
     return new RegExp('^\\.' + componentName + '(?:-[a-z]+)?$');
   }
 });
 
-// define separate `componentName`, `initial`, and `chainable` RegExps
+// define separate `componentName`, `initial`, and `combined` RegExps
 bemLinter({
   componentName: /[A-Z]+/,
   selectors: {
     initial: function(componentName) {
       return new RegExp('^\\.' + componentName + '(?:-[a-z]+)?$');
     },
-    chainable: function(componentName) {
-      return new RegExp('^\\.chained-' + componentName + '-[a-z]+$');
+    combined: function(componentName) {
+      return new RegExp('^\\.combined-' + componentName + '-[a-z]+$');
     }
   }
 });
