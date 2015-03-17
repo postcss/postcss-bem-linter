@@ -3,4 +3,6 @@
 .f-Foo {}
 .foo-Foo {}
 .foobar-Foo_f {}
-.foobar-Foo_foo {}
+.foobar-Foo_foo
+.foobar-Foo_foo:hover {}
+.foobar-Foo_foo::after {}

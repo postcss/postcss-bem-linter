@@ -43,6 +43,14 @@ describe('selector validation', function () {
       assertSuccess(s('.f-Foo~li>a.link#baz.foo'), patternA);
     });
 
+    it('ignores pseudo-selectors at the end of a sequence', function () {
+      var s = selectorTester('/** @define Foo */');
+
+      assertSuccess(s('.f-Foo:hover'), patternA);
+      assertSuccess(s('.f-Foo::before'), patternA);
+      assertSuccess(s('.f-Foo:not(\'.is-open\')'), patternA);
+    });
+
     describe('in strict mode', function () {
       var s = selectorTester('/** @define Foo; use strict */');
 

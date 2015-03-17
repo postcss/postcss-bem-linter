@@ -9,6 +9,11 @@
   color: green;
 }
 
+.ValidRules-child:first-child:hover,
+.ValidRules-child2:nth-child(3)::before {
+  color: green;
+}
+
 .ValidRules.is-active {
   color: green;
 }
