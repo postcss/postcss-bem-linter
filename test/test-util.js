@@ -3,24 +3,24 @@ var linter = require('..');
 var fs = require('fs');
 var postcss = require('postcss');
 
-function processCss(css, opts) {
-  return postcss().use(linter(opts)).process(css);
+function processCss(css, pattern, opts) {
+  return postcss().use(linter(pattern, opts)).process(css);
 }
 
 function fixture(name) {
   return fs.readFileSync('test/fixtures/' + name + '.css', 'utf8').trim();
 }
 
-function assertSuccess(css, opts) {
+function assertSuccess(css, pattern, opts) {
   var result = function () {
-    processCss(css, opts);
+    processCss(css, pattern, opts);
   };
   assert.doesNotThrow(result);
 }
 
-function assertFailure(css, opts) {
+function assertFailure(css, pattern, opts) {
   var result = function () {
-    processCss(css, opts);
+    processCss(css, pattern, opts);
   };
   assert.throws(result);
 }

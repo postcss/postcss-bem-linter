@@ -41,14 +41,15 @@ npm install postcss-bem-linter
 ## Use
 
 ```
-postcss().use(bemLinter([pattern]));
+postcss().use(bemLinter([pattern, options]));
 ```
 
 ### Defining your pattern
 
-Patterns consist of regular expressions that describe valid selector sequences.
+Patterns consist of regular expressions, and functions that return regular expressions,
+which describe valid selector sequences.
 
-Please note that *patterns define sequences, not just simple selectors*. So if, for example,
+Please note that *patterns describe sequences, not just simple selectors*. So if, for example,
 you would like to be able to chain state classes to your component classes, as in
 `.Component.is-open`, your pattern needs to allow for this chaining.
 
@@ -58,9 +59,15 @@ will be ignored*. Instead of `.Component:first-child.is-open` you should use
 
 #### Preset Patterns
 
-You can use a preset pattern by passing a string. The following preset patterns are available:
+You can use a preset pattern by passing a string as the `pattern`, and, if needed, an `options` object,
+as in `bemLinter('suit', { namespace: 'twt' })`. Options are pattern-specific.
+
+The following preset patterns are available:
 
 - `'suit'` (default), as defined [here](https://github.com/suitcss/suit/blob/master/doc/naming-conventions.md).
+  Options:
+  - `namespace`: a namespace to prefix valid classes, as described
+    [in the SUIT docs](https://github.com/suitcss/suit/blob/master/doc/naming-conventions.md#namespace-optional)
 - `'bem'`, as defined [here](https://en.bem.info/tools/bem/bem-naming/).
 
 **`'suit'` is the default pattern**; so if you do not pass any `pattern` argument,
@@ -91,6 +98,7 @@ So you might call the plugin in any of the following ways:
 // use 'suit' conventions
 bemLinter();
 bemLinter('suit');
+bemLinter('suit', { namespace: 'twt' });
 
 // use 'bem' conventions
 bemLinter('bem');
