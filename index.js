@@ -5,6 +5,7 @@
  */
 
 var validateCustomProperties = require('./lib/validate-properties');
+var validateUtilities = require('./lib/validate-utilities');
 var validateSelectors = require('./lib/validate-selectors');
 var validateRules = require('./lib/validate-rules');
 var presetPatterns = require('./lib/preset-patterns');
@@ -16,6 +17,7 @@ var presetPatterns = require('./lib/preset-patterns');
 module.exports = conformance;
 
 var RE_DIRECTIVE = /\*\s*@define ([-_a-zA-Z0-9]+)\s*(?:;\s*(use strict))?\s*/;
+var UTILITIES_IDENT = 'utilities';
 
 /**
  * Check patterns or setup defaults. If the input CSS does not have a
@@ -25,6 +27,7 @@ var RE_DIRECTIVE = /\*\s*@define ([-_a-zA-Z0-9]+)\s*(?:;\s*(use strict))?\s*/;
  *
  * @param {Object} [patterns = 'suit']
  * @param {RegExp} [patterns.componentName]
+ * @param {RegExp} [patterns.utilities]
  * @param {Object|Function} [patterns.selectors]
  */
 function conformance(patterns) {
@@ -41,8 +44,9 @@ function conformance(patterns) {
     var initialComment = firstNode.text;
     if (!initialComment || !initialComment.match(RE_DIRECTIVE)) { return; }
 
-    var componentName = initialComment.match(RE_DIRECTIVE)[1].trim();
-    if (!componentName.match(componentNamePattern)) {
+    var defined = initialComment.match(RE_DIRECTIVE)[1].trim();
+    var isUtilities = defined === UTILITIES_IDENT;
+    if (!isUtilities && !defined.match(componentNamePattern)) {
       throw firstNode.error(
         'Invalid component name in definition /*' +
         initialComment + '*/.',
@@ -54,7 +58,11 @@ function conformance(patterns) {
     var isStrict = initialComment.match(RE_DIRECTIVE)[2] === 'use strict';
 
     validateRules(styles);
-    validateSelectors(styles, componentName, isStrict, patterns.selectors);
-    validateCustomProperties(styles, componentName);
+    if (isUtilities) {
+      validateUtilities(styles, patterns.utilities);
+    } else {
+      validateSelectors(styles, defined, isStrict, patterns.selectors);
+    }
+    validateCustomProperties(styles, defined);
   };
 }

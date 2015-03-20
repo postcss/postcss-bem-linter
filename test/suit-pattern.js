@@ -23,6 +23,15 @@ describe('using SUIT pattern (default)', function () {
     assertFailure(fixture('all-invalid-selector-in-media-query'));
   });
 
+  it('deals fairly with utility classes', function () {
+    var s = util.selectorTester('/** @define utilities */');
+    assertSuccess(s('.u-foo'));
+    assertSuccess(s('.u-fooBar'));
+    assertSuccess(s('.u-fooBar17'));
+    assertFailure(s('.Foo'));
+    assertFailure(s('.u-Foo'));
+  });
+
   describe('in strict mode', function () {
     it('selectors must only contain valid component classes', function () {
       assertSuccess(fixture('strict-valid-rules'));
