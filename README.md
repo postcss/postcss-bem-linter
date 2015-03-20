@@ -82,6 +82,8 @@ You can define a custom pattern by passing an object with the following properti
     Two things to note: In non-strict mode, *any* combined sequences are accepted.
     And if you do not specify a combined pattern, in strict mode it is assumed that combined
     sequences must match the same pattern as initial sequences.
+- `utilities`: A regular expression describing valid utility selectors. This will be use
+    if the stylesheet uses `/** @define utilities */`, as explained below.
 
 So you might call the plugin in any of the following ways:
 
@@ -105,7 +107,7 @@ bemLinter({
   }
 });
 
-// define separate `componentName`, `initial`, and `combined` RegExps
+// define separate `componentName`, `initial`, `combined`, and `utilities` RegExps
 bemLinter({
   componentName: /[A-Z]+/,
   selectors: {
@@ -115,15 +117,20 @@ bemLinter({
     combined: function(componentName) {
       return new RegExp('^\\.combined-' + componentName + '-[a-z]+$');
     }
-  }
+  },
+  utilities: /^\.util-[a-z]+$/
 });
 ```
 
 ### Defining a component
 
-The plugin will only run against files that explicitly define themselves as a
-named component, using a `/** @define ComponentName */` or `/** @define
-ComponentName; use strict */` comment on the first line of the file.
+The plugin will only run against files that explicitly declare that they
+are defining either a named component or utilities, using either
+`/** @define ComponentName */` or `/** @define utilities */` in the first line
+of the file.
+
+Strict mode is turned on by adding `; use strict` to this definition,
+e.g. `/** @define ComponentName; use strict */`.
 
 ```css
 /** @define MyComponent */
@@ -151,7 +158,18 @@ Strict mode:
 .MyComponent-other {}
 ```
 
-If the component name does not match your `componentName` pattern, the plugin will throw an error.
+Utilities:
+
+```css
+/** @define utilities */
+
+.u-sizeFill {}
+
+.u-sm-horse {}
+```
+
+If a component is defined and the component name does not match your `componentName` pattern,
+the plugin will throw an error.
 
 ### Testing CSS files
 

@@ -106,4 +106,21 @@ describe('selector validation', function () {
       });
     });
   });
+
+  describe('checking utility classes', function () {
+    var patternC = {
+      utilities: /^\.UTIL-[a-z]+$/
+    };
+    var s = selectorTester('/** @define utilities */');
+
+    it('accepts valid utility selectors', function () {
+      assertSuccess(s('.UTIL-foo'), patternC);
+      assertSuccess(s('.UTIL-foobarbaz'), patternC);
+    });
+
+    it('rejects invalid utility selectors', function () {
+      assertFailure(s('.Foo'), patternC);
+      assertFailure(s('.U-foo'), patternC);
+    });
+  });
 });
