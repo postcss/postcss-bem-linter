@@ -29,8 +29,10 @@ var UTILITIES_IDENT = 'utilities';
  * @param {RegExp} [patterns.componentName]
  * @param {RegExp} [patterns.utilities]
  * @param {Object|Function} [patterns.selectors]
+ * @param {Object} [opts] - Options that are can be used by
+ *   a pattern (e.g. `namespace`)
  */
-function conformance(patterns) {
+function conformance(patterns, opts) {
   patterns = patterns || 'suit';
   if (typeof patterns === 'string') {
     patterns = presetPatterns[patterns];
@@ -52,7 +54,6 @@ function conformance(patterns) {
         initialComment + '*/.',
         'Component names must match the pattern ' + componentNamePattern
       );
-      return;
     }
 
     var isStrict = initialComment.match(RE_DIRECTIVE)[2] === 'use strict';
@@ -61,7 +62,9 @@ function conformance(patterns) {
     if (isUtilities) {
       validateUtilities(styles, patterns.utilities);
     } else {
-      validateSelectors(styles, defined, isStrict, patterns.selectors);
+      validateSelectors(
+        styles, defined, isStrict, patterns.selectors, opts
+      );
     }
     validateCustomProperties(styles, defined);
   };
