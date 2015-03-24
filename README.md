@@ -25,18 +25,15 @@ npm install postcss-bem-linter
 
 **Default mode**:
 
-* Only allow selectors that *begin* with a selector sequence matching the defined convention
-  (ignoring sequences are combinators).
+* Only allow selectors sequences that match the defined convention.
 * Only allow custom-property names that *begin* with the defined `ComponentName`.
 * The `:root` selector can only contain custom-properties.
 * The `:root` cannot be combined with other selectors.
 
-**Strict mode**:
+**Weak mode**:
 
-* All the tests in "default mode".
-* Disallow selector sequences *after combinators* that do not match the
-  defined convention. (The convention for sequences after combinators can be the same as
-  or different from that for initial sequences.)
+* While *initial* selector sequences (before combinators) must match the defined convention,
+  sequences *after* combinators are not held to any standard.
 
 ## Use
 
@@ -86,11 +83,11 @@ You can define a custom pattern by passing an object with the following properti
     component name and return a regular expression. `initial` returns a description of valid
     initial selector sequences — those occurring at the beginning of a selector, before any
     combinators. `combined` returns a description of valid selector sequences allowed *after* combinators.
-    Two things to note: In non-strict mode, *any* combined sequences are accepted.
-    And if you do not specify a combined pattern, in strict mode it is assumed that combined
+    Two things to note: If you do not specify a combined pattern, it is assumed that combined
     sequences must match the same pattern as initial sequences.
+    And in weak mode, *any* combined sequences are accepted.
 - `utilities`: A regular expression describing valid utility selectors. This will be use
-    if the stylesheet uses `/** @define utilities */`, as explained below.
+  if the stylesheet uses `/** @define utilities */`, as explained below.
 
 So you might call the plugin in any of the following ways:
 
@@ -137,8 +134,8 @@ are defining either a named component or utilities, using either
 `/** @define ComponentName */` or `/** @define utilities */` in the first line
 of the file.
 
-Strict mode is turned on by adding `; use strict` to this definition,
-e.g. `/** @define ComponentName; use strict */`.
+Weak mode is turned on by adding `; weak` to this definition,
+e.g. `/** @define ComponentName; weak */`.
 
 ```css
 /** @define MyComponent */
@@ -149,13 +146,13 @@ e.g. `/** @define ComponentName; use strict */`.
 
 .MyComponent {}
 
-.MyComponent .other {}
+.MyComponent-other {}
 ```
 
-Strict mode:
+Weak mode:
 
 ```css
-/** @define MyComponent; use strict */
+/** @define MyComponent; weak */
 
 :root {
   --MyComponent-property: value;
@@ -163,7 +160,7 @@ Strict mode:
 
 .MyComponent {}
 
-.MyComponent-other {}
+.MyComponent .other {}
 ```
 
 Utilities:

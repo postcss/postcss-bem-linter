@@ -1,7 +1,0 @@
-/** @define ValidSelectorInMediaQuery */
-
-@media all {
-  .ValidSelectorInMediaQuery {
-    color: green;
-  }
-}
