@@ -2,12 +2,12 @@ var util = require('./test-util');
 var assertFailure = util.assertFailure;
 
 describe('using BEM pattern', function () {
-  it('accepts valid selectors in strict mode', function () {
-    util.assertSuccess(util.fixture('strict-bem-valid'), 'bem');
+  it('accepts valid selectors', function () {
+    util.assertSuccess(util.fixture('bem-valid'), 'bem');
   });
 
   describe('when given invalid selectors', function () {
-    var s = util.selectorTester('/** @define block; use strict */');
+    var s = util.selectorTester('/** @define block */');
 
     // mirroring tests from
     // https://github.com/bem/bem-naming/blob/master/test/original/validate.test.js

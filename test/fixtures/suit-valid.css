@@ -1,0 +1,48 @@
+/** @define StrictValidRules */
+
+.StrictValidRules {
+  color: green;
+}
+
+.StrictValidRules:focus {
+  color: green;
+}
+
+.StrictValidRules.is-active {
+  color: green;
+}
+
+.StrictValidRules .StrictValidRules--modifier {
+  color: green;
+}
+
+.StrictValidRules .StrictValidRules--modifier::after {
+  color: green;
+}
+
+.StrictValidRules {
+  color: green;
+}
+
+.StrictValidRules-child,
+.StrictValidRules-child2 {
+  color: green;
+}
+
+.StrictValidRules-child:first-child:hover,
+.StrictValidRules-child2:nth-child(3)::before {
+  color: green;
+}
+
+.StrictValidRules.is-active {
+  color: green;
+}
+
+@keyframes grow {
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

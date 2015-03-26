@@ -6,3 +6,7 @@
 .foobar-Foo_foo
 .foobar-Foo_foo:hover {}
 .foobar-Foo_foo::after {}
+
+@media all {
+  .f-Foo {}
+}

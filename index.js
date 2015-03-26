@@ -16,7 +16,7 @@ var presetPatterns = require('./lib/preset-patterns');
 
 module.exports = conformance;
 
-var RE_DIRECTIVE = /\*\s*@define ([-_a-zA-Z0-9]+)\s*(?:;\s*(use strict))?\s*/;
+var RE_DIRECTIVE = /\*\s*@define ([-_a-zA-Z0-9]+)\s*(?:;\s*(weak))?\s*/;
 var UTILITIES_IDENT = 'utilities';
 
 /**
@@ -56,14 +56,14 @@ function conformance(patterns, opts) {
       );
     }
 
-    var isStrict = initialComment.match(RE_DIRECTIVE)[2] === 'use strict';
+    var weakMode = initialComment.match(RE_DIRECTIVE)[2] === 'weak';
 
     validateRules(styles);
     if (isUtilities) {
       validateUtilities(styles, patterns.utilities);
     } else {
       validateSelectors(
-        styles, defined, isStrict, patterns.selectors, opts
+        styles, defined, weakMode, patterns.selectors, opts
       );
     }
     validateCustomProperties(styles, defined);

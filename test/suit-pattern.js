@@ -5,46 +5,42 @@ var selectorTester = util.selectorTester;
 var fixture = util.fixture;
 
 describe('using SUIT pattern (default)', function () {
+  it('accepts valid component classes', function () {
+    assertSuccess(fixture('suit-valid'));
+  });
+
+  var s = selectorTester('/** @define Foo */');
+
   it('selectors must begin with the component name', function () {
-    assertSuccess(fixture('valid-rules'));
-    assertFailure(fixture('all-false-match'));
-    assertFailure(fixture('all-invalid-selector-tag'));
-    assertFailure(fixture('all-invalid-selector-component'));
-  });
-
-  it('custom properties must begin with the component name', function () {
-    assertSuccess(fixture('all-valid-root-vars'));
-    assertFailure(fixture('all-invalid-root-vars'));
-    assertFailure(fixture('all-invalid-root-property'));
-    assertFailure(fixture('all-invalid-root-selector'));
-  });
-
-  it('must apply to selectors in media queries', function () {
-    assertSuccess(fixture('all-valid-selector-in-media-query'));
-    assertFailure(fixture('all-invalid-selector-in-media-query'));
-  });
-
-  it('deals fairly with utility classes', function () {
-    var s = util.selectorTester('/** @define utilities */');
-    assertSuccess(s('.u-foo'));
-    assertSuccess(s('.u-fooBar'));
-    assertSuccess(s('.u-fooBar17'));
-    assertFailure(s('.Foo'));
-    assertFailure(s('.u-Foo'));
+    assertFailure(s('.potentialFalseMatch'));
+    assertFailure(s('div'));
+    assertFailure(s('.Error'));
   });
 
   it('understands namespaces', function () {
-    var s = selectorTester('/** @define Foo */');
-
     assertSuccess(s('.ns-Foo'), 'suit', { namespace: 'ns' });
     assertFailure(s('.Foo'), 'suit', { namespace: 'ns' });
     assertSuccess(s('.Ho04__d-Foo'), 'suit', { namespace: 'Ho04__d' });
   });
 
-  describe('in strict mode', function () {
-    it('selectors must only contain valid component classes', function () {
-      assertSuccess(fixture('strict-valid-rules'));
-      assertFailure(fixture('strict-invalid-selector'));
+  it('rejects invalid combined classes', function () {
+    var sInvalid = selectorTester('/** @define StrictInvalidSelector */');
+    assertFailure(sInvalid('.StrictInvalidSelector .Another'));
+  });
+
+  it('deals fairly with utility classes', function () {
+    var sUtil = util.selectorTester('/** @define utilities */');
+    assertSuccess(sUtil('.u-foo'));
+    assertSuccess(sUtil('.u-fooBar'));
+    assertSuccess(sUtil('.u-fooBar17'));
+    assertFailure(sUtil('.Foo'));
+    assertFailure(sUtil('.u-Foo'));
+  });
+
+  describe('in weak mode', function () {
+    it('accepts arbitrary combined classes', function () {
+      var sWeak = selectorTester('/** @define ValidRules; weak */');
+      assertSuccess(sWeak('.ValidRules .Another'));
     });
   });
 });

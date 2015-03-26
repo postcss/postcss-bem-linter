@@ -25,44 +25,45 @@ describe('selector validation', function () {
         return new RegExp('^\\.[a-z]+-' + cmpt + '(?:_[a-z]+)?$');
       }
     };
+    var s = selectorTester('/** @define Foo */');
 
     it('accepts valid initial selectors', function () {
-      assertSuccess(util.fixture('patternA-valid-initial'), patternA);
+      assertSuccess(util.fixture('patternA-valid'), patternA);
     });
 
     it('rejects invalid initial selectors', function () {
-      assertFailure('/** @define Foo */ .Foo {}', patternA);
+      assertFailure(s('.Foo'), patternA);
     });
 
-    it('accepts any combined selectors in non-strict mode', function () {
-      var s = selectorTester('/** @define Foo */');
-
-      assertSuccess(s('.f-Foo .f-Foo'), patternA);
-      assertSuccess(s('.f-Foo > div'), patternA);
-      assertSuccess(s('.f-Foo + #baz'), patternA);
-      assertSuccess(s('.f-Foo~li>a.link#baz.foo'), patternA);
+    it('rejects invalid initial selectors in media queries', function () {
+      assertFailure('/** @define Foo */ @media all { .Bar {} }');
     });
 
     it('ignores pseudo-selectors at the end of a sequence', function () {
-      var s = selectorTester('/** @define Foo */');
-
       assertSuccess(s('.f-Foo:hover'), patternA);
       assertSuccess(s('.f-Foo::before'), patternA);
       assertSuccess(s('.f-Foo:not(\'.is-open\')'), patternA);
     });
 
-    describe('in strict mode', function () {
-      var s = selectorTester('/** @define Foo; use strict */');
+    it('accepts valid combined selectors', function () {
+      assertSuccess(s('.f-Foo .f-Foo'), patternA);
+      assertSuccess(s('.f-Foo > .f-Foo'), patternA);
+    });
 
-      it('accepts valid combined selectors', function () {
-        assertSuccess(s('.f-Foo .f-Foo'), patternA);
-        assertSuccess(s('.f-Foo > .f-Foo'), patternA);
-      });
+    it('rejects invalid combined selectors', function () {
+      assertFailure(s('.f-Foo > div'), patternA);
+      assertFailure(s('.f-Foo + #baz'), patternA);
+      assertFailure(s('.f-Foo~li>a.link#baz.foo'), patternA);
+    });
 
-      it('rejects invalid combined selectors', function () {
-        assertFailure(s('.f-Foo > div'), patternA);
-        assertFailure(s('.f-Foo + #baz'), patternA);
-        assertFailure(s('.f-Foo~li>a.link#baz.foo'), patternA);
+    describe('in weak mode', function () {
+      var sWeak = selectorTester('/** @define Foo; weak */');
+
+      it('accepts any combined selectors', function () {
+        assertSuccess(sWeak('.f-Foo .f-Foo'), patternA);
+        assertSuccess(sWeak('.f-Foo > div'), patternA);
+        assertSuccess(sWeak('.f-Foo + #baz'), patternA);
+        assertSuccess(sWeak('.f-Foo~li>a.link#baz.foo'), patternA);
       });
     });
   });
@@ -80,29 +81,28 @@ describe('selector validation', function () {
         }
       }
     };
+    var s = selectorTester('/** @define Foo */');
 
-    it('accepts any combined selectors in non-strict mode', function () {
-      var s = selectorTester('/** @define Foo */');
-
+    it('accepts valid combined selectors', function () {
       assertSuccess(s('.Foo .c-Foo'), patternB);
-      assertSuccess(s('.Foo .Foo'), patternB);
-      assertSuccess(s('.Foo > div'), patternB);
-      assertSuccess(s('.Foo + #baz'), patternB);
-      assertSuccess(s('.Foo~li>a.link#baz.foo'), patternB);
+      assertSuccess(s('.Foo-bar > .c-Foo-bar'), patternB);
+      assertSuccess(s('.Foo-bar>.c-Foo-bar'), patternB);
     });
 
-    describe('in strict mode', function () {
-      var s = selectorTester('/** @define Foo; use strict */');
+    it('rejects invalid combined selectors', function () {
+      assertFailure(s('.Foo .cc-Foo'), patternB);
+      assertFailure(s('.Foo > .Foo-F'), patternB);
+    });
 
-      it('accepts valid combined selectors', function () {
-        assertSuccess(s('.Foo .c-Foo'), patternB);
-        assertSuccess(s('.Foo-bar > .c-Foo-bar'), patternB);
-        assertSuccess(s('.Foo-bar>.c-Foo-bar'), patternB);
-      });
+    describe('in weak mode', function () {
+      var sWeak = selectorTester('/** @define Foo; weak*/');
 
-      it('rejects invalid combined selectors', function () {
-        assertFailure(s('.Foo .cc-Foo'), patternB);
-        assertFailure(s('.Foo > .Foo-F'), patternB);
+      it('accepts any combined selectors', function () {
+        assertSuccess(sWeak('.Foo .c-Foo'), patternB);
+        assertSuccess(sWeak('.Foo .Foo'), patternB);
+        assertSuccess(sWeak('.Foo > div'), patternB);
+        assertSuccess(sWeak('.Foo + #baz'), patternB);
+        assertSuccess(sWeak('.Foo~li>a.link#baz.foo'), patternB);
       });
     });
   });
