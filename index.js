@@ -27,8 +27,8 @@ var UTILITIES_IDENT = 'utilities';
  *
  * @param {Object} [patterns = 'suit']
  * @param {RegExp} [patterns.componentName]
- * @param {RegExp} [patterns.utilities]
- * @param {Object|Function} [patterns.selectors]
+ * @param {RegExp} [patterns.utilitySelectors]
+ * @param {Object|Function} [patterns.componentSelectors]
  * @param {Object} [opts] - Options that are can be used by
  *   a pattern (e.g. `namespace`)
  */
@@ -60,10 +60,10 @@ function conformance(patterns, opts) {
 
     validateRules(styles);
     if (isUtilities) {
-      validateUtilities(styles, patterns.utilities);
+      validateUtilities(styles, patterns.utilitySelectors);
     } else {
       validateSelectors(
-        styles, defined, weakMode, patterns.selectors, opts
+        styles, defined, weakMode, patterns.componentSelectors, opts
       );
     }
     validateCustomProperties(styles, defined);

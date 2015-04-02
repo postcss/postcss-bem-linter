@@ -7,7 +7,7 @@ A [PostCSS](https://github.com/postcss/postcss) plugin to lint *BEM-style* CSS.
 *BEM-style* describes CSS that follows a more-or-less strict set of conventions determining
 what selectors can be used. Typically, these conventions require that classes begin with
 the name of the component (or "block") that contains them, and that all characters after the
-namespace follow a specified pattern. Original BEM methodology refers to "blocks", "elements",
+component name follow a specified pattern. Original BEM methodology refers to "blocks", "elements",
 and "modifiers"; SUIT refers to "components", "descendants", and "modifiers". You might have your
 own terms for similar concepts.
 
@@ -48,7 +48,7 @@ which describe valid selector sequences.
 
 Please note that *patterns describe sequences, not just simple selectors*. So if, for example,
 you would like to be able to chain state classes to your component classes, as in
-`.Component.is-open`, your pattern needs to allow for this chaining.
+`.Component.is-open`, your regular expression needs to allow for this chaining.
 
 Also note that *pseudo-classes and pseudo-elements must be at the end of sequences, and
 will be ignored*. Instead of `.Component:first-child.is-open` you should use
@@ -76,9 +76,9 @@ You can define a custom pattern by passing an object with the following properti
 
 - `componentName` (optional): A regular expression describing valid component names.
   Default is `/[-_a-zA-Z0-9]+/`.
-- `selectors`: Either of the following:
+- `componentSelectors`: Either of the following:
   - A single function that accepts a component name and returns a regular expression describing
-    all valid selector sequences.
+    all valid selector sequences for the stylesheet.
   - An object consisting of two methods, `initial` and `combined`. Both methods accept a
     component name and return a regular expression. `initial` returns a description of valid
     initial selector sequences — those occurring at the beginning of a selector, before any
@@ -86,7 +86,7 @@ You can define a custom pattern by passing an object with the following properti
     Two things to note: If you do not specify a combined pattern, it is assumed that combined
     sequences must match the same pattern as initial sequences.
     And in weak mode, *any* combined sequences are accepted.
-- `utilities`: A regular expression describing valid utility selectors. This will be use
+- `utilitySelectors`: A regular expression describing valid utility selectors. This will be use
   if the stylesheet uses `/** @define utilities */`, as explained below.
 
 So you might call the plugin in any of the following ways:
@@ -107,7 +107,7 @@ bemLinter({
 
 // define a single RegExp for all selector sequences, initial or combined
 bemLinter({
-  selectors: function(componentName) {
+  componentSelectors: function(componentName) {
     return new RegExp('^\\.' + componentName + '(?:-[a-z]+)?$');
   }
 });
@@ -115,7 +115,7 @@ bemLinter({
 // define separate `componentName`, `initial`, `combined`, and `utilities` RegExps
 bemLinter({
   componentName: /[A-Z]+/,
-  selectors: {
+  componentSelectors: {
     initial: function(componentName) {
       return new RegExp('^\\.' + componentName + '(?:-[a-z]+)?$');
     },
@@ -123,7 +123,7 @@ bemLinter({
       return new RegExp('^\\.combined-' + componentName + '-[a-z]+$');
     }
   },
-  utilities: /^\.util-[a-z]+$/
+  utilitySelectors: /^\.util-[a-z]+$/
 });
 ```
 
