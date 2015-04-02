@@ -8,9 +8,9 @@
   ],
   "devDependencies": {
     "jscs": "1.11.3",
-    "jscs-jsdoc": "^0.4.0",
-    "mocha": "^2.0.0",
-    "postcss": "^4.0.0"
+    "jscs-jsdoc": "0.4.5",
+    "mocha": "2.2.1",
+    "postcss": "4.0.0"
   },
   "scripts": {
     "checkstyle": "jscs *.js **/*.js --config=jscs.config.js",
