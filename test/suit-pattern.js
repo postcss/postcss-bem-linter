@@ -37,6 +37,13 @@ describe('using SUIT pattern (default)', function () {
     assertFailure(sUtil('.u-Foo'));
   });
 
+  it('accepts chained attribute selectors', function () {
+    assertSuccess(s('.Foo-input[type=number]'));
+    assertSuccess(s('.Foo[disabled]'));
+    assertSuccess(s('.Foo-input[disabled] ~ .Foo-label'));
+    assertSuccess(s('.Foo-inner--password .Foo-input[type="password"]'));
+  });
+
   describe('in weak mode', function () {
     it('accepts arbitrary combined classes', function () {
       var sWeak = selectorTester('/** @define ValidRules; weak */');
