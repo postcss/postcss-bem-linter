@@ -1,36 +1,37 @@
 var util = require('./test-util');
 var assertSuccess = util.assertSuccess;
+var assertSingleFailure = util.assertSingleFailure;
 var assertFailure = util.assertFailure;
 var fixture = util.fixture;
 
 describe('property validation', function () {
   it(
     'accepts custom properties that begin with the component name',
-    function () {
-      assertSuccess(fixture('properties-valid'));
+    function (done) {
+      assertSuccess(done, fixture('properties-valid'));
     }
   );
 
   var invDef = '/** @define InvalidRootVars */';
 
-  it('accepts an empty root', function () {
-    assertSuccess(invDef + ':root {}');
+  it('accepts an empty root', function (done) {
+    assertSuccess(done, invDef + ':root {}');
   });
 
   it(
     'rejects custom properties that do not being with the component name',
-    function () {
-      assertFailure(
+    function (done) {
+      assertSingleFailure(done,
         invDef + ':root { --invalid-InvalidRootVars-color: green; }'
       );
     }
   );
 
-  it('rejects invalid root properties', function () {
-    assertFailure(invDef + ':root { color: green; }');
+  it('rejects invalid root declarations', function (done) {
+    assertSingleFailure(done, invDef + ':root { color: green; }');
   });
 
-  it('rejects root selectors grouped with other selectors', function () {
-    assertFailure(invDef + ':root, .InvalidRootSelector {}');
+  it('rejects root selectors grouped with other selectors', function (done) {
+    assertSingleFailure(done, invDef + ':root, .InvalidRootVars {}');
   });
 });
