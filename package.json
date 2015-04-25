@@ -6,11 +6,13 @@
     "index.js",
     "lib"
   ],
+  "dependencies": {
+    "postcss": "^4.1.0"
+  },
   "devDependencies": {
-    "jscs": "1.11.3",
-    "jscs-jsdoc": "0.4.5",
-    "mocha": "2.2.1",
-    "postcss": "4.0.0"
+    "jscs": "1.12.0",
+    "jscs-jsdoc": "0.4.6",
+    "mocha": "2.2.3"
   },
   "scripts": {
     "checkstyle": "jscs *.js **/*.js --config=jscs.config.js",

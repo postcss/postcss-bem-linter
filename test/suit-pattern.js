@@ -1,46 +1,77 @@
 var util = require('./test-util');
 var assertSuccess = util.assertSuccess;
-var assertFailure = util.assertFailure;
+var assertSingleFailure = util.assertSingleFailure;
 var selectorTester = util.selectorTester;
 var fixture = util.fixture;
 
 describe('using SUIT pattern (default)', function () {
-  it('accepts valid component classes', function () {
-    assertSuccess(fixture('suit-valid'));
+  it('accepts valid component classes', function (done) {
+    assertSuccess(done, fixture('suit-valid'));
   });
 
   var s = selectorTester('/** @define Foo */');
 
-  it('selectors must begin with the component name', function () {
-    assertFailure(s('.potentialFalseMatch'));
-    assertFailure(s('div'));
-    assertFailure(s('.Error'));
+  describe('selectors must begin with the component name', function () {
+    it('rejects `.potentialFalseMatch`', function (done) {
+      assertSingleFailure(done, s('.potentialFalseMatch'));
+    });
+
+    it('rejects `div`', function (done) {
+      assertSingleFailure(done, s('div'));
+    });
+
+    it('rejects `.Error`', function (done) {
+      assertSingleFailure(done, s('.Error'));
+    });
   });
 
-  it('understands namespaces', function () {
-    assertSuccess(s('.ns-Foo'), 'suit', { namespace: 'ns' });
-    assertFailure(s('.Foo'), 'suit', { namespace: 'ns' });
-    assertSuccess(s('.Ho04__d-Foo'), 'suit', { namespace: 'Ho04__d' });
+  describe('understands namespaces', function () {
+    it('and with namespace `ns` accepts `ns-Foo`', function (done) {
+      assertSuccess(done, s('.ns-Foo'), 'suit', { namespace: 'ns' });
+    });
+
+    it('and with namespace `Ho04__d` accepts `Ho04__d-Foo`', function (done) {
+      assertSuccess(done, s('.Ho04__d-Foo'), 'suit', { namespace: 'Ho04__d' });
+    });
+
+    it('and with namespace `ns` rejects `.Foo`', function (done) {
+      assertSingleFailure(done, s('.Foo'), 'suit', { namespace: 'ns' });
+    });
   });
 
-  it('rejects invalid combined classes', function () {
+  it('rejects invalid combined classes', function (done) {
     var sInvalid = selectorTester('/** @define StrictInvalidSelector */');
-    assertFailure(sInvalid('.StrictInvalidSelector .Another'));
+    assertSingleFailure(done, sInvalid('.StrictInvalidSelector .Another'));
   });
 
-  it('deals fairly with utility classes', function () {
+  describe('deals fairly with utility classes', function () {
     var sUtil = util.selectorTester('/** @define utilities */');
-    assertSuccess(sUtil('.u-foo'));
-    assertSuccess(sUtil('.u-fooBar'));
-    assertSuccess(sUtil('.u-fooBar17'));
-    assertFailure(sUtil('.Foo'));
-    assertFailure(sUtil('.u-Foo'));
+
+    it('accepts `u-foo`', function (done) {
+      assertSuccess(done, sUtil('.u-foo'));
+    });
+
+    it('accepts `u-fooBar`', function (done) {
+      assertSuccess(done, sUtil('.u-fooBar'));
+    });
+
+    it('accepts `u-fooBar17`', function (done) {
+      assertSuccess(done, sUtil('.u-fooBar17'));
+    });
+
+    it('rejects `.Foo`', function (done) {
+      assertSingleFailure(done, sUtil('.Foo'));
+    });
+
+    it('rejects `.u-Foo`', function (done) {
+      assertSingleFailure(done, sUtil('.u-Foo'));
+    });
   });
 
   describe('in weak mode', function () {
-    it('accepts arbitrary combined classes', function () {
+    it('accepts arbitrary combined classes', function (done) {
       var sWeak = selectorTester('/** @define ValidRules; weak */');
-      assertSuccess(sWeak('.ValidRules .Another'));
+      assertSuccess(done, sWeak('.ValidRules .Another'));
     });
   });
 });
