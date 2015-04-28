@@ -39,7 +39,7 @@ module.exports = postcss.plugin(
     return function (styles, result) {
       return new Promise(function (resolve) {
         var firstNode = styles.nodes[0];
-        if (firstNode.type !== 'comment') { resolve(); }
+        if (!firstNode || firstNode.type !== 'comment') { resolve(); }
 
         var initialComment = firstNode.text;
         if (!initialComment || !initialComment.match(RE_DIRECTIVE)) {
