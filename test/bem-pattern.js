@@ -9,8 +9,7 @@ describe('using BEM pattern', function () {
   describe('when given invalid selectors', function () {
     var s = util.selectorTester('/** @define block */');
 
-    // mirroring tests from
-    // https://github.com/bem/bem-naming/blob/master/test/original/validate.test.js
+    // mirroring tests from http://goo.gl/Db6QPu
     it('should not validate elem without block', function (done) {
       assertSingleFailure(done, s('__elem'), 'bem');
     });

@@ -2,11 +2,13 @@ var util = require('./test-util');
 var assertSuccess = util.assertSuccess;
 var assertSingleFailure = util.assertSingleFailure;
 var selectorTester = util.selectorTester;
-var test = util.test;
 
 describe('selector validation', function () {
   describe('with a custom `componentName` pattern /^[A-Z]+$/', function () {
-    var p1 = { componentName: /^[A-Z]+$/, componentSelectors: function () { return /.*/; } };
+    var p1 = {
+      componentName: /^[A-Z]+$/,
+      componentSelectors: function () { return /.*/; }
+    };
 
     it('rejects component name Foo', function (done) {
       assertSingleFailure(done, '/** @define Foo */', p1);
@@ -18,7 +20,10 @@ describe('selector validation', function () {
   });
 
   describe('with a custom `componentName` pattern /^[a-z]+1$/', function () {
-    var p2 = { componentName: /^[a-z]+1$/, componentSelectors: function () { return /.*/; } };
+    var p2 = {
+      componentName: /^[a-z]+1$/,
+      componentSelectors: function () { return /.*/; }
+    };
 
     it('rejects component name foo2', function (done) {
       assertSingleFailure(done, '/** @define foo2 */', p2);
@@ -159,28 +164,24 @@ describe('selector validation', function () {
     describe('in weak mode', function () {
       var sWeak = selectorTester('/** @define Foo; weak*/');
 
-      describe('in weak mode', function () {
-        var sWeak = selectorTester('/** @define Foo; weak*/');
+      it('accepts `.Foo .c-Foo`', function (done) {
+        assertSuccess(done, sWeak('.Foo .c-Foo'), patternB);
+      });
 
-        it('accepts `.Foo .c-Foo`', function (done) {
-          assertSuccess(done, sWeak('.Foo .c-Foo'), patternB);
-        });
+      it('accepts `.Foo .Foo`', function (done) {
+        assertSuccess(done, sWeak('.Foo .Foo'), patternB);
+      });
 
-        it('accepts `.Foo .Foo`', function (done) {
-          assertSuccess(done, sWeak('.Foo .Foo'), patternB);
-        });
+      it('accepts `.Foo > div`', function (done) {
+        assertSuccess(done, sWeak('.Foo > div'), patternB);
+      });
 
-        it('accepts `.Foo > div`', function (done) {
-          assertSuccess(done, sWeak('.Foo > div'), patternB);
-        });
+      it('accepts `.Foo + #baz`', function (done) {
+        assertSuccess(done, sWeak('.Foo + #baz'), patternB);
+      });
 
-        it('accepts `.Foo + #baz`', function (done) {
-          assertSuccess(done, sWeak('.Foo + #baz'), patternB);
-        });
-
-        it('accepts `.Foo~li>a.link#baz.foo`', function (done) {
-          assertSuccess(done, sWeak('.Foo~li>a.link#baz.foo'), patternB);
-        });
+      it('accepts `.Foo~li>a.link#baz.foo`', function (done) {
+        assertSuccess(done, sWeak('.Foo~li>a.link#baz.foo'), patternB);
       });
     });
   });

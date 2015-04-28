@@ -1,7 +1,6 @@
 var util = require('./test-util');
 var assertSuccess = util.assertSuccess;
 var assertSingleFailure = util.assertSingleFailure;
-var assertFailure = util.assertFailure;
 var fixture = util.fixture;
 
 describe('property validation', function () {

@@ -45,5 +45,5 @@ module.exports = {
   assertFailure: assertFailure,
   assertSingleFailure: assertSingleFailure,
   selectorTester: selectorTester,
-  test: processCss,
+  test: processCss
 };
