@@ -21,6 +21,8 @@ error if it finds CSS that does not follow the specified conventions.
 npm install postcss-bem-linter
 ```
 
+This plugin logs warnings via PostCSS. Therefore, you'll want to use it with a PostCSS runner that prints warnings (e.g. [`gulp-postcss`](https://github.com/postcss/gulp-postcss)) or a plugin that prints warnings (e.g. [`postcss-log-warnings`](https://github.com/davidtheclark/postcss-log-warnings)).
+
 ## Conformance tests
 
 **Default mode**:
