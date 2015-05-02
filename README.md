@@ -21,7 +21,7 @@ error if it finds CSS that does not follow the specified conventions.
 npm install postcss-bem-linter
 ```
 
-This plugin logs warnings via PostCSS. Therefore, you'll want to use it with a PostCSS runner that prints warnings (e.g. [`gulp-postcss`](https://github.com/postcss/gulp-postcss)) or a plugin that prints warnings (e.g. [`postcss-log-warnings`](https://github.com/davidtheclark/postcss-log-warnings)).
+This plugin logs warnings via PostCSS. Therefore, you'll want to use it with a PostCSS runner that prints warnings (e.g. [`gulp-postcss`](https://github.com/postcss/gulp-postcss)) or another PostCSS plugin that prints warnings (e.g. [`postcss-log-warnings`](https://github.com/davidtheclark/postcss-log-warnings)).
 
 ## Conformance tests
 
@@ -180,16 +180,22 @@ the plugin will throw an error.
 
 ### Testing CSS files
 
-Pass your individual CSS files through the plugin. It will throw errors for
-conformance failures, which you can log when caught by your build tools.
+Pass your individual CSS files through the plugin. It will log warnings errors for
+conformance failures, which you can print to the console using
+[`postcss-log-warnings`](https://github.com/davidtheclark/postcss-log-warnings) or relying
+on a PostCSS runner (such as [`gulp-postcss`](https://github.com/postcss/gulp-postcss)).
 
 ```js
 var postcss = require('postcss');
 var bemLinter = require('postcss-bem-linter');
+var logWarnings = require('postcss-log-warnings');
 
 files.forEach(function (file) {
   var css = fs.readFileSync(file, 'utf-8');
-  postcss().use(bemLinter()).process(css);
+  postcss()
+    .use(bemLinter())
+    .use(logWarnings())
+    .process(css);
 });
 ```
 
