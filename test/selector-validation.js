@@ -200,6 +200,14 @@ describe('selector validation', function () {
       assertSuccess(done, s('.UTIL-foobarbaz'), patternC);
     });
 
+    it('accepts `.UTIL-foo:hover`', function (done) {
+      assertSuccess(done, s('.UTIL-foo:hover'), patternC);
+    });
+
+    it('accepts `.UTIL-foo::before`', function (done) {
+      assertSuccess(done, s('.UTIL-foo::before'), patternC);
+    });
+
     it('rejects `.Foo`', function (done) {
       assertSingleFailure(done, s('.Foo'), patternC);
     });
