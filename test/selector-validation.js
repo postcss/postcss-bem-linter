@@ -216,4 +216,24 @@ describe('selector validation', function () {
       assertSingleFailure(done, s('.U-foo'), patternC);
     });
   });
+
+  describe('ignore a selector', function () {
+    var s = selectorTester('/** @define Foo */');
+
+    it(
+      'ignores selectors after special comments a line before',
+      function (done) {
+        assertSuccess(done, s('/* postcss-bem-linter: ignore */\n.Foo a'));
+      }
+    );
+
+    it(
+      'ignores selectors after special comments inline with the selector',
+      function (done) {
+        assertSuccess(done, s(
+          '/* postcss-bem-linter: ignore */ .no-flexbox .Foo'
+        ));
+      }
+    );
+  });
 });

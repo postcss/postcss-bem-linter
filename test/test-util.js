@@ -14,9 +14,9 @@ function fixture(name) {
 
 function assertSuccess(done, css, pattern, opts) {
   processCss(css, pattern, opts).then(function (result) {
-    assert(result.warnings().length === 0);
+    assert.equal(result.warnings().length, 0);
     done();
-  });
+  }).catch(done);
 }
 
 function assertSingleFailure(done, css, pattern, opts) {
