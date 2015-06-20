@@ -27,7 +27,7 @@ This plugin registers warnings via PostCSS. Therefore, you'll want to use it wit
 
 **Default mode**:
 
-* Only allow selectors sequences that match the defined convention.
+* Only allow selector sequences that match the defined convention.
 * Only allow custom-property names that *begin* with the defined `ComponentName`.
 * The `:root` selector can only contain custom-properties.
 * The `:root` cannot be combined with other selectors.
