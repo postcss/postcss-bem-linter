@@ -12,8 +12,8 @@ and "modifiers"; SUIT refers to "components", "descendants", and "modifiers". Yo
 own terms for similar concepts.
 
 With this plugin, you can check the validity of stylesheets against a set of BEM-style conventions.
-You can use preset patterns (SUIT and BEM, currently) or insert your own. The plugin will throw an
-error if it finds CSS that does not follow the specified conventions.
+You can use preset patterns (SUIT and BEM, currently) or insert your own. The plugin will register
+warnings if it finds CSS that does not follow the specified conventions.
 
 ## Installation
 
@@ -21,7 +21,7 @@ error if it finds CSS that does not follow the specified conventions.
 npm install postcss-bem-linter
 ```
 
-This plugin logs warnings via PostCSS. Therefore, you'll want to use it with a PostCSS runner that prints warnings (e.g. [`gulp-postcss`](https://github.com/postcss/gulp-postcss)) or another PostCSS plugin that prints warnings (e.g. [`postcss-log-warnings`](https://github.com/davidtheclark/postcss-log-warnings)).
+This plugin registers warnings via PostCSS. Therefore, you'll want to use it with a PostCSS runner that prints warnings (e.g. [`gulp-postcss`](https://github.com/postcss/gulp-postcss)) or another PostCSS plugin that prints warnings (e.g. [`postcss-log-warnings`](https://github.com/davidtheclark/postcss-log-warnings)).
 
 ## Conformance tests
 
@@ -40,7 +40,7 @@ This plugin logs warnings via PostCSS. Therefore, you'll want to use it with a P
 ## Use
 
 ```
-postcss().use(bemLinter([pattern, options]));
+bemLinter([pattern[, options]])
 ```
 
 ### Defining your pattern
@@ -54,7 +54,7 @@ you would like to be able to chain state classes to your component classes, as i
 
 Also note that *pseudo-classes and pseudo-elements must be at the end of sequences, and
 will be ignored*. Instead of `.Component:first-child.is-open` you should use
-`.Component.is-open:first-child`. The former will cause an error.
+`.Component.is-open:first-child`. The former will trigger a warning.
 
 #### Preset Patterns
 
@@ -180,7 +180,7 @@ the plugin will throw an error.
 
 ### Testing CSS files
 
-Pass your individual CSS files through the plugin. It will log warnings errors for
+Pass your individual CSS files through the plugin. It will register warnings for
 conformance failures, which you can print to the console using
 [`postcss-log-warnings`](https://github.com/davidtheclark/postcss-log-warnings) or relying
 on a PostCSS runner (such as [`gulp-postcss`](https://github.com/postcss/gulp-postcss)).
@@ -195,7 +195,8 @@ files.forEach(function (file) {
   postcss()
     .use(bemLinter())
     .use(logWarnings())
-    .process(css);
+    .process(css)
+    .then(function(result) { .. });
 });
 ```
 
