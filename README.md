@@ -1,6 +1,6 @@
 # postcss-bem-linter
 
-[![Build Status](https://secure.travis-ci.org/necolas/postcss-bem-linter.png?branch=master)](http://travis-ci.org/necolas/postcss-bem-linter)
+[![Build Status](https://travis-ci.org/postcss/postcss-bem-linter.svg?branch=master)](https://travis-ci.org/postcss/postcss-bem-linter)
 
 A [PostCSS](https://github.com/postcss/postcss) plugin to lint *BEM-style* CSS.
 
