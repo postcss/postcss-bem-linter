@@ -178,6 +178,26 @@ Utilities:
 If a component is defined and the component name does not match your `componentName` pattern,
 the plugin will throw an error.
 
+### Ignoring specific selectors
+
+If you need to ignore a specific selector but do not want to ignore the entire stylesheet,
+you can do so by preceding the selector with this comment: `/* postcss-bem-linter: ignore */`.
+
+```css
+/** @define MyComponent */
+
+.MyComponent {
+  display: flex;
+}
+
+/* postcss-bem-linter: ignore */
+.no-flexbox .Component {
+  display: block;
+}
+```
+
+This will cause the linter to ignore *only* the very next selector.
+
 ### Testing CSS files
 
 Pass your individual CSS files through the plugin. It will register warnings for

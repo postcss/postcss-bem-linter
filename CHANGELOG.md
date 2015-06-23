@@ -1,5 +1,9 @@
 === HEAD
 
+=== 0.4.0 (June 23, 2015)
+
+* Support `/* postcss-bem-linter: ignore */` comments.
+
 === 0.3.0 (May 23, 2015)
 
 * Support BEM format and custom formats.
