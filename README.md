@@ -202,19 +202,19 @@ This will cause the linter to ignore *only* the very next selector.
 
 Pass your individual CSS files through the plugin. It will register warnings for
 conformance failures, which you can print to the console using
-[`postcss-log-warnings`](https://github.com/davidtheclark/postcss-log-warnings) or relying
+[`postcss-reporter`](https://github.com/postcss/postcss-reporter) or relying
 on a PostCSS runner (such as [`gulp-postcss`](https://github.com/postcss/gulp-postcss)).
 
 ```js
 var postcss = require('postcss');
 var bemLinter = require('postcss-bem-linter');
-var logWarnings = require('postcss-log-warnings');
+var reporter = require('postcss-reporter');
 
 files.forEach(function (file) {
   var css = fs.readFileSync(file, 'utf-8');
   postcss()
     .use(bemLinter())
-    .use(logWarnings())
+    .use(reporter())
     .process(css)
     .then(function(result) { .. });
 });
