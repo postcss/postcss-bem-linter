@@ -29,13 +29,13 @@ This plugin registers warnings via PostCSS. Therefore, you'll want to use it wit
 
 * Only allow selector sequences that match the defined convention.
 * Only allow custom-property names that *begin* with the defined `ComponentName`.
-* The `:root` selector can only contain custom-properties.
-* The `:root` cannot be combined with other selectors.
 
 **Weak mode**:
 
 * While *initial* selector sequences (before combinators) must match the defined convention,
   sequences *after* combinators are not held to any standard.
+
+*Prior to 0.5.0, this plugin checked two other details: that `:root` rules only contain custom-properties; and that the `:root` selector is not grouped or combined with other selectors. These checks can now be performed by [stylelint](https://github.com/stylelint/stylelint). So from 0.5.0 onwards, this plugin does not perform them anymore.*
 
 ## Use
 

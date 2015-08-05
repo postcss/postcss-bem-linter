@@ -8,7 +8,6 @@ var postcss = require('postcss');
 var validateCustomProperties = require('./lib/validate-properties');
 var validateUtilities = require('./lib/validate-utilities');
 var validateSelectors = require('./lib/validate-selectors');
-var validateRules = require('./lib/validate-rules');
 var presetPatterns = require('./lib/preset-patterns');
 
 var RE_DIRECTIVE = /\*\s*@define ([-_a-zA-Z0-9]+)\s*(?:;\s*(weak))?\s*/;
@@ -57,7 +56,6 @@ module.exports = postcss.plugin(
 
         var weakMode = initialComment.match(RE_DIRECTIVE)[2] === 'weak';
 
-        validateRules(styles, result);
         if (isUtilities) {
           validateUtilities(styles, patterns.utilitySelectors, result);
         } else {

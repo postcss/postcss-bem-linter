@@ -29,8 +29,4 @@ describe('property validation', function () {
   it('rejects invalid root declarations', function (done) {
     assertSingleFailure(done, invDef + ':root { color: green; }');
   });
-
-  it('rejects root selectors grouped with other selectors', function (done) {
-    assertSingleFailure(done, invDef + ':root, .InvalidRootVars {}');
-  });
 });
