@@ -7,7 +7,7 @@ describe('selector validation', function () {
   describe('with a custom `componentName` pattern /^[A-Z]+$/', function () {
     var p1 = {
       componentName: /^[A-Z]+$/,
-      componentSelectors: function () { return /.*/; }
+      componentSelectors: function () { return /.*/; },
     };
 
     it('rejects component name Foo', function (done) {
@@ -22,7 +22,7 @@ describe('selector validation', function () {
   describe('with a custom `componentName` pattern /^[a-z]+1$/', function () {
     var p2 = {
       componentName: /^[a-z]+1$/,
-      componentSelectors: function () { return /.*/; }
+      componentSelectors: function () { return /.*/; },
     };
 
     it('rejects component name foo2', function (done) {
@@ -41,7 +41,7 @@ describe('selector validation', function () {
       var patternA = {
         componentSelectors: function (cmpt) {
           return new RegExp('^\\.[a-z]+-' + cmpt + '(?:_[a-z]+)?$');
-        }
+        },
       };
       var s = selectorTester('/** @define Foo */');
 
@@ -136,8 +136,8 @@ describe('selector validation', function () {
         },
         combined: function (cmpt) {
           return new RegExp('^\\.c-' + cmpt + '(?:-[a-z]+)?$');
-        }
-      }
+        },
+      },
     };
     var s = selectorTester('/** @define Foo */');
 
@@ -188,7 +188,7 @@ describe('selector validation', function () {
 
   describe('checking utilitySelectors', function () {
     var patternC = {
-      utilitySelectors: /^\.UTIL-[a-z]+$/
+      utilitySelectors: /^\.UTIL-[a-z]+$/,
     };
     var s = selectorTester('/** @define utilities */');
 

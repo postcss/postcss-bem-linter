@@ -10,7 +10,7 @@
     "postcss": "^4.1.0"
   },
   "devDependencies": {
-    "eslint": "0.23.0",
+    "eslint": "1.0.0",
     "mocha": "2.2.5"
   },
   "scripts": {
@@ -21,7 +21,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/necolas/postcss-bem-linter.git"
+    "url": "git://github.com/postcss/postcss-bem-linter.git"
   },
   "keywords": [
     "css",
