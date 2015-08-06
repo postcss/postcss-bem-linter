@@ -35,7 +35,7 @@ This plugin registers warnings via PostCSS. Therefore, you'll want to use it wit
 * While *initial* selector sequences (before combinators) must match the defined convention,
   sequences *after* combinators are not held to any standard.
 
-*Prior to 0.5.0, this plugin checked two other details: that `:root` rules only contain custom-properties; and that the `:root` selector is not grouped or combined with other selectors. These checks can now be performed by [stylelint](https://github.com/stylelint/stylelint). So from 0.5.0 onwards, this plugin does not perform them anymore.*
+*Prior to 0.5.0, this plugin checked two other details: that `:root` rules only contain custom-properties; and that the `:root` selector is not grouped or combined with other selectors. These checks can now be performed by [stylelint](https://github.com/stylelint/stylelint). So from 0.5.0 onwards, this plugin leaves that business to stylelint to focus on its more unique task.*
 
 ## Use
 
