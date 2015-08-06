@@ -2,6 +2,7 @@
 
 === 0.5.0
 
+* Add alternate signature for designating preset and preset options.
 * Remove checks that `:root` rules only contain custom-properties, and that the `:root` selector is not grouped or combined with other selectors. Outsourcing these checks to [stylelint](https://github.com/stylelint/stylelint).
 
 === 0.4.0 (June 23, 2015)

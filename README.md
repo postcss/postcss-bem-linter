@@ -11,7 +11,7 @@ component name follow a specified pattern. Original BEM methodology refers to "b
 and "modifiers"; SUIT refers to "components", "descendants", and "modifiers". You might have your
 own terms for similar concepts.
 
-With this plugin, you can check the validity of stylesheets against a set of BEM-style conventions.
+**With this plugin, you can check the validity of selectors against a set of BEM-style conventions.**
 You can use preset patterns (SUIT and BEM, currently) or insert your own. The plugin will register
 warnings if it finds CSS that does not follow the specified conventions.
 
@@ -52,14 +52,11 @@ Please note that *patterns describe sequences, not just simple selectors*. So if
 you would like to be able to chain state classes to your component classes, as in
 `.Component.is-open`, your regular expression needs to allow for this chaining.
 
-Also note that *pseudo-classes and pseudo-elements must be at the end of sequences, and
-will be ignored*. Instead of `.Component:first-child.is-open` you should use
-`.Component.is-open:first-child`. The former will trigger a warning.
+Also note that *pseudo-classes and pseudo-elements will be ignored if they occur at the end of the sequence*.
+Instead of `.Component:first-child.is-open`, you should use `.Component.is-open:first-child`.
+The former will trigger a warning unless you've written a silly complicated regular expression.
 
 #### Preset Patterns
-
-You can use a preset pattern by passing a string as the `pattern`, and, if needed, an `options` object,
-as in `bemLinter('suit', { namespace: 'twt' })`. Options are pattern-specific.
 
 The following preset patterns are available:
 
@@ -69,12 +66,17 @@ The following preset patterns are available:
     [in the SUIT docs](https://github.com/suitcss/suit/blob/master/doc/naming-conventions.md#namespace-optional)
 - `'bem'`, as defined [here](https://en.bem.info/tools/bem/bem-naming/).
 
+You can use a preset pattern and its options in two ways:
+- pass the preset's name as the first argument, and, if needed, an `options` object as the second,
+e.g. `bemLinter('suit', { namespace: 'twt' })`.
+- pass an object as the first and only argument, with the preset's name as the `preset` property and, if need, `presetOptions`, e.g. `bemLinter({ preset: 'suit', presetOptions { namespace: 'twt' })`.
+
 **`'suit'` is the default pattern**; so if you do not pass any `pattern` argument,
 SUIT conventions will be enforced.
 
 #### Custom Patterns
 
-You can define a custom pattern by passing an object with the following properties:
+You can define a custom pattern by passing as your first and only argument an object with the following properties:
 
 - `componentName` (optional): A regular expression describing valid component names.
   Default is `/[-_a-zA-Z0-9]+/`.
@@ -98,6 +100,7 @@ So you might call the plugin in any of the following ways:
 bemLinter();
 bemLinter('suit');
 bemLinter('suit', { namespace: 'twt' });
+bemLinter({ preset: 'suit', presetOptions: { namespace: 'twt' }});
 
 // use 'bem' conventions
 bemLinter('bem');
@@ -210,7 +213,7 @@ var postcss = require('postcss');
 var bemLinter = require('postcss-bem-linter');
 var reporter = require('postcss-reporter');
 
-files.forEach(function (file) {
+files.forEach(function(file) {
   var css = fs.readFileSync(file, 'utf-8');
   postcss()
     .use(bemLinter())
