@@ -1,0 +1,17 @@
+/* postcss-bem-linter: define Foo */
+
+.Foo {}
+.Foo-bar {}
+
+/* postcss-bem-linter: end */
+
+.blahblah {}
+
+/* postcss-bem-linter: define utilities */
+
+.u-something {}
+.u-somethingElse {}
+
+/* postcss-bem-linter: end */
+
+.blergh {}

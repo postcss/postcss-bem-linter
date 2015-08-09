@@ -25,8 +25,4 @@ describe('property validation', function() {
       );
     }
   );
-
-  it('rejects invalid root declarations', function(done) {
-    assertSingleFailure(done, invDef + ':root { color: green; }');
-  });
 });

@@ -1,70 +1,96 @@
 var postcss = require('postcss');
-var validateCustomProperties = require('./lib/validate-properties');
+var validateCustomProperties = require('./lib/validate-custom-properties');
 var validateUtilities = require('./lib/validate-utilities');
 var validateSelectors = require('./lib/validate-selectors');
-var presetPatterns = require('./lib/preset-patterns');
+var generateConfig = require('./lib/generate-config');
 
-var RE_DIRECTIVE = /\*\s*@define ([-_a-zA-Z0-9]+)\s*(?:;\s*(weak))?\s*/;
+var DEFINE_VALUE = '([-_a-zA-Z0-9]+)\\s*(?:;\\s*(weak))?';
+var DEFINE_DIRECTIVE = new RegExp(
+  '(?:\\*\\s*@define ' + DEFINE_VALUE + ')|' +
+  '(?:\\s*postcss-bem-linter: define ' + DEFINE_VALUE + ')\\s*'
+);
+var END_DIRECTIVE = new RegExp(
+  '(?:\\*\\s*@end\\s*)|' +
+  '(?:\\s*postcss-bem-linter: end)\\s*'
+);
 var UTILITIES_IDENT = 'utilities';
+var WEAK_IDENT = 'weak';
 
 /**
  * Set things up and call the validators.
  *
- * If the input CSS does not have a
+ * If the input CSS does not have any
  * directive defining a component name according to the specified pattern,
  * do nothing -- or warn, if the directive is there but the name does not match.
  *
- * @param {Object|String} [primaryOptions = 'suit']
- * @param {RegExp} [primaryOptions.componentName]
- * @param {RegExp} [primaryOptions.utilitySelectors]
- * @param {Object|Function} [primaryOptions.componentSelectors]
- * @param {String} [primaryOptions.preset] - The same as passing a string for `primaryOptions`
- * @param {Object} [primaryOptions.presetOptions] - Options that are can be used by
- *   a pattern (e.g. `namespace`)
- * @param {Object} [secondaryOptions] - The same as `primaryOptions.presetOptions`
+ * @param {Object|String} primaryOptions
+ * @param {Object} [secondaryOptions]
  */
 module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, secondaryOptions) {
-  var patterns = primaryOptions || 'suit';
-  if (typeof patterns === 'string') {
-    patterns = presetPatterns[patterns];
-  } else if (patterns.preset) {
-    patterns = presetPatterns[patterns.preset];
-  }
-
-  var presetOptions = secondaryOptions || {};
-  if (primaryOptions && primaryOptions.presetOptions) {
-    presetOptions = primaryOptions.presetOptions;
-  }
-
-  var componentNamePattern = patterns.componentName || /[-_a-zA-Z0-9]+/;
+  var config = generateConfig(primaryOptions, secondaryOptions);
 
   return function(root, result) {
-    var firstNode = root.nodes[0];
-    if (!firstNode || firstNode.type !== 'comment') return;
+    var ranges = findRanges(root);
 
-    var initialComment = firstNode.text;
-    if (!initialComment || !initialComment.match(RE_DIRECTIVE)) return;
+    root.eachRule(function(rule) {
+      var ruleStartLine = rule.source.start.line;
+      ranges.forEach(function(range) {
+        if (ruleStartLine < range.start) return;
+        if (range.end && ruleStartLine > range.end) return;
+        checkRule(rule, range);
+      })
+    });
 
-    var defined = initialComment.match(RE_DIRECTIVE)[1].trim();
-    var isUtilities = defined === UTILITIES_IDENT;
-    if (!isUtilities && !defined.match(componentNamePattern)) {
-      result.warn(
-        'Invalid component name in definition /*' + initialComment + '*/',
-        { node: firstNode }
-      );
+    function checkRule(rule, range) {
+      if (range.defined === UTILITIES_IDENT) {
+        validateUtilities(rule, config.patterns.utilitySelectors, result);
+        return;
+      }
+      validateCustomProperties(rule, range.defined, result);
+      validateSelectors({
+        rule: rule,
+        componentName: range.defined,
+        weakMode: range.weakMode,
+        selectorPattern: config.patterns.componentSelectors,
+        selectorPatternOptions: config.presetOptions,
+        result: result,
+      });
     }
 
-    var weakMode = initialComment.match(RE_DIRECTIVE)[2] === 'weak';
+    function findRanges(root) {
+      var ranges = [];
+      root.eachComment(function(comment) {
+        var startLine = comment.source.start.line;
 
-    if (isUtilities) {
-      validateUtilities(root, patterns.utilitySelectors, result);
-      return;
+        if (END_DIRECTIVE.test(comment.text)) {
+          endCurrentRange(startLine);
+          return;
+        }
+
+        var directiveMatch = comment.text.match(DEFINE_DIRECTIVE);
+        if (!directiveMatch) return;
+        var defined = (directiveMatch[1] || directiveMatch[3]).trim();
+        if (defined !== UTILITIES_IDENT && !defined.match(config.componentNamePattern)) {
+          result.warn(
+            'Invalid component name in definition /*' + comment + '*/',
+            { node: comment }
+          );
+        }
+        endCurrentRange(startLine);
+        ranges.push({
+          defined: defined,
+          start: startLine,
+          weakMode: directiveMatch[2] === WEAK_IDENT,
+        });
+      });
+      return ranges;
+
+      function endCurrentRange(line) {
+        if (!ranges.length) return;
+        var lastRange = ranges[ranges.length - 1];
+        if (lastRange.end) return;
+        lastRange.end = line;
+      }
     }
-
-    validateSelectors(
-      root, defined, weakMode, patterns.componentSelectors, presetOptions, result
-    );
-    validateCustomProperties(root, defined, result);
-    console.log(result.messages)
   };
 });

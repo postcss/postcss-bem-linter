@@ -33,7 +33,7 @@ This plugin registers warnings via PostCSS. Therefore, you'll want to use it wit
 **Weak mode**:
 
 * While *initial* selector sequences (before combinators) must match the defined convention,
-  sequences *after* combinators are not held to any standard.
+  sequences *after combinators* are not held to any standard.
 
 *Prior to 0.5.0, this plugin checked two other details: that `:root` rules only contain custom-properties; and that the `:root` selector is not grouped or combined with other selectors. These checks can now be performed by [stylelint](https://github.com/stylelint/stylelint). So from 0.5.0 onwards, this plugin leaves that business to stylelint to focus on its more unique task.*
 
@@ -68,8 +68,9 @@ The following preset patterns are available:
 
 You can use a preset pattern and its options in two ways:
 - pass the preset's name as the first argument, and, if needed, an `options` object as the second,
-e.g. `bemLinter('suit', { namespace: 'twt' })`.
-- pass an object as the first and only argument, with the preset's name as the `preset` property and, if need, `presetOptions`, e.g. `bemLinter({ preset: 'suit', presetOptions { namespace: 'twt' })`.
+  e.g. `bemLinter('suit', { namespace: 'twt' })`.
+- pass an object as the first and only argument, with the preset's name as the `preset` property and,
+  if needed, `presetOptions`, e.g. `bemLinter({ preset: 'suit', presetOptions { namespace: 'twt' })`.
 
 **`'suit'` is the default pattern**; so if you do not pass any `pattern` argument,
 SUIT conventions will be enforced.
@@ -81,17 +82,17 @@ You can define a custom pattern by passing as your first and only argument an ob
 - `componentName` (optional): A regular expression describing valid component names.
   Default is `/[-_a-zA-Z0-9]+/`.
 - `componentSelectors`: Either of the following:
-  - A single function that accepts a component name and returns a regular expression describing
+  - A *single function* that accepts a component name and returns a regular expression describing
     all valid selector sequences for the stylesheet.
-  - An object consisting of two methods, `initial` and `combined`. Both methods accept a
+  - An *object consisting of two methods*, `initial` and `combined`. Both methods accept a
     component name and return a regular expression. `initial` returns a description of valid
     initial selector sequences — those occurring at the beginning of a selector, before any
     combinators. `combined` returns a description of valid selector sequences allowed *after* combinators.
-    Two things to note: If you do not specify a combined pattern, it is assumed that combined
+    (Two things to note: If you do not specify a combined pattern, it is assumed that combined
     sequences must match the same pattern as initial sequences.
-    And in weak mode, *any* combined sequences are accepted.
+    And in weak mode, *any* combined sequences are accepted.)
 - `utilitySelectors`: A regular expression describing valid utility selectors. This will be use
-  if the stylesheet uses `/** @define utilities */`, as explained below.
+  if the stylesheet defines a group of utilities, as explained below.
 
 So you might call the plugin in any of the following ways:
 
@@ -134,13 +135,18 @@ bemLinter({
 
 ### Defining a component
 
-The plugin will only run against files that explicitly declare that they
-are defining either a named component or utilities, using either
-`/** @define ComponentName */` or `/** @define utilities */` in the first line
-of the file.
+The plugin will only run if it finds special comments that
+define a named component or a group of utilities.
 
-Weak mode is turned on by adding `; weak` to this definition,
-e.g. `/** @define ComponentName; weak */`.
+These definitions can be provided in two syntaxes: concise and verbose.
+
+- Concise definition syntax: `/** @define ComponentName */` or `/** @define utilities */`
+- Verbose definition syntax: `/* postcss-bem-linter: define ComponentName */` or `/* postcss-bem-linter: define utilities */`.
+
+Weak mode is turned on by adding `; weak` to a definition,
+e.g. `/** @define ComponentName; weak */` or `/* postcss-bem-linter: define ComponentName; weak */`.
+
+Concise syntax:
 
 ```css
 /** @define MyComponent */
@@ -152,6 +158,20 @@ e.g. `/** @define ComponentName; weak */`.
 .MyComponent {}
 
 .MyComponent-other {}
+```
+
+Verbose syntax:
+
+```css
+/** postcss-bem-linter: define FancyComponent */
+
+:root {
+  --FancyComponent-property: value;
+}
+
+.FancyComponent {}
+
+.FancyComponent-other {}
 ```
 
 Weak mode:
@@ -181,9 +201,44 @@ Utilities:
 If a component is defined and the component name does not match your `componentName` pattern,
 the plugin will throw an error.
 
+### Multiple definitions
+
+It's recommended that you keep each defined group of rules in a distinct file,
+with the definition at the top of the file. If, however, you have a good reason
+for *multiple definitions within a single file*, you can do that.
+
+Successive definitions override each other. So the following works:
+
+```css
+/* @define Foo */
+.Foo {}
+
+/* @define Bar */
+.Bar {}
+
+/* @define utilities */
+.u-something {}
+```
+
+You can also deliberately *end the enforcement of a definition* with the following special comments:
+`/* @end */` or `/* postcss-bem-linter: end */`.
+
+```css
+/* @define Foo */
+.Foo {}
+/* @end */
+
+.something-something-something {}
+```
+
+One use-case for this functionality is when linting files *after* concatenation performed by a
+CSS processor like Less or Sass, whose syntax is not always compatible with PostCSS.
+See [issue #57](https://github.com/postcss/postcss-bem-linter/issues/57).
+
 ### Ignoring specific selectors
 
-If you need to ignore a specific selector but do not want to ignore the entire stylesheet,
+If you need to ignore a specific selector but do not want to ignore the entire stylesheet
+or end the enforcement of a definition,
 you can do so by preceding the selector with this comment: `/* postcss-bem-linter: ignore */`.
 
 ```css

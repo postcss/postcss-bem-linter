@@ -1,3 +1,9 @@
+=== Head
+
+* Support multiple definitions per file.
+* Support comments to end definition enforcement.
+* Support verbose comment syntax, e.g. `/* postcss-bem-linter: define ComponentName */`.
+
 === 0.5.0 (August 5, 2015)
 
 * Add alternate signature for designating preset and preset options.
