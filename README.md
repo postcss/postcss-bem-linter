@@ -1,4 +1,4 @@
-# postcss-bem-linter
+  # postcss-bem-linter
 
 [![Build Status](https://travis-ci.org/postcss/postcss-bem-linter.svg?branch=master)](https://travis-ci.org/postcss/postcss-bem-linter)
 
@@ -25,6 +25,8 @@ This plugin registers warnings via PostCSS. Therefore, you'll want to use it wit
 
 ## Conformance tests
 
+**Throughout this document, terms like "selector", "selector sequence", and "simple selector" are used according to the definitions in the [Selectors Level 3 spec](http://www.w3.org/TR/css3-selectors/#selector-syntax).**  
+
 **Default mode**:
 
 * Only allow selector sequences that match the defined convention.
@@ -48,11 +50,11 @@ bemLinter([pattern[, options]])
 Patterns consist of regular expressions, and functions that return regular expressions,
 which describe valid selector sequences.
 
-Please note that *patterns describe sequences, not just simple selectors*. So if, for example,
+Keep in mind:
+- **Patterns describe sequences, not just simple selectors.** So if, for example,
 you would like to be able to chain state classes to your component classes, as in
 `.Component.is-open`, your regular expression needs to allow for this chaining.
-
-Also note that *pseudo-classes and pseudo-elements will be ignored if they occur at the end of the sequence*.
+- **Pseudo-classes and pseudo-elements will be ignored if they occur at the end of the sequence.**
 Instead of `.Component:first-child.is-open`, you should use `.Component.is-open:first-child`.
 The former will trigger a warning unless you've written a silly complicated regular expression.
 
@@ -67,17 +69,17 @@ The following preset patterns are available:
 - `'bem'`, as defined [here](https://en.bem.info/tools/bem/bem-naming/).
 
 You can use a preset pattern and its options in two ways:
-- pass the preset's name as the first argument, and, if needed, an `options` object as the second,
+- Pass the preset's name as the first argument, and, if needed, an `options` object as the second,
   e.g. `bemLinter('suit', { namespace: 'twt' })`.
-- pass an object as the first and only argument, with the preset's name as the `preset` property and,
-  if needed, `presetOptions`, e.g. `bemLinter({ preset: 'suit', presetOptions { namespace: 'twt' })`.
+- Pass an object as the first and only argument, with the preset's name as the `preset` property and,
+  if needed, `presetOptions`, e.g. `bemLinter({ preset: 'suit', presetOptions: { namespace: 'twt' })`.
 
-**`'suit'` is the default pattern**; so if you do not pass any `pattern` argument,
-SUIT conventions will be enforced.
+**`'suit'` is the default pattern; so if you do not pass any `pattern` argument,
+SUIT conventions will be enforced.**
 
 #### Custom Patterns
 
-You can define a custom pattern by passing as your first and only argument an object with the following properties:
+You can define a custom pattern by passing as your first and only argument *an object with the following properties*:
 
 - `componentName` (optional): A regular expression describing valid component names.
   Default is `/[-_a-zA-Z0-9]+/`.
@@ -88,9 +90,8 @@ You can define a custom pattern by passing as your first and only argument an ob
     component name and return a regular expression. `initial` returns a description of valid
     initial selector sequences — those occurring at the beginning of a selector, before any
     combinators. `combined` returns a description of valid selector sequences allowed *after* combinators.
-    (Two things to note: If you do not specify a combined pattern, it is assumed that combined
-    sequences must match the same pattern as initial sequences.
-    And in weak mode, *any* combined sequences are accepted.)
+      - If you do not specify a combined pattern, it is assumed that combined sequences must match the same pattern as initial sequences.
+      - In weak mode, *any* combined sequences are accepted.
 - `utilitySelectors`: A regular expression describing valid utility selectors. This will be use
   if the stylesheet defines a group of utilities, as explained below.
 
@@ -239,7 +240,7 @@ See [issue #57](https://github.com/postcss/postcss-bem-linter/issues/57).
 
 If you need to ignore a specific selector but do not want to ignore the entire stylesheet
 or end the enforcement of a definition,
-you can do so by preceding the selector with this comment: `/* postcss-bem-linter: ignore */`.
+you can do so by *preceding the selector* with this comment: `/* postcss-bem-linter: ignore */`.
 
 ```css
 /** @define MyComponent */
@@ -254,7 +255,7 @@ you can do so by preceding the selector with this comment: `/* postcss-bem-linte
 }
 ```
 
-This will cause the linter to ignore *only* the very next selector.
+*This will cause the linter to ignore **only** the very next selector.*
 
 ### Testing CSS files
 
