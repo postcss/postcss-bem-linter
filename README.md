@@ -21,6 +21,8 @@ warnings if it finds CSS that does not follow the specified conventions.
 npm install postcss-bem-linter
 ```
 
+Version 1.0.0+ is compatible with PostCSS 5+. (Earlier versions are compatible with PostCSS 4.)
+
 This plugin registers warnings via PostCSS. Therefore, you'll want to use it with a PostCSS runner that prints warnings (e.g. [`gulp-postcss`](https://github.com/postcss/gulp-postcss)) or another PostCSS plugin that prints warnings (e.g. [`postcss-reporter`](https://github.com/postcss/postcss-reporter)).
 
 ## Conformance tests
