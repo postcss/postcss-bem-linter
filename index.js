@@ -32,7 +32,7 @@ module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, s
   return function(root, result) {
     var ranges = findRanges(root);
 
-    root.eachRule(function(rule) {
+    root.walkRules(function(rule) {
       var ruleStartLine = rule.source.start.line;
       ranges.forEach(function(range) {
         if (ruleStartLine < range.start) return;
@@ -59,7 +59,7 @@ module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, s
 
     function findRanges(root) {
       var ranges = [];
-      root.eachComment(function(comment) {
+      root.walkComments(function(comment) {
         var startLine = comment.source.start.line;
 
         if (END_DIRECTIVE.test(comment.text)) {

@@ -1,16 +1,16 @@
 {
   "name": "postcss-bem-linter",
-  "version": "0.6.0",
+  "version": "1.0.0",
   "description": "A BEM linter for postcss",
   "files": [
     "index.js",
     "lib"
   ],
   "dependencies": {
-    "postcss": "^4.1.0"
+    "postcss": "^5.0.0"
   },
   "devDependencies": {
-    "eslint": "1.0.0",
+    "eslint": "1.2.1",
     "mocha": "2.2.5"
   },
   "scripts": {

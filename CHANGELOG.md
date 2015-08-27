@@ -1,3 +1,7 @@
+=== 1.0.0 (August 26, 2015)
+
+* Upgrade to PostCSS 5.
+
 === 0.6.0 (August 8, 2015)
 
 * Support multiple definitions per file.
