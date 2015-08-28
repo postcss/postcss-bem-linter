@@ -1,4 +1,4 @@
-  # postcss-bem-linter
+# postcss-bem-linter
 
 [![Build Status](https://travis-ci.org/postcss/postcss-bem-linter.svg?branch=master)](https://travis-ci.org/postcss/postcss-bem-linter)
 
