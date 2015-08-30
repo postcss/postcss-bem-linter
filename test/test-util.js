@@ -35,7 +35,7 @@ function assertFailure(done, css, primary, secondary) {
 
 function selectorTester(def) {
   return function(selector) {
-    return [ def, selector, '{}' ].join(' ');
+    return def + '\n' + selector + ' {}';
   };
 }
 

@@ -161,6 +161,10 @@ describe('selector validation', function() {
       assertSingleFailure(done, s('.Foo > .Foo-F'), patternB);
     });
 
+    it('rejects `.Foo, .cc-Foo`', function(done) {
+      assertSingleFailure(done, s('.Foo, .cc-Foo'), patternB);
+    });
+
     describe('in weak mode', function() {
       var sWeak = selectorTester('/** @define Foo; weak*/');
 
