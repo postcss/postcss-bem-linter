@@ -43,8 +43,21 @@ module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, s
 
     function checkRule(rule, range) {
       if (range.defined === UTILITIES_IDENT) {
+        if (!config.patterns.utilitySelectors) {
+          throw new Error(
+            'You tried to `@define utilities` but have not provided ' +
+            'a `utilitySelectors` pattern'
+          );
+        }
         validateUtilities(rule, config.patterns.utilitySelectors, result);
         return;
+      }
+
+      if (!config.patterns.componentSelectors) {
+        throw new Error(
+          'You tried to `@define` a component but have not provided ' +
+          'a `componentSelectors` pattern'
+        );
       }
       validateCustomProperties(rule, range.defined, result);
       validateSelectors({

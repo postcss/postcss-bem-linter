@@ -1,3 +1,7 @@
+=== HEAD
+
+* Add helpful error messages when user configuration is lacking patterns
+
 === 1.0.1 (August 30, 2015)
 
 * Use PostCSS's improved warning API to provide more precise locations

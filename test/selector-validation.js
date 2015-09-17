@@ -1,9 +1,20 @@
+var assert = require('assert');
 var util = require('./test-util');
 var assertSuccess = util.assertSuccess;
 var assertSingleFailure = util.assertSingleFailure;
 var selectorTester = util.selectorTester;
 
 describe('selector validation', function() {
+  describe('with no `componentSelectors` pattern', function() {
+    it('throws an error', function(done) {
+      util.test('/** @define Foo */ .Foo {}', {})
+        .catch(function(err) {
+          assert.equal(err.message.indexOf('You tried to `@define` a component'), 0);
+          done();
+        });
+    });
+  });
+
   describe('with a custom `componentName` pattern /^[A-Z]+$/', function() {
     var p1 = {
       componentName: /^[A-Z]+$/,
