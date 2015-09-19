@@ -49,7 +49,12 @@ module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, s
             'a `utilitySelectors` pattern'
           );
         }
-        validateUtilities(rule, config.patterns.utilitySelectors, result);
+        validateUtilities({
+          rule: rule,
+          utilityPattern: config.patterns.utilitySelectors,
+          ignorePattern: config.patterns.ignoreSelectors,
+          result: result,
+        });
         return;
       }
 
@@ -66,6 +71,7 @@ module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, s
         weakMode: range.weakMode,
         selectorPattern: config.patterns.componentSelectors,
         selectorPatternOptions: config.presetOptions,
+        ignorePattern: config.patterns.ignoreSelectors,
         result: result,
       });
     }

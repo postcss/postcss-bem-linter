@@ -94,10 +94,24 @@ You can define a custom pattern by passing as your first and only argument *an o
     combinators. `combined` returns a description of valid selector sequences allowed *after* combinators.
       - If you do not specify a combined pattern, it is assumed that combined sequences must match the same pattern as initial sequences.
       - In weak mode, *any* combined sequences are accepted.
-- `utilitySelectors`: A regular expression describing valid utility selectors. This will be use
+- `utilitySelectors`: A regular expression describing valid utility selector sequences. This will be used
   if the stylesheet defines a group of utilities, as explained below.
+- `ignoreSelectors`: A regular expression describing selector sequences to ignore. You can use this to
+  systematically ignore selectors matching this pattern, instead of having to add a
+  `/* postcss-bem-linter: ignore */` comment above each one (see below).
 
-So you might call the plugin in any of the following ways:
+*You can also choose a preset to start with and override specific patterns.*
+For example, if you want to use SUIT's `componentSelectors` pattern but write your own `utilitySelectors` pattern,
+you can do that with a config object like this:
+
+```js
+{
+  preset: 'suit',
+  utilitySelectors: /\.fancyUtilities-[a-z]+/
+}
+```
+
+Given all of the above, you might call the plugin in any of the following ways:
 
 ```js
 // use 'suit' conventions
@@ -134,6 +148,14 @@ bemLinter({
   },
   utilitySelectors: /^\.util-[a-z]+$/
 });
+
+// start with the `bem` preset but include a special `componentName` pattern
+// and `ignoreSelectors` pattern to ignore Modernizr-injected `no-*` classes
+bemLinter({
+  preset: 'bem',
+  componentName: /cmpnt_[a-zA-Z]+/,
+  ignoreSelectors: /\.no-.+/
+})
 ```
 
 ### Defining a component
@@ -241,7 +263,12 @@ See [issue #57](https://github.com/postcss/postcss-bem-linter/issues/57).
 ### Ignoring specific selectors
 
 If you need to ignore a specific selector but do not want to ignore the entire stylesheet
-or end the enforcement of a definition,
+or end the enforcement of a definition, there are two ways to accomplish this:
+
+As describe above, you can include an `ignoreSelectors` regular expression in your configuration.
+This is the best approach if you want to systematically ignore all selectors matching a pattern (e.g. all Modernizr classes).
+
+If you just want to ignore a single, isolated selector, though,
 you can do so by *preceding the selector* with this comment: `/* postcss-bem-linter: ignore */`.
 
 ```css
@@ -257,7 +284,7 @@ you can do so by *preceding the selector* with this comment: `/* postcss-bem-lin
 }
 ```
 
-*This will cause the linter to ignore **only** the very next selector.*
+*The comment will cause the linter to ignore **only** the very next selector.*
 
 ### Testing CSS files
 

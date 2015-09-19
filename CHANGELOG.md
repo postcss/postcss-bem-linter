@@ -1,10 +1,13 @@
 === HEAD
 
-* Add helpful error messages when user configuration is lacking patterns
+* Support selective overriding of a chosen preset's patterns.
+* Support `ignoreSelectors` pattern.
+* Support ignoring utility selectors with a preceding comment.
+* Add helpful error messages when user configuration is lacking patterns.
 
 === 1.0.1 (August 30, 2015)
 
-* Use PostCSS's improved warning API to provide more precise locations
+* Use PostCSS's improved warning API to provide more precise locations.
 
 === 1.0.0 (August 26, 2015)
 
@@ -46,3 +49,4 @@
 === 0.1.0 (October 2, 2014)
 
 * Initial release. Ported from rework-suit-conformance.
+e1iv

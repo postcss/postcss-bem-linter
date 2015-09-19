@@ -232,7 +232,7 @@ describe('selector validation', function() {
     });
   });
 
-  describe('ignore a selector', function() {
+  describe('ignore a selector with a comment', function() {
     var s = selectorTester('/** @define Foo */');
 
     it(
@@ -248,6 +248,25 @@ describe('selector validation', function() {
         assertSuccess(done, s(
           '/* postcss-bem-linter: ignore */ .no-flexbox .Foo'
         ));
+      }
+    );
+  });
+
+  describe('ignore a selector with an `ignoreSelectors` pattern', function() {
+    var s = selectorTester('/** @define Foo */');
+    var config = { preset: 'suit', ignoreSelectors: /\.isok-.+/ };
+
+    it(
+      'ignores selectors that match the `ignoreSelectors` pattern',
+      function(done) {
+        assertSuccess(done, s('.isok-BLERGH'), config);
+      }
+    );
+
+    it(
+      'ignores grouped selectors that match the `ignoreSelectors` pattern',
+      function(done) {
+        assertSuccess(done, s('.Foo .isok-BLERGH'), config);
       }
     );
   });
