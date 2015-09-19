@@ -1,4 +1,4 @@
-=== HEAD
+=== 1.1.0 (September 18, 2015)
 
 * Support selective overriding of a chosen preset's patterns.
 * Support `ignoreSelectors` pattern.
