@@ -96,8 +96,8 @@ You can define a custom pattern by passing as your first and only argument *an o
       - In weak mode, *any* combined sequences are accepted.
 - `utilitySelectors`: A regular expression describing valid utility selector sequences. This will be used
   if the stylesheet defines a group of utilities, as explained below.
-- `ignoreSelectors`: A regular expression describing selector sequences to ignore. You can use this to
-  systematically ignore selectors matching this pattern, instead of having to add a
+- `ignoreSelectors`: A regular expression or an array of regular expressions describing selector sequences to ignore. You can use this to
+  systematically ignore selectors matching certain patterns, instead of having to add a
   `/* postcss-bem-linter: ignore */` comment above each one (see below).
 
 *You can also choose a preset to start with and override specific patterns.*
@@ -155,7 +155,17 @@ bemLinter({
   preset: 'bem',
   componentName: /cmpnt_[a-zA-Z]+/,
   ignoreSelectors: /\.no-.+/
-})
+});
+
+// using an array for `ignoreSelectors`
+bemLinter({
+  preset: 'bem',
+  componentName: /cmpnt_[a-zA-Z]+/,
+  ignoreSelectors: [
+    /\.no-.+/,
+    /\.isok-.+/
+  ]
+});
 ```
 
 ### Defining a component
@@ -265,7 +275,7 @@ See [issue #57](https://github.com/postcss/postcss-bem-linter/issues/57).
 If you need to ignore a specific selector but do not want to ignore the entire stylesheet
 or end the enforcement of a definition, there are two ways to accomplish this:
 
-As describe above, you can include an `ignoreSelectors` regular expression in your configuration.
+As describe above, you can include an `ignoreSelectors` regular expression (or array of regular expressions) in your configuration.
 This is the best approach if you want to systematically ignore all selectors matching a pattern (e.g. all Modernizr classes).
 
 If you just want to ignore a single, isolated selector, though,

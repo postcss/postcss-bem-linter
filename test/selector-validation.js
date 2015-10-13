@@ -269,5 +269,52 @@ describe('selector validation', function() {
         assertSuccess(done, s('.Foo .isok-BLERGH'), config);
       }
     );
+
+    it(
+      'rejects selectors that do not match valid pattern or `ignoreSelectors` pattern',
+      function(done) {
+        assertSingleFailure(done, s('.blergh'), config);
+      }
+    );
+  });
+
+  describe('ignore a selector with an `ignoreSelectors` array of patterns', function() {
+    var s = selectorTester('/** @define Foo */');
+    var config = { preset: 'suit', ignoreSelectors: [/\.isok-.+/, /#fine/] };
+
+    it(
+      'ignores selectors that match any of the `ignoreSelectors` pattern',
+      function(done) {
+        assertSuccess(done, s('.isok-BLERGH'), config);
+      }
+    );
+
+    it(
+      'ignores selectors that match any of the `ignoreSelectors` pattern (take 2)',
+      function(done) {
+        assertSuccess(done, s('#fine'), config);
+      }
+    );
+
+    it(
+      'ignores grouped selectors that match any of the `ignoreSelectors` pattern',
+      function(done) {
+        assertSuccess(done, s('.Foo .isok-BLERGH'), config);
+      }
+    );
+
+    it(
+      'ignores grouped selectors that match any of the `ignoreSelectors` pattern (take 2)',
+      function(done) {
+        assertSuccess(done, s('.Foo #fine'), config);
+      }
+    );
+
+    it(
+      'rejects selectors that do not match valid pattern or `ignoreSelectors` pattern',
+      function(done) {
+        assertSingleFailure(done, s('.blergh'), config);
+      }
+    );
   });
 });
