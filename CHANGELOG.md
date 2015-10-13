@@ -1,4 +1,4 @@
-=== Head
+=== 1.2.0 (October 12, 2015)
 
 * Support array of patterns for `ignoreSelectors`.
 
