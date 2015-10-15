@@ -77,8 +77,7 @@ describe('using SUIT pattern (default)', function() {
     it('rejects `u-Foo`', function(done) {
       assertSingleFailure(done, sUtil('.u-Foo'));
     });
-
-
+    
     it('rejects `u-16by9`', function(done) {
       assertSingleFailure(done, sUtil('.u-16by9'));
     });
@@ -89,8 +88,6 @@ describe('using SUIT pattern (default)', function() {
     assertSuccess(s('.Foo[disabled]'));
     assertSuccess(s('.Foo-input[disabled] ~ .Foo-label'));
     assertSuccess(s('.Foo-inner--password .Foo-input[type="password"]'));
-
-    
   });
   
   describe('strict SUIT syntax', function() {
