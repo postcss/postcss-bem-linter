@@ -1,7 +1,7 @@
-=== Head
+=== 2.0.0 (October 17, 2015)
 
 * Add namespace option to BEM preset pattern.
-* Improve strictness of SUIT preset pattern: enforce proper camelCasing.
+* Light breaking change: Improve strictness of SUIT preset pattern: enforce proper camelCasing.
 
 === 1.2.0 (October 12, 2015)
 
