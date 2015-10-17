@@ -69,6 +69,8 @@ The following preset patterns are available:
   - `namespace`: a namespace to prefix valid classes, as described
     [in the SUIT docs](https://github.com/suitcss/suit/blob/master/doc/naming-conventions.md#namespace-optional)
 - `'bem'`, as defined [here](https://en.bem.info/tools/bem/bem-naming/).
+  - `namespace`: a namespace to prefix valid classes, to be separated from the block name with a hyphen,
+    e.g. with namespace `foo`, `.foo-dropdown__menu`.
 
 You can use a preset pattern and its options in two ways:
 - Pass the preset's name as the first argument, and, if needed, an `options` object as the second,
@@ -122,6 +124,8 @@ bemLinter({ preset: 'suit', presetOptions: { namespace: 'twt' }});
 
 // use 'bem' conventions
 bemLinter('bem');
+bemLinter('bem', { namespace: 'ydx' });
+bemLinter({ present: 'bem', presetOptions: { namespace: 'ydx' }});
 
 // define a RegExp for component names
 bemLinter({

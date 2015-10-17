@@ -1,5 +1,6 @@
 var util = require('./test-util');
 var assertSingleFailure = util.assertSingleFailure;
+var assertSuccess = util.assertSuccess;
 
 describe('using BEM pattern', function() {
   it('accepts valid selectors', function(done) {
@@ -47,5 +48,21 @@ describe('using BEM pattern', function() {
         assertSingleFailure(done, s('^_^'), 'bem');
       }
     );
+  });
+
+  describe('understands namespaces', function() {
+    var s = util.selectorTester('/** @define block */');
+
+    it('and with namespace `ns` accepts `ns-block`', function(done) {
+      assertSuccess(done, s('.ns-block'), 'bem', { namespace: 'ns' });
+    });
+
+    it('and with namespace `Ho04` accepts `Ho04-block`', function(done) {
+      assertSuccess(done, s('.Ho04-block'), 'bem', { namespace: 'Ho04' });
+    });
+
+    it('and with namespace `ns` rejects `.block`', function(done) {
+      assertSingleFailure(done, s('.block'), 'bem', { namespace: 'ns' });
+    });
   });
 });

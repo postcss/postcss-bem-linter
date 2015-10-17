@@ -77,9 +77,9 @@ describe('using SUIT pattern (default)', function() {
     it('rejects `u-Foo`', function(done) {
       assertSingleFailure(done, sUtil('.u-Foo'));
     });
-    
-    it('rejects `u-16by9`', function(done) {
-      assertSingleFailure(done, sUtil('.u-16by9'));
+
+    it('accepts `u-16by9`', function(done) {
+      assertSuccess(done, sUtil('.u-16by9'));
     });
   });
 
@@ -89,7 +89,7 @@ describe('using SUIT pattern (default)', function() {
     assertSuccess(s('.Foo-input[disabled] ~ .Foo-label'));
     assertSuccess(s('.Foo-inner--password .Foo-input[type="password"]'));
   });
-  
+
   describe('strict SUIT syntax', function() {
     var sComponent = util.selectorTester('/** @define Component */');
 
@@ -117,6 +117,10 @@ describe('using SUIT pattern (default)', function() {
       assertSuccess(done, sComponent('.Component-descendant--16by9'));
     });
 
+    it('accepts `Component-16by9--modifier`', function(done) {
+      assertSuccess(done, sComponent('.Component-16by9--modifier'));
+    });
+
     it('rejects `Component--16by9-descendant`', function(done) {
       assertSingleFailure(done, sComponent('.Component--16by9-descendant'));
     });
@@ -129,8 +133,8 @@ describe('using SUIT pattern (default)', function() {
       assertSingleFailure(done, sComponent('.Component-descendant--Modifier'));
     });
 
-    it('rejects `Component-0escendantNameThing`', function(done) {
-      assertSingleFailure(done, sComponent('.Component-0escendantNameThing'));
+    it('accepts `Component-0escendantNameThing`', function(done) {
+      assertSuccess(done, sComponent('.Component-0escendantNameThing'));
     });
 
     it('rejects `Component-descendant--`', function(done) {
