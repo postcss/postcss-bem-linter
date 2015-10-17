@@ -1,5 +1,6 @@
 var util = require('./test-util');
 var assertSuccess = util.assertSuccess;
+var assertFailure = util.assertFailure;
 var assertSingleFailure = util.assertSingleFailure;
 var selectorTester = util.selectorTester;
 var fixture = util.fixture;
@@ -69,12 +70,16 @@ describe('using SUIT pattern (default)', function() {
       assertSuccess(done, sUtil('.u-fooBar17'));
     });
 
-    it('rejects `.Foo`', function(done) {
+    it('rejects `Foo`', function(done) {
       assertSingleFailure(done, sUtil('.Foo'));
     });
 
-    it('rejects `.u-Foo`', function(done) {
+    it('rejects `u-Foo`', function(done) {
       assertSingleFailure(done, sUtil('.u-Foo'));
+    });
+    
+    it('rejects `u-16by9`', function(done) {
+      assertSingleFailure(done, sUtil('.u-16by9'));
     });
   });
 
@@ -83,6 +88,58 @@ describe('using SUIT pattern (default)', function() {
     assertSuccess(s('.Foo[disabled]'));
     assertSuccess(s('.Foo-input[disabled] ~ .Foo-label'));
     assertSuccess(s('.Foo-inner--password .Foo-input[type="password"]'));
+  });
+  
+  describe('strict SUIT syntax', function() {
+    var sComponent = util.selectorTester('/** @define Component */');
+
+    it('accepts `Component--modifier`', function(done) {
+      assertSuccess(done, sComponent('.Component--modifier'));
+    });
+
+    it('accepts `Component-descendant`', function(done) {
+      assertSuccess(done, sComponent('.Component-descendant'));
+    });
+
+    it('accepts `Component-descendantName`', function(done) {
+      assertSuccess(done, sComponent('.Component-descendantName'));
+    });
+
+    it('accepts `Component-descendantNameThing`', function(done) {
+      assertSuccess(done, sComponent('.Component-descendantNameThing'));
+    });
+
+    it('accepts `Component-descendant--modifer`', function(done) {
+      assertSuccess(done, sComponent('.Component-descendant--modifer'));
+    });
+
+    it('accepts `Component-descendant--16by9`', function(done) {
+      assertSuccess(done, sComponent('.Component-descendant--16by9'));
+    });
+
+    it('rejects `Component--16by9-descendant`', function(done) {
+      assertSingleFailure(done, sComponent('.Component--16by9-descendant'));
+    });
+
+    it('rejects `Component-DescendantName`', function(done) {
+      assertSingleFailure(done, sComponent('.Component-DescendantName'));
+    });
+
+    it('rejects `Component-descendant--Modifier`', function(done) {
+      assertSingleFailure(done, sComponent('.Component-descendant--Modifier'));
+    });
+
+    it('rejects `Component-0escendantNameThing`', function(done) {
+      assertSingleFailure(done, sComponent('.Component-0escendantNameThing'));
+    });
+
+    it('rejects `Component-descendant--`', function(done) {
+      assertSingleFailure(done, sComponent('.Component-descendant--'));
+    });
+
+    it('rejects `Component-`', function(done) {
+      assertSingleFailure(done, sComponent('.Component-'));
+    });
   });
 
   describe('in weak mode', function() {
