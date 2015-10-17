@@ -10,8 +10,8 @@
     "postcss": "^5.0.0"
   },
   "devDependencies": {
-    "eslint": "1.2.1",
-    "mocha": "2.2.5"
+    "eslint": "1.7.1",
+    "mocha": "2.3.3"
   },
   "scripts": {
     "checkstyle": "eslint .",
