@@ -1,3 +1,7 @@
+=== Head
+
+* Improve strictness of SUIT preset pattern: enforce proper camelCasing.
+
 === 1.2.0 (October 12, 2015)
 
 * Support array of patterns for `ignoreSelectors`.
