@@ -28,17 +28,55 @@ describe('utility validation', function() {
         utilitySelectors: /\.[A-Z]+/,
         ignoreSelectors: /\.isok-[a-z]+/,
       };
+      var ignoreString = Object.assign({}, configWithIgnore, {
+        ignoreSelectors: '\\.isok-[a-z]+',
+      });
+      var badIgnoreString = Object.assign({}, configWithIgnore, {
+        ignoreSelectors: '(',
+      });
+      var emptyIgnoreString = Object.assign({}, configWithIgnore, {
+        ignoreSelectors: '',
+      });
 
       it('accepts valid selectors', function(done) {
-        util.assertSuccess(done, '/** @define utilities */ .FOO {}', configWithIgnore);
+        var css = '/** @define utilities */ .FOO {}';
+
+        util.assertSuccess(function () {
+          util.assertSuccess(done, css, ignoreString);
+        }, css, configWithIgnore);
       });
 
       it('rejected invalid selectors that do not match ignore pattern', function(done) {
-        util.assertSingleFailure(done, '/** @define utilities */ .foo {}', configWithIgnore);
+        var css = '/** @define utilities */ .foo {}';
+
+        util.assertSingleFailure(function () {
+          util.assertSingleFailure(done, css, ignoreString);
+        }, css, configWithIgnore);
       });
 
       it('ignores selectors that match ignore pattern', function(done) {
-        util.assertSuccess(done, '/** @define utilities */ .isok-bar {}', configWithIgnore);
+        var css = '/** @define utilities */ .isok-bar {}';
+
+        util.assertSuccess(function () {
+          util.assertSuccess(done, css, ignoreString);
+        }, css, configWithIgnore);
+      });
+
+      it('rejects invalid regexp string', function(done) {
+        util.test('/** @define utilities */ .isok-bar {}', badIgnoreString)
+          .catch(function(err) {
+            var expected = badIgnoreString.ignoreSelectors + ' is not a valid regex';
+            assert.equal(err.message, expected);
+            done();
+          });
+      });
+
+      it('rejects empty regexp string', function(done) {
+        util.test('/** @define utilities */ .isok-bar {}', badIgnoreString)
+          .catch(function(err) {
+            assert.notEqual(err.message, '`ignorePattern` is empty');
+            done();
+          });
       });
     });
   });
