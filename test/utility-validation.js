@@ -28,15 +28,18 @@ describe('utility validation', function() {
         utilitySelectors: /\.[A-Z]+/,
         ignoreSelectors: /\.isok-[a-z]+/,
       };
-      var ignoreString = Object.assign({}, configWithIgnore, {
+      var ignoreString = {
+        utilitySelectors: /\.[A-Z]+/,
         ignoreSelectors: '\\.isok-[a-z]+',
-      });
-      var badIgnoreString = Object.assign({}, configWithIgnore, {
+      };
+      var badIgnoreString = {
+        utilitySelectors: /\.[A-Z]+/,
         ignoreSelectors: '(',
-      });
-      var emptyIgnoreString = Object.assign({}, configWithIgnore, {
+      };
+      var emptyIgnoreString = {
+        utilitySelectors: /\.[A-Z]+/,
         ignoreSelectors: '',
-      });
+      };
 
       it('accepts valid selectors', function(done) {
         var css = '/** @define utilities */ .FOO {}';
