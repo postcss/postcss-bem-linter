@@ -41,24 +41,4 @@ describe('utility validation', function() {
       });
     });
   });
-
-  describe('ignore a rule with a comment', function() {
-    var config = { utilitySelectors: /\.[a-z]+/ };
-
-    it(
-      'ignores selectors after special comments a line before',
-      function() {
-        var css = '/** @define utilities */\n/* postcss-bem-linter: ignore */\n.394 {}'
-        util.assertSuccess(css, config);
-      }
-    );
-
-    it(
-      'ignores selectors after special comments a line before',
-      function() {
-        var css = '/** @define utilities */ /* postcss-bem-linter: ignore */ .394 {}'
-        util.assertSuccess(css, config);
-      }
-    );
-  });
 });
