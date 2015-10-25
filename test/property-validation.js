@@ -6,23 +6,21 @@ var fixture = util.fixture;
 describe('property validation', function() {
   it(
     'accepts custom properties that begin with the component name',
-    function(done) {
-      assertSuccess(done, fixture('properties-valid'));
+    function() {
+      assertSuccess(fixture('properties-valid'));
     }
   );
 
   var invDef = '/** @define InvalidRootVars */';
 
-  it('accepts an empty root', function(done) {
-    assertSuccess(done, invDef + ':root {}');
+  it('accepts an empty root', function() {
+    assertSuccess(invDef + ':root {}');
   });
 
   it(
     'rejects custom properties that do not being with the component name',
-    function(done) {
-      assertSingleFailure(done,
-        invDef + ':root { --invalid-InvalidRootVars-color: green; }'
-      );
+    function() {
+      assertSingleFailure(invDef + ':root { --invalid-InvalidRootVars-color: green; }');
     }
   );
 });

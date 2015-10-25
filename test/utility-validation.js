@@ -3,11 +3,10 @@ var util = require('./test-util');
 
 describe('utility validation', function() {
   describe('with no `utilitySelectors` pattern', function() {
-    it('throws an error', function(done) {
+    it('throws an error', function() {
       util.test('/** @define utilities */ .foo {}', {})
         .catch(function(err) {
           assert.equal(err.message.indexOf('You tried to `@define utilities`'), 0);
-          done();
         });
     });
   });
@@ -15,12 +14,12 @@ describe('utility validation', function() {
   describe('with a `utilitySelectors` pattern', function() {
     var config = { utilitySelectors: /\.[a-z]+/ };
 
-    it('accepts valid selectors', function(done) {
-      util.assertSuccess(done, '/** @define utilities */ .foo {}', config);
+    it('accepts valid selectors', function() {
+      util.assertSuccess('/** @define utilities */ .foo {}', config);
     });
 
-    it('rejects valid selectors', function(done) {
-      util.assertSingleFailure(done, '/** @define utilities */ .FOO {}', config);
+    it('rejects valid selectors', function() {
+      util.assertSingleFailure('/** @define utilities */ .FOO {}', config);
     });
 
     describe('and a `ignoreSelectors` pattern', function() {
@@ -29,16 +28,16 @@ describe('utility validation', function() {
         ignoreSelectors: /\.isok-[a-z]+/,
       };
 
-      it('accepts valid selectors', function(done) {
-        util.assertSuccess(done, '/** @define utilities */ .FOO {}', configWithIgnore);
+      it('accepts valid selectors', function() {
+        util.assertSuccess('/** @define utilities */ .FOO {}', configWithIgnore);
       });
 
-      it('rejected invalid selectors that do not match ignore pattern', function(done) {
-        util.assertSingleFailure(done, '/** @define utilities */ .foo {}', configWithIgnore);
+      it('rejected invalid selectors that do not match ignore pattern', function() {
+        util.assertSingleFailure('/** @define utilities */ .foo {}', configWithIgnore);
       });
 
-      it('ignores selectors that match ignore pattern', function(done) {
-        util.assertSuccess(done, '/** @define utilities */ .isok-bar {}', configWithIgnore);
+      it('ignores selectors that match ignore pattern', function() {
+        util.assertSuccess('/** @define utilities */ .isok-bar {}', configWithIgnore);
       });
     });
   });
@@ -48,17 +47,17 @@ describe('utility validation', function() {
 
     it(
       'ignores selectors after special comments a line before',
-      function(done) {
+      function() {
         var css = '/** @define utilities */\n/* postcss-bem-linter: ignore */\n.394 {}'
-        util.assertSuccess(done, css, config);
+        util.assertSuccess(css, config);
       }
     );
 
     it(
       'ignores selectors after special comments a line before',
-      function(done) {
+      function() {
         var css = '/** @define utilities */ /* postcss-bem-linter: ignore */ .394 {}'
-        util.assertSuccess(done, css, config);
+        util.assertSuccess(css, config);
       }
     );
   });

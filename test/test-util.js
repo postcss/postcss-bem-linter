@@ -1,36 +1,34 @@
 var assert = require('assert');
+var path = require('path');
 var linter = require('..');
 var fs = require('fs');
 var postcss = require('postcss');
 
-function processCss(css, primary, secondary) {
+function getPostcssResult(css, primary, secondary) {
   // Call then() at the end to make the LazyResult evaluate
-  return postcss().use(linter(primary, secondary)).process(css);
+  var result = postcss()
+    .use(linter(primary, secondary))
+    .process(css);
+  return result;
 }
 
 function fixture(name) {
-  return fs.readFileSync('test/fixtures/' + name + '.css', 'utf8').trim();
+  return fs.readFileSync(path.join(__dirname, 'fixtures', name + '.css'), 'utf8').trim();
 }
 
-function assertSuccess(done, css, primary, secondary) {
-  processCss(css, primary, secondary).then(function(result) {
-    assert.equal(result.warnings().length, 0);
-    done();
-  }).catch(done);
+function assertSuccess(css, primary, secondary) {
+  var result = getPostcssResult(css, primary, secondary);
+  assert.equal(result.warnings().length, 0);
 }
 
-function assertSingleFailure(done, css, primary, secondary) {
-  processCss(css, primary, secondary).then(function(result) {
-    assert(result.warnings().length === 1);
-    done();
-  }).catch(done);
+function assertSingleFailure(css, primary, secondary) {
+  var result = getPostcssResult(css, primary, secondary);
+  assert.equal(result.warnings().length, 1);
 }
 
-function assertFailure(done, css, primary, secondary) {
-  processCss(css, primary, secondary).then(function(result) {
-    assert(result.warnings().length > 0);
-    done();
-  }).catch(done);
+function assertFailure(css, primary, secondary) {
+  var result = getPostcssResult(css, primary, secondary);
+  assert.ok(result.warnings().length > 0);
 }
 
 function selectorTester(def) {
@@ -45,5 +43,5 @@ module.exports = {
   assertFailure: assertFailure,
   assertSingleFailure: assertSingleFailure,
   selectorTester: selectorTester,
-  test: processCss,
+  test: getPostcssResult,
 };
