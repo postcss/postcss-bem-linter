@@ -10,13 +10,13 @@
     "postcss": "^5.0.0"
   },
   "devDependencies": {
-    "eslint": "1.7.1",
+    "eslint": "1.7.3",
     "mocha": "2.3.3"
   },
   "scripts": {
-    "checkstyle": "eslint .",
+    "lint": "eslint .",
     "start": "mocha --reporter spec --watch",
-    "test": "npm run checkstyle && mocha --no-colors"
+    "test": "npm run lint && mocha --no-colors"
   },
   "license": "MIT",
   "repository": {
