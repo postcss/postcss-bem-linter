@@ -21,24 +21,5 @@ describe('utility validation', function() {
     it('rejects valid selectors', function() {
       util.assertSingleFailure('/** @define utilities */ .FOO {}', config);
     });
-
-    describe('and a `ignoreSelectors` pattern', function() {
-      var configWithIgnore = {
-        utilitySelectors: /\.[A-Z]+/,
-        ignoreSelectors: /\.isok-[a-z]+/,
-      };
-
-      it('accepts valid selectors', function() {
-        util.assertSuccess('/** @define utilities */ .FOO {}', configWithIgnore);
-      });
-
-      it('rejected invalid selectors that do not match ignore pattern', function() {
-        util.assertSingleFailure('/** @define utilities */ .foo {}', configWithIgnore);
-      });
-
-      it('ignores selectors that match ignore pattern', function() {
-        util.assertSuccess('/** @define utilities */ .isok-bar {}', configWithIgnore);
-      });
-    });
   });
 });
