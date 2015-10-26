@@ -1,6 +1,7 @@
+require('./bem-pattern');
 require('./definition');
+require('./ignore-selectors');
 require('./property-validation');
 require('./selector-validation');
 require('./suit-pattern');
-require('./bem-pattern');
-require('./ignore-selectors');
+require('./utility-validation');
