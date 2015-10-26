@@ -25,9 +25,9 @@ Version 1.0.0+ is compatible with PostCSS 5+. (Earlier versions are compatible w
 
 This plugin registers warnings via PostCSS. Therefore, you'll want to use it with a PostCSS runner that prints warnings (e.g. [`gulp-postcss`](https://github.com/postcss/gulp-postcss)) or another PostCSS plugin that prints warnings (e.g. [`postcss-reporter`](https://github.com/postcss/postcss-reporter)).
 
-## Conformance tests
-
 **Throughout this document, terms like "selector", "selector sequence", and "simple selector" are used according to the definitions in the [Selectors Level 3 spec](http://www.w3.org/TR/css3-selectors/#selector-syntax).**  
+
+## Conformance tests
 
 **Default mode**:
 
@@ -50,15 +50,15 @@ bemLinter([pattern[, options]])
 ### Defining your pattern
 
 Patterns consist of regular expressions, and functions that return regular expressions,
-which describe valid selector sequences.
+or strings, which describe valid selector sequences.
 
 Keep in mind:
 - **Patterns describe sequences, not just simple selectors.** So if, for example,
 you would like to be able to chain state classes to your component classes, as in
-`.Component.is-open`, your regular expression needs to allow for this chaining.
+`.Component.is-open`, your pattern needs to allow for this chaining.
 - **Pseudo-classes and pseudo-elements will be ignored if they occur at the end of the sequence.**
 Instead of `.Component:first-child.is-open`, you should use `.Component.is-open:first-child`.
-The former will trigger a warning unless you've written a silly complicated regular expression.
+The former will trigger a warning unless you've written a silly complicated pattern.
 
 #### Preset Patterns
 
@@ -85,25 +85,68 @@ SUIT conventions will be enforced.**
 
 You can define a custom pattern by passing as your first and only argument *an object with the following properties*:
 
-- `componentName` (optional): A regular expression describing valid component names.
-  Default is `/[-_a-zA-Z0-9]+/`.
-- `componentSelectors`: Either of the following:
-  - A *single function* that accepts a component name and returns a regular expression describing
-    all valid selector sequences for the stylesheet.
-  - An *object consisting of two methods*, `initial` and `combined`. Both methods accept a
-    component name and return a regular expression. `initial` returns a description of valid
-    initial selector sequences — those occurring at the beginning of a selector, before any
-    combinators. `combined` returns a description of valid selector sequences allowed *after* combinators.
-      - If you do not specify a combined pattern, it is assumed that combined sequences must match the same pattern as initial sequences.
-      - In weak mode, *any* combined sequences are accepted.
-- `utilitySelectors`: A regular expression describing valid utility selector sequences. This will be used
-  if the stylesheet defines a group of utilities, as explained below.
-- `ignoreSelectors`: A regular expression or an array of regular expressions describing selector sequences to ignore. You can use this to
-  systematically ignore selectors matching certain patterns, instead of having to add a
-  `/* postcss-bem-linter: ignore */` comment above each one (see below).
+##### `componentName`
 
-*You can also choose a preset to start with and override specific patterns.*
-For example, if you want to use SUIT's `componentSelectors` pattern but write your own `utilitySelectors` pattern,
+default: `/[-_a-zA-Z0-9]+/`
+
+Describes valid component names in one of the following forms:
+
+- A regular expression.
+- A string that provides a valid pattern for the `RegExp()` constructor.
+
+##### `componentSelectors`
+
+Describes all valid selector sequences for the stylesheet in one of the following forms:
+
+- A *single function* that accepts a component name and returns a regular expression, e.g.
+  ```js
+  componentSelectors: function(componentName) {
+    return new RegExp('\\.ns-' + componentName + '(?:-[a-zA-Z]+)?');
+  }
+  ```
+- A *single string* that provides a valid pattern for the `RegExp()` constructor *when
+  `{componentName}` is interpolated with the defined component's name*, e.g.
+  ```js
+  componentSelectors: '\\.ns-{componentName}(?:-[a-zA-Z]+)?'
+  ```
+- An *object consisting of two properties*, `initial` and `combined`. Both properties accept the
+  same two forms described above: a function accepting a component name and returning a regular
+  expression; or a string, interpolating the component name with `{componentName}`, that will
+  provide a valid pattern for the `RegExp()` constructor.
+
+  `initial` describes valid initial selector sequences — those occurring at the beginning of
+  a selector, before any combinators.
+
+  `combined` describes valid selector sequences allowed *after* combinators.
+  Two important notes about `combined`:
+    - If you do not specify a `combined` pattern, it is assumed that combined sequences must match the same pattern as initial sequences.
+    - In weak mode, *any* combined sequences are accepted, even if you have a `combined` pattern.
+
+##### `utilitySelectors`
+
+Describes valid utility selector sequences. This will be used if the stylesheet defines a
+group of utilities, as explained below. Can take one of the following forms:
+
+- A regular expression.
+- A string that provides a valid pattern for the `RegExp()` constructor.
+
+##### `ignoreSelectors`
+
+Describes selector sequences to ignore. You can use this to
+systematically ignore selectors matching certain patterns, instead of having to add a
+`/* postcss-bem-linter: ignore */` comment above each one (see below).
+Can take one of the following forms:
+
+- A regular expression.
+- An array of regular expressions.
+- A string that provides a valid pattern for the `RegExp()` constructor.
+- An array of such string patterns.
+
+### Overriding Presets
+
+*You can also choose a preset to start with and override specific parts of it, specific patterns.*
+
+For example, if you want to use SUIT's preset generally but write your own `utilitySelectors` pattern,
 you can do that with a config object like this:
 
 ```js
@@ -112,6 +155,8 @@ you can do that with a config object like this:
   utilitySelectors: /\.fancyUtilities-[a-z]+/
 }
 ```
+
+### Examples
 
 Given all of the above, you might call the plugin in any of the following ways:
 
@@ -127,19 +172,25 @@ bemLinter('bem');
 bemLinter('bem', { namespace: 'ydx' });
 bemLinter({ present: 'bem', presetOptions: { namespace: 'ydx' }});
 
-// define a RegExp for component names
+// define a pattern for component names
 bemLinter({
   componentName: /[A-Z]+/
 });
+bemLinter({
+  componentName: '[A-Z]+'
+});
 
-// define a single RegExp for all selector sequences, initial or combined
+// define a single pattern for all selector sequences, initial or combined
 bemLinter({
   componentSelectors: function(componentName) {
     return new RegExp('^\\.' + componentName + '(?:-[a-z]+)?$');
   }
 });
+bemLinter({
+  componentSelectors: '^\\.{componentName}(?:-[a-z]+)?$'
+});
 
-// define separate `componentName`, `initial`, `combined`, and `utilities` RegExps
+// define separate `componentName`, `initial`, `combined`, and `utilities` patterns
 bemLinter({
   componentName: /[A-Z]+/,
   componentSelectors: {
@@ -152,6 +203,14 @@ bemLinter({
   },
   utilitySelectors: /^\.util-[a-z]+$/
 });
+bemLinter({
+  componentName: '[A-Z]+',
+  componentSelectors: {
+    initial: '^\\.{componentName}(?:-[a-z]+)?$',
+    combined: '^\\.combined-{componentName}-[a-z]+$'
+  },
+  utilitySelectors: '^\.util-[a-z]+$'
+});
 
 // start with the `bem` preset but include a special `componentName` pattern
 // and `ignoreSelectors` pattern to ignore Modernizr-injected `no-*` classes
@@ -160,14 +219,27 @@ bemLinter({
   componentName: /cmpnt_[a-zA-Z]+/,
   ignoreSelectors: /\.no-.+/
 });
+bemLinter({
+  preset: 'bem',
+  componentName: 'cmpnt_[a-zA-Z]+',
+  ignoreSelectors: '\.no-.+'
+});
 
-// using an array for `ignoreSelectors`
+// ... using an array for `ignoreSelectors`
 bemLinter({
   preset: 'bem',
   componentName: /cmpnt_[a-zA-Z]+/,
   ignoreSelectors: [
     /\.no-.+/,
     /\.isok-.+/
+  ]
+});
+bemLinter({
+  preset: 'bem',
+  componentName: 'cmpnt_[a-zA-Z]+',
+  ignoreSelectors: [
+    '\.no-.+',
+    '\.isok-.+'
   ]
 });
 ```

@@ -12,14 +12,23 @@ describe('utility validation', function() {
   });
 
   describe('with a `utilitySelectors` pattern', function() {
-    var config = { utilitySelectors: /\.[a-z]+/ };
-
-    it('accepts valid selectors', function() {
-      util.assertSuccess('/** @define utilities */ .foo {}', config);
+    describe('as a regular expression', function() {
+      runTests(/\.[a-z]+/);
+    });
+    describe('as a string', function() {
+      runTests('.[a-z]+');
     });
 
-    it('rejects valid selectors', function() {
-      util.assertSingleFailure('/** @define utilities */ .FOO {}', config);
-    });
+    function runTests(utilitySelectors) {
+      var config = { utilitySelectors: utilitySelectors };
+
+      it('accepts valid selectors', function() {
+        util.assertSuccess('/** @define utilities */ .foo {}', config);
+      });
+
+      it('rejects valid selectors', function() {
+        util.assertSingleFailure('/** @define utilities */ .FOO {}', config);
+      });
+    }
   });
 });

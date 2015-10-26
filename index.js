@@ -3,6 +3,7 @@ var validateCustomProperties = require('./lib/validate-custom-properties');
 var validateUtilities = require('./lib/validate-utilities');
 var validateSelectors = require('./lib/validate-selectors');
 var generateConfig = require('./lib/generate-config');
+var toRegexp = require('./lib/to-regexp');
 
 var DEFINE_VALUE = '([-_a-zA-Z0-9]+)\\s*(?:;\\s*(weak))?';
 var DEFINE_DIRECTIVE = new RegExp(
@@ -51,8 +52,8 @@ module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, s
         }
         validateUtilities({
           rule: rule,
-          utilityPattern: config.patterns.utilitySelectors,
-          ignorePattern: config.patterns.ignoreSelectors,
+          utilityPattern: toRegexp(config.patterns.utilitySelectors),
+          ignorePattern: toRegexp(config.patterns.ignoreSelectors),
           result: result,
         });
         return;
@@ -71,7 +72,7 @@ module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, s
         weakMode: range.weakMode,
         selectorPattern: config.patterns.componentSelectors,
         selectorPatternOptions: config.presetOptions,
-        ignorePattern: config.patterns.ignoreSelectors,
+        ignorePattern: toRegexp(config.patterns.ignoreSelectors),
         result: result,
       });
     }
@@ -89,7 +90,7 @@ module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, s
         var directiveMatch = comment.text.match(DEFINE_DIRECTIVE);
         if (!directiveMatch) return;
         var defined = (directiveMatch[1] || directiveMatch[3]).trim();
-        if (defined !== UTILITIES_IDENT && !defined.match(config.componentNamePattern)) {
+        if (defined !== UTILITIES_IDENT && !defined.match(toRegexp(config.componentNamePattern))) {
           result.warn(
             'Invalid component name in definition /*' + comment + '*/',
             { node: comment }
