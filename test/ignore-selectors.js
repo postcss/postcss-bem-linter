@@ -25,69 +25,87 @@ describe('ignoring selectors', function() {
   });
 
   describe('ignore a selector with an `ignoreSelectors` pattern', function() {
-    var s = selectorTester('/** @define Foo */');
-    var config = { preset: 'suit', ignoreSelectors: /\.isok-.+/ };
+    describe('that is a regular expression', function() {
+      runTests(/\.isok-.+/);
+    });
+    describe('that is a string', function() {
+      runTests('.isok-.+');
+    });
 
-    it(
-      'ignores selectors that match the `ignoreSelectors` pattern',
-      function() {
-        assertSuccess(s('.isok-BLERGH'), config);
-      }
-    );
+    function runTests(ignoreSelectors) {
+      var s = selectorTester('/** @define Foo */');
+      var config = { preset: 'suit', ignoreSelectors: ignoreSelectors };
 
-    it(
-      'ignores grouped selectors that match the `ignoreSelectors` pattern',
-      function() {
-        assertSuccess(s('.Foo .isok-BLERGH'), config);
-      }
-    );
+      it(
+        'ignores selectors that match the `ignoreSelectors` pattern',
+        function() {
+          assertSuccess(s('.isok-BLERGH'), config);
+        }
+      );
 
-    it(
-      'rejects selectors that do not match valid pattern or `ignoreSelectors` pattern',
-      function() {
-        assertSingleFailure(s('.blergh'), config);
-      }
-    );
+      it(
+        'ignores grouped selectors that match the `ignoreSelectors` pattern',
+        function() {
+          assertSuccess(s('.Foo .isok-BLERGH'), config);
+        }
+      );
+
+      it(
+        'rejects selectors that do not match valid pattern or `ignoreSelectors` pattern',
+        function() {
+          assertSingleFailure(s('.blergh'), config);
+        }
+      );
+    }
   });
 
   describe('ignore a selector with an `ignoreSelectors` array of patterns', function() {
-    var s = selectorTester('/** @define Foo */');
-    var config = { preset: 'suit', ignoreSelectors: [/\.isok-.+/, /#fine/] };
+    describe('each item of which is a regular expression', function() {
+      runTests([/\.isok-.+/, /#fine/]);
+    });
+    describe('each item of which is a string', function() {
+      runTests(['.isok-.+', '#fine']);
+    });
 
-    it(
-      'ignores selectors that match any of the `ignoreSelectors` pattern',
-      function() {
-        assertSuccess(s('.isok-BLERGH'), config);
-      }
-    );
+    function runTests(ignoreSelectors) {
+      var s = selectorTester('/** @define Foo */');
+      var config = { preset: 'suit', ignoreSelectors: ignoreSelectors };
 
-    it(
-      'ignores selectors that match any of the `ignoreSelectors` pattern (take 2)',
-      function() {
-        assertSuccess(s('#fine'), config);
-      }
-    );
+      it(
+        'ignores selectors that match any of the `ignoreSelectors` pattern',
+        function() {
+          assertSuccess(s('.isok-BLERGH'), config);
+        }
+      );
 
-    it(
-      'ignores grouped selectors that match any of the `ignoreSelectors` pattern',
-      function() {
-        assertSuccess(s('.Foo .isok-BLERGH'), config);
-      }
-    );
+      it(
+        'ignores selectors that match any of the `ignoreSelectors` pattern (take 2)',
+        function() {
+          assertSuccess(s('#fine'), config);
+        }
+      );
 
-    it(
-      'ignores grouped selectors that match any of the `ignoreSelectors` pattern (take 2)',
-      function() {
-        assertSuccess(s('.Foo #fine'), config);
-      }
-    );
+      it(
+        'ignores grouped selectors that match any of the `ignoreSelectors` pattern',
+        function() {
+          assertSuccess(s('.Foo .isok-BLERGH'), config);
+        }
+      );
 
-    it(
-      'rejects selectors that do not match valid pattern or `ignoreSelectors` pattern',
-      function() {
-        assertSingleFailure(s('.blergh'), config);
-      }
-    );
+      it(
+        'ignores grouped selectors that match any of the `ignoreSelectors` pattern (take 2)',
+        function() {
+          assertSuccess(s('.Foo #fine'), config);
+        }
+      );
+
+      it(
+        'rejects selectors that do not match valid pattern or `ignoreSelectors` pattern',
+        function() {
+          assertSingleFailure(s('.blergh'), config);
+        }
+      );
+    }
   });
 
   describe('ignore utility selectors with a comment', function() {
@@ -111,21 +129,30 @@ describe('ignoring selectors', function() {
   });
 
   describe('ignore utility selectors with an `ignoreSelectors` pattern', function() {
-    var configWithIgnore = {
-      utilitySelectors: /\.[A-Z]+/,
-      ignoreSelectors: /\.isok-[a-z]+/,
-    };
-
-    it('accepts valid selectors', function() {
-      util.assertSuccess('/** @define utilities */ .FOO {}', configWithIgnore);
+    describe('that is a regular expression', function() {
+      runTests(/\.isok-[a-z]+$/);
     });
+    describe('that is a string', function() {
+      runTests('.isok-[a-z]+$');
+    })
 
-    it('rejected invalid selectors that do not match ignore pattern', function() {
-      util.assertSingleFailure('/** @define utilities */ .foo {}', configWithIgnore);
-    });
+    function runTests(ignoreSelectors) {
+      var configWithIgnore = {
+        utilitySelectors: /\.[A-Z]+/,
+        ignoreSelectors: ignoreSelectors,
+      };
 
-    it('ignores selectors that match ignore pattern', function() {
-      util.assertSuccess('/** @define utilities */ .isok-bar {}', configWithIgnore);
-    });
+      it('accepts valid selectors', function() {
+        util.assertSuccess('/** @define utilities */ .FOO {}', configWithIgnore);
+      });
+
+      it('rejected invalid selectors that do not match ignore pattern', function() {
+        util.assertSingleFailure('/** @define utilities */ .foo {}', configWithIgnore);
+      });
+
+      it('ignores selectors that match ignore pattern', function() {
+        util.assertSuccess('/** @define utilities */ .isok-bar {}', configWithIgnore);
+      });
+    }
   });
 });

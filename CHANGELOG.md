@@ -1,3 +1,7 @@
+=== Head
+
+* Support string patterns for everything: `componentName`, `componentSelectors` (with one description, and with `initial` and `combined`), `utilitySelectors`, and `ignoreSelectors` (with a single value or an array).
+
 === 2.0.0 (October 17, 2015)
 
 * Add namespace option to BEM preset pattern.
