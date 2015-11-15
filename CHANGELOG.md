@@ -1,4 +1,4 @@
-=== Head
+=== 2.2.0 (November 15, 2015)
 
 * Allow attribute selectors in BEM preset pattern.
 * Fix bug causing pseudo-classes with operators like `:nth-child(3n+1)` to cause problems.
