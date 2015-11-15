@@ -2,6 +2,7 @@
 
 * Allow attribute selectors in BEM preset pattern.
 * Fix bug causing pseudo-classes with operators like `:nth-child(3n+1)` to cause problems.
+* Add flexibility (remove unnecessary strictness) in attribute part of preset patterns.
 
 === 2.1.0 (October 31, 2015)
 
