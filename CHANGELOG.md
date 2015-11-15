@@ -1,5 +1,6 @@
 === Head
 
+* Allow attribute selectors in BEM preset pattern.
 * Fix bug causing pseudo-classes with operators like `:nth-child(3n+1)` to cause problems.
 
 === 2.1.0 (October 31, 2015)

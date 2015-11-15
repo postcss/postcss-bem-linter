@@ -17,3 +17,5 @@
 
 .block-name__camelCase:nth-child(3n) {}
 .block-name__camelCase:nth-child(3n+1) {}
+.block-name[disabled] {}
+.block-name__elem_mod[disabled] {}
