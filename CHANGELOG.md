@@ -1,5 +1,7 @@
 === Head
 
+* Fix bug causing pseudo-classes with operators like `:nth-child(3n+1)` to cause problems.
+
 === 2.1.0 (October 31, 2015)
 
 * Support string patterns for everything: `componentName`, `componentSelectors` (with one description, and with `initial` and `combined`), `utilitySelectors`, and `ignoreSelectors` (with a single value or an array).

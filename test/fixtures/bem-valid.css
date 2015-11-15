@@ -14,3 +14,6 @@
 .block-name__elem-name_mod-name_mod-val .block-name__elem-name_mod-name_mod-val {}
 .block-name__elem_mod .block-name__elem_mod {}
 .block-name__camelCase {}
+
+.block-name__camelCase:nth-child(3n) {}
+.block-name__camelCase:nth-child(3n+1) {}
