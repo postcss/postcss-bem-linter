@@ -1,4 +1,4 @@
-=== Head
+=== 2.3.0 (November 24, 2015)
 
 * Add ability to ignore custom properties via `postcss-bem-linter: ignore` comments and the `ignoreCustomProperties` pattern.
 
