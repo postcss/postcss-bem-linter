@@ -16,7 +16,7 @@
   "scripts": {
     "lint": "eslint .",
     "start": "mocha --reporter spec --watch",
-    "test": "npm run lint && mocha --no-colors"
+    "test": "npm run lint && mocha --no-colors test/index.js"
   },
   "license": "MIT",
   "repository": {

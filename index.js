@@ -29,6 +29,7 @@ var WEAK_IDENT = 'weak';
  */
 module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, secondaryOptions) {
   var config = generateConfig(primaryOptions, secondaryOptions);
+  var patterns = config.patterns;
 
   return function(root, result) {
     var ranges = findRanges(root);
@@ -44,7 +45,7 @@ module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, s
 
     function checkRule(rule, range) {
       if (range.defined === UTILITIES_IDENT) {
-        if (!config.patterns.utilitySelectors) {
+        if (!patterns.utilitySelectors) {
           throw new Error(
             'You tried to `@define utilities` but have not provided ' +
             'a `utilitySelectors` pattern'
@@ -52,27 +53,32 @@ module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, s
         }
         validateUtilities({
           rule: rule,
-          utilityPattern: toRegexp(config.patterns.utilitySelectors),
-          ignorePattern: toRegexp(config.patterns.ignoreSelectors),
+          utilityPattern: toRegexp(patterns.utilitySelectors),
+          ignorePattern: toRegexp(patterns.ignoreSelectors),
           result: result,
         });
         return;
       }
 
-      if (!config.patterns.componentSelectors) {
+      if (!patterns.componentSelectors) {
         throw new Error(
           'You tried to `@define` a component but have not provided ' +
           'a `componentSelectors` pattern'
         );
       }
-      validateCustomProperties(rule, range.defined, result);
+      validateCustomProperties({
+        rule: rule,
+        componentName: range.defined,
+        result: result,
+        ignorePattern: toRegexp(patterns.ignoreCustomProperties),
+      });
       validateSelectors({
         rule: rule,
         componentName: range.defined,
         weakMode: range.weakMode,
-        selectorPattern: config.patterns.componentSelectors,
+        selectorPattern: patterns.componentSelectors,
         selectorPatternOptions: config.presetOptions,
-        ignorePattern: toRegexp(config.patterns.ignoreSelectors),
+        ignorePattern: toRegexp(patterns.ignoreSelectors),
         result: result,
       });
     }

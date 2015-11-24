@@ -142,6 +142,10 @@ Can take one of the following forms:
 - A string that provides a valid pattern for the `RegExp()` constructor.
 - An array of such string patterns.
 
+##### `ignoreCustomProperties`
+
+Describes custom properties to ignore. Works the same as `ignoreSelectors`, above, so please read about that.
+
 ### Overriding Presets
 
 *You can also choose a preset to start with and override specific parts of it, specific patterns.*

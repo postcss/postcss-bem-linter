@@ -1,3 +1,7 @@
+=== Head
+
+* Add ability to ignore custom properties via `postcss-bem-linter: ignore` comments and the `ignoreCustomProperties` pattern.
+
 === 2.2.0 (November 15, 2015)
 
 * Allow attribute selectors in BEM preset pattern.
