@@ -27,6 +27,12 @@ This plugin registers warnings via PostCSS. Therefore, you'll want to use it wit
 
 **Throughout this document, terms like "selector", "selector sequence", and "simple selector" are used according to the definitions in the [Selectors Level 3 spec](http://www.w3.org/TR/css3-selectors/#selector-syntax).**  
 
+### stylelint plugin
+
+postcss-bem-linter can also be used as a [stylelint](http://stylelint.io/) plugin: [stylelint-selector-bem-pattern](https://github.com/davidtheclark/stylelint-selector-bem-pattern).
+
+By using the stylelint plugin, all of your linting can happen in one step, seamlessly: postcss-bem-linter warnings will output alongside other stylelint warnings. Also, you can take advantage of all the other features that stylelint offers, such as a CLI and Node.js API, different formatters for output, etc.
+
 ## Conformance tests
 
 **Default mode**:
