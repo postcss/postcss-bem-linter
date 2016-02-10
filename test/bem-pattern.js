@@ -65,4 +65,12 @@ describe('using BEM pattern', function() {
       assertSingleFailure(s('.block'), 'bem', { namespace: 'ns' });
     });
   });
+
+  describe('in weak mode', function() {
+    var sWeak = util.selectorTester('/** @define block; weak */');
+
+    it('accepts `block__elem #foo`', function() {
+      assertSuccess(sWeak('.block__elem #foo'), 'bem');
+    });
+  });
 });
