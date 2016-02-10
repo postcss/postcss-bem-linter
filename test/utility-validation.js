@@ -31,4 +31,10 @@ describe('utility validation', function() {
       });
     }
   });
+
+  describe('with @keyframes rule', function() {
+    it('does not complain about keyframe selectors', function() {
+      util.assertSuccess('/** @define utilities */ @keyframes fade { 0% { opacity: 0; } 100% { opacity: 1; } }');
+    });
+  });
 });

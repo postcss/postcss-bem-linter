@@ -35,6 +35,8 @@ module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, s
     var ranges = findRanges(root);
 
     root.walkRules(function(rule) {
+      if (rule.parent && rule.parent.name === 'keyframes') return;
+
       var ruleStartLine = rule.source.start.line;
       ranges.forEach(function(range) {
         if (ruleStartLine < range.start) return;
