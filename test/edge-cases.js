@@ -3,7 +3,7 @@ var assert = require('assert');
 var linter = require('..');
 
 describe('nodes without sources', function() {
-  it('works and does not throw an error', function(done) {
+  it('should ignore both comments and rules', function(done) {
     var sourcelessAST = postcss.root();
     var comment = postcss.comment({ text: 'postcss-bem-linter: define Foo' });
     var rule = postcss.rule({ selector: '#bar' });
@@ -14,7 +14,7 @@ describe('nodes without sources', function() {
       .process(sourcelessAST)
       .then(function(result) {
         var warnings = result.warnings();
-        assert.equal(warnings[0].text, 'Invalid component selector "#bar"');
+        assert.equal(warnings.length, 0);
         done();
       }).catch(done);
   });
