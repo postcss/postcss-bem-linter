@@ -1,4 +1,4 @@
-=== Head
+=== 2.3.2 (February 14, 2015)
 
 * Prevent failure if a PostCSS node lacks a `source` property.
 
