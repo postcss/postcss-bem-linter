@@ -37,10 +37,10 @@ module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, s
     root.walkRules(function(rule) {
       if (rule.parent && rule.parent.name === 'keyframes') return;
 
-      var ruleStartLine = rule.source.start.line;
+      var ruleStartLine = (rule.source) ? rule.source.start.line : null;
       ranges.forEach(function(range) {
-        if (ruleStartLine < range.start) return;
-        if (range.end && ruleStartLine > range.end) return;
+        if (ruleStartLine && ruleStartLine < range.start) return;
+        if (ruleStartLine && range.end && ruleStartLine > range.end) return;
         checkRule(rule, range);
       })
     });
@@ -88,10 +88,10 @@ module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, s
     function findRanges(root) {
       var ranges = [];
       root.walkComments(function(comment) {
-        var startLine = comment.source.start.line;
+        var commentStartLine = (comment.source) ? comment.source.start.line : 0;
 
         if (END_DIRECTIVE.test(comment.text)) {
-          endCurrentRange(startLine);
+          endCurrentRange(commentStartLine);
           return;
         }
 
@@ -104,10 +104,10 @@ module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, s
             { node: comment }
           );
         }
-        endCurrentRange(startLine);
+        endCurrentRange(commentStartLine);
         ranges.push({
           defined: defined,
-          start: startLine,
+          start: commentStartLine,
           weakMode: directiveMatch[2] === WEAK_IDENT,
         });
       });

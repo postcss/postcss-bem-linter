@@ -7,3 +7,4 @@ require('./ranges');
 require('./selector-validation');
 require('./suit-pattern');
 require('./utility-validation');
+require('./edge-cases');

@@ -1,3 +1,7 @@
+=== Head
+
+* Prevent failure if a PostCSS node lacks a `source` property.
+
 === 2.3.1 (February 9, 2015)
 
 * Ensure that `@keyframes` selectors are always skipped.

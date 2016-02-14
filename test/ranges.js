@@ -11,11 +11,11 @@ describe('ranges', function() {
 
   it('one valid, one invalid', function() {
     assertSingleFailure(fixture('ranges-one-valid-one-invalid'));
-  })
+  });
 
   it('two valid, one invalid', function() {
     assertSingleFailure(fixture('ranges-two-valid-one-invalid'));
-  })
+  });
 
   it('one valid that is ended, then some extra stuff', function() {
     assertSuccess(fixture('ranges-one-ended-valid'));
@@ -27,5 +27,5 @@ describe('ranges', function() {
 
   it('with verbose directives', function() {
     assertSuccess(fixture('verbose-directives'));
-  })
+  });
 });
