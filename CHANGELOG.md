@@ -1,4 +1,4 @@
-=== Head
+=== 2.3.3 (February 15, 2015)
 
 * Skip nodes that do not have `source` properties.
 
