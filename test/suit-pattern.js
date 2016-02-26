@@ -82,6 +82,20 @@ describe('using SUIT pattern (default)', function() {
       assertSuccess(sUtil('.u-16by9'));
     });
   });
+  
+  
+  it('accepts chained modifier selectors', function() {
+    assertSuccess(s('.Foo--big.Foo--colored'));
+    assertSuccess(s('.Foo--big.Foo--colored .Foo-input'));
+    assertSuccess(s('.Foo-input--big.Foo-input--colored'));
+
+  });
+
+  it('accepts chained state selectors', function() {
+    assertSuccess(s('.Foo.is-open.is-disabled .Foo-input'));
+    assertSuccess(s('.Foo--big.is-open.is-disabled .Foo-input.is-invalid'));    
+    assertSuccess(s('.Foo.is-open.is-disabled .Foo-input.is-invalid'));
+  });
 
   it('accepts chained attribute selectors', function() {
     assertSuccess(s('.Foo-input[type=number]'));
@@ -89,7 +103,7 @@ describe('using SUIT pattern (default)', function() {
     assertSuccess(s('.Foo-input[disabled] ~ .Foo-label'));
     assertSuccess(s('.Foo-inner--password .Foo-input[type="password"]'));
   });
-
+  
   describe('strict SUIT syntax', function() {
     var sComponent = util.selectorTester('/** @define Component */');
 
