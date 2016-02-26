@@ -103,7 +103,7 @@ describe('using SUIT pattern (default)', function() {
     assertSuccess(s('.Foo-input[disabled] ~ .Foo-label'));
     assertSuccess(s('.Foo-inner--password .Foo-input[type="password"]'));
   });
-  
+
   describe('strict SUIT syntax', function() {
     var sComponent = util.selectorTester('/** @define Component */');
 
