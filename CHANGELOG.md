@@ -1,12 +1,17 @@
-=== 2.3.3 (February 15, 2015)
+=== 2.4.0 (March 3, 2016)
+
+* Allow chaining modifier classes in SUIT pattern.
+* Allow chaining state classes in SUIT pattern.
+
+=== 2.3.3 (February 15, 2016)
 
 * Skip nodes that do not have `source` properties.
 
-=== 2.3.2 (February 14, 2015)
+=== 2.3.2 (February 14, 2016)
 
 * Prevent failure if a PostCSS node lacks a `source` property.
 
-=== 2.3.1 (February 9, 2015)
+=== 2.3.1 (February 9, 2016)
 
 * Ensure that `@keyframes` selectors are always skipped.
 
