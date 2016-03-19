@@ -1,3 +1,7 @@
+=== Head
+
+* Fix preset `componentName` patterns.
+
 === 2.4.0 (March 3, 2016)
 
 * Allow chaining modifier classes in SUIT pattern.

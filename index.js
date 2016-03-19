@@ -100,7 +100,7 @@ module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, s
         var directiveMatch = comment.text.match(DEFINE_DIRECTIVE);
         if (!directiveMatch) return;
         var defined = (directiveMatch[1] || directiveMatch[3]).trim();
-        if (defined !== UTILITIES_IDENT && !defined.match(toRegexp(config.componentNamePattern))) {
+        if (defined !== UTILITIES_IDENT && !toRegexp(config.componentNamePattern).test(defined)) {
           result.warn(
             'Invalid component name in definition /*' + comment + '*/',
             { node: comment }
