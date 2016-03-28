@@ -1,4 +1,4 @@
-=== Head
+=== 2.4.1 (March 28, 2016)
 
 * Fix preset `componentName` patterns.
 

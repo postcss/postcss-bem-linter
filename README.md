@@ -93,7 +93,7 @@ You can define a custom pattern by passing as your first and only argument *an o
 
 ##### `componentName`
 
-default: `/[-_a-zA-Z0-9]+/`
+default: `/^[-_a-zA-Z0-9]+$/`
 
 Describes valid component names in one of the following forms:
 
@@ -107,13 +107,13 @@ Describes all valid selector sequences for the stylesheet in one of the followin
 - A *single function* that accepts a component name and returns a regular expression, e.g.
   ```js
   componentSelectors: function(componentName) {
-    return new RegExp('\\.ns-' + componentName + '(?:-[a-zA-Z]+)?');
+    return new RegExp('^\\.ns-' + componentName + '(?:-[a-zA-Z]+)?$');
   }
   ```
 - A *single string* that provides a valid pattern for the `RegExp()` constructor *when
   `{componentName}` is interpolated with the defined component's name*, e.g.
   ```js
-  componentSelectors: '\\.ns-{componentName}(?:-[a-zA-Z]+)?'
+  componentSelectors: '^\\.ns-{componentName}(?:-[a-zA-Z]+)?$'
   ```
 - An *object consisting of two properties*, `initial` and `combined`. Both properties accept the
   same two forms described above: a function accepting a component name and returning a regular
@@ -162,7 +162,7 @@ you can do that with a config object like this:
 ```js
 {
   preset: 'suit',
-  utilitySelectors: /\.fancyUtilities-[a-z]+/
+  utilitySelectors: /^\.fancyUtilities-[a-z]+$/
 }
 ```
 
@@ -184,10 +184,10 @@ bemLinter({ present: 'bem', presetOptions: { namespace: 'ydx' }});
 
 // define a pattern for component names
 bemLinter({
-  componentName: /[A-Z]+/
+  componentName: /^[A-Z]+$/
 });
 bemLinter({
-  componentName: '[A-Z]+'
+  componentName: '^[A-Z]+$'
 });
 
 // define a single pattern for all selector sequences, initial or combined
@@ -202,7 +202,7 @@ bemLinter({
 
 // define separate `componentName`, `initial`, `combined`, and `utilities` patterns
 bemLinter({
-  componentName: /[A-Z]+/,
+  componentName: /^[A-Z]+$/,
   componentSelectors: {
     initial: function(componentName) {
       return new RegExp('^\\.' + componentName + '(?:-[a-z]+)?$');
@@ -214,7 +214,7 @@ bemLinter({
   utilitySelectors: /^\.util-[a-z]+$/
 });
 bemLinter({
-  componentName: '[A-Z]+',
+  componentName: '^[A-Z]+$',
   componentSelectors: {
     initial: '^\\.{componentName}(?:-[a-z]+)?$',
     combined: '^\\.combined-{componentName}-[a-z]+$'
@@ -226,30 +226,30 @@ bemLinter({
 // and `ignoreSelectors` pattern to ignore Modernizr-injected `no-*` classes
 bemLinter({
   preset: 'bem',
-  componentName: /cmpnt_[a-zA-Z]+/,
-  ignoreSelectors: /\.no-.+/
+  componentName: /^cmpnt_[a-zA-Z]+$/,
+  ignoreSelectors: /^\.no-.+$/
 });
 bemLinter({
   preset: 'bem',
-  componentName: 'cmpnt_[a-zA-Z]+',
-  ignoreSelectors: '\.no-.+'
+  componentName: '^cmpnt_[a-zA-Z]+$',
+  ignoreSelectors: '^\.no-.+$'
 });
 
 // ... using an array for `ignoreSelectors`
 bemLinter({
   preset: 'bem',
-  componentName: /cmpnt_[a-zA-Z]+/,
+  componentName: /^cmpnt_[a-zA-Z]+$/,
   ignoreSelectors: [
-    /\.no-.+/,
-    /\.isok-.+/
+    /^\.no-.+$/,
+    /^\.isok-.+$/
   ]
 });
 bemLinter({
   preset: 'bem',
-  componentName: 'cmpnt_[a-zA-Z]+',
+  componentName: '^cmpnt_[a-zA-Z]+$',
   ignoreSelectors: [
-    '\.no-.+',
-    '\.isok-.+'
+    '^\.no-.+$',
+    '^\.isok-.+$'
   ]
 });
 ```
