@@ -82,8 +82,7 @@ describe('using SUIT pattern (default)', function() {
       assertSuccess(sUtil('.u-16by9'));
     });
   });
-  
-  
+
   it('accepts chained modifier selectors', function() {
     assertSuccess(s('.Foo--big.Foo--colored'));
     assertSuccess(s('.Foo--big.Foo--colored .Foo-input'));
@@ -93,7 +92,7 @@ describe('using SUIT pattern (default)', function() {
 
   it('accepts chained state selectors', function() {
     assertSuccess(s('.Foo.is-open.is-disabled .Foo-input'));
-    assertSuccess(s('.Foo--big.is-open.is-disabled .Foo-input.is-invalid'));    
+    assertSuccess(s('.Foo--big.is-open.is-disabled .Foo-input.is-invalid'));
     assertSuccess(s('.Foo.is-open.is-disabled .Foo-input.is-invalid'));
   });
 
