@@ -1,0 +1,20 @@
+/** @define block-name */
+
+.block-name {
+  color: green;
+
+  .block-name__element {}
+  &__element {}
+  &__element-modifier {}
+  &_modifier {}
+  &:pseudo-class {}
+  &:pseudo-element {}
+  &::pseudo-element {}
+  &[attr] {}
+}
+
+/** @define block-name; weak **/
+
+.block-name {
+  .other {}
+}

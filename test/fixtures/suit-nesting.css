@@ -1,0 +1,33 @@
+/** @define Component **/
+
+.Component {
+  color: green;
+
+  .Component-descendant {
+    &:active {}
+    &.is-active {}
+  }
+
+  &.is-stateName {}
+  &-descendant {}
+  &-descendant--modifier {}
+  &--modifier {}
+  &:pseudo-class {}
+  &:pseudo-element {}
+  &::pseudo-element {}
+  &[attr] {}
+}
+
+.Component-standAloneDescendant {}
+
+@media (min-width: 780px) {
+  .Component {
+    .Component-descendant {}
+  }
+}
+
+/** @define ComponentWeak; weak **/
+
+.ComponentWeak {
+  .Other {}
+}
