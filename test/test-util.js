@@ -5,7 +5,6 @@ var fs = require('fs');
 var postcss = require('postcss');
 
 function getPostcssResult(css, primary, secondary) {
-  // Call then() at the end to make the LazyResult evaluate
   var result = postcss()
     .use(linter(primary, secondary))
     .process(css);
