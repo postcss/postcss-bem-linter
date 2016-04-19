@@ -7,7 +7,8 @@
     "lib"
   ],
   "dependencies": {
-    "postcss": "^5.0.0"
+    "postcss": "^5.0.0",
+    "postcss-resolve-nested-selector": "^0.1.1"
   },
   "devDependencies": {
     "eslint": "1.7.3",
