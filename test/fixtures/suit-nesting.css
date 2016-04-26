@@ -26,6 +26,26 @@
   }
 }
 
+.Component {
+  @nest & .Component-nested {
+    width: 500px;
+  }
+
+  @nest &.is-dark {
+    color: white;
+  }
+}
+
+.Component {
+  & .Component-nested {
+    width: 500px;
+  }
+
+  &.is-dark {
+    color: white;
+  }
+}
+
 /** @define ComponentWeak; weak **/
 
 .ComponentWeak {
