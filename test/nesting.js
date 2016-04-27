@@ -61,6 +61,33 @@ describe('getSelectors function', function() {
       assert.deepEqual(getSelectors(hover), ['.Component .Component-d:hover']);
       assert.deepEqual(getSelectors(state), ['.Component .Component-d.is-active']);
     });
+
+    describe('grouped selectors', function() {
+      it('should unwrap grouped selectors without declarations', function() {
+        var componentRoot = postcss.rule({selector: '.Component, .Component-d'});
+        var hover = postcss.rule({selector: '&:hover'});
+        var state = postcss.rule({selector: '&.is-active'});
+        componentRoot.append([hover, state]);
+        root.append(componentRoot);
+
+        assert.deepEqual(getSelectors(componentRoot), null);
+        assert.deepEqual(getSelectors(hover), ['.Component:hover', '.Component-d:hover']);
+        assert.deepEqual(getSelectors(state), ['.Component.is-active', '.Component-d.is-active']);
+      });
+
+      it('should unwrap grouped selectors with declarations', function() {
+        var componentRoot = postcss.rule({selector: '.Component, .Component-d'});
+        var hover = postcss.rule({selector: '&:hover'});
+        var state = postcss.rule({selector: '&.is-active'});
+        componentRoot.append({prop: 'color', value: 'green'});
+        componentRoot.append([hover, state]);
+        root.append(componentRoot);
+
+        assert.deepEqual(getSelectors(componentRoot), ['.Component', '.Component-d']);
+        assert.deepEqual(getSelectors(hover), ['.Component:hover', '.Component-d:hover']);
+        assert.deepEqual(getSelectors(state), ['.Component.is-active', '.Component-d.is-active']);
+      });
+    });
   });
 
   describe('ruleset within an atrule block', function() {
