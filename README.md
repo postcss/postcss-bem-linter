@@ -74,7 +74,7 @@ The following preset patterns are available:
   Options:
   - `namespace`: a namespace to prefix valid classes, as described
     [in the SUIT docs](https://github.com/suitcss/suit/blob/master/doc/naming-conventions.md#namespace-optional)
-- `'bem'`, as defined [here](https://en.bem.info/tools/bem/bem-naming/).
+- `'bem'`, as defined [here](https://en.bem.info/methodology/naming-convention/).
   - `namespace`: a namespace to prefix valid classes, to be separated from the block name with a hyphen,
     e.g. with namespace `foo`, `.foo-dropdown__menu`.
 
