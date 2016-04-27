@@ -1,3 +1,7 @@
+=== 2.5.0 (April 27, 2016)
+
+* Add support for nested selectors.
+
 === 2.4.1 (March 28, 2016)
 
 * Fix preset `componentName` patterns.
