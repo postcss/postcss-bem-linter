@@ -7,10 +7,16 @@ describe('using BEM pattern', function() {
     assertSuccess(util.fixture('bem-valid'), 'bem');
   });
 
+  describe('nesting selectors', function() {
+    it('accepts nested rulesets', function() {
+      assertSuccess(util.fixture('bem-nesting'), 'bem');
+    });
+  });
+
   describe('when given invalid selectors', function() {
     var s = util.selectorTester('/** @define block */');
 
-    // mirroring tests from http://goo.gl/Db6QPu
+    // mirroring tests from https://goo.gl/G0VZHZ
     it('should not validate elem without block', function() {
       assertSingleFailure(s('__elem'), 'bem');
     });

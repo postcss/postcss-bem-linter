@@ -4,6 +4,7 @@ var assertFailure = util.assertFailure;
 var assertSingleFailure = util.assertSingleFailure;
 var selectorTester = util.selectorTester;
 var fixture = util.fixture;
+var assert = require('assert');
 
 describe('using SUIT pattern (default)', function() {
   it('accepts valid component classes', function() {
@@ -82,8 +83,7 @@ describe('using SUIT pattern (default)', function() {
       assertSuccess(sUtil('.u-16by9'));
     });
   });
-  
-  
+
   it('accepts chained modifier selectors', function() {
     assertSuccess(s('.Foo--big.Foo--colored'));
     assertSuccess(s('.Foo--big.Foo--colored .Foo-input'));
@@ -93,7 +93,7 @@ describe('using SUIT pattern (default)', function() {
 
   it('accepts chained state selectors', function() {
     assertSuccess(s('.Foo.is-open.is-disabled .Foo-input'));
-    assertSuccess(s('.Foo--big.is-open.is-disabled .Foo-input.is-invalid'));    
+    assertSuccess(s('.Foo--big.is-open.is-disabled .Foo-input.is-invalid'));
     assertSuccess(s('.Foo.is-open.is-disabled .Foo-input.is-invalid'));
   });
 
@@ -102,6 +102,31 @@ describe('using SUIT pattern (default)', function() {
     assertSuccess(s('.Foo[disabled]'));
     assertSuccess(s('.Foo-input[disabled] ~ .Foo-label'));
     assertSuccess(s('.Foo-inner--password .Foo-input[type="password"]'));
+  });
+
+  describe('nesting selectors', function() {
+    it('accepts nested rulesets', function() {
+      assertSuccess(fixture('suit-nesting'));
+    });
+
+    it('rejects an incorrect nested ruleset', function() {
+      assertSingleFailure('/** @define Component */ \n .Component { &--Modifier {} }');
+      assertSingleFailure('/** @define Component */ \n .Component { .component-elem {} }');
+    });
+
+    it('rejects with a single warning when the parent has no declarations', function() {
+      assertSingleFailure('/** @define Component */ \n .component { &--modifier {} }');
+    });
+
+    it('rejects with multiple warnings if the parent has declarations', function() {
+      var result = util.test('/** @define Component */ \n .component { color:red; &--modifier {} }');
+      assert.equal(result.warnings().length, 2);
+    });
+
+    it('correctly reports line number', function() {
+      var result = util.test('/** @define Component */ \n .Component {\n &--modifier {}\n .component-element {} \n}');
+      assert.equal(result.warnings()[0].line, 4);
+    });
   });
 
   describe('strict SUIT syntax', function() {

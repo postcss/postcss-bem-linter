@@ -5,6 +5,7 @@ require('./ignore-selectors');
 require('./property-validation');
 require('./ranges');
 require('./selector-validation');
+require('./nesting');
 require('./suit-pattern');
 require('./utility-validation');
 require('./edge-cases');
