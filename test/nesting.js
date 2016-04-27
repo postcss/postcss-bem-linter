@@ -22,7 +22,7 @@ describe('getSelectors function', function() {
       componentRoot.append({selector: '.Component-d'});
       componentRoot.append({text: 'comment'});
 
-      assert.deepEqual(getSelectors(componentRoot), null);
+      assert.deepEqual(getSelectors(componentRoot), []);
     });
 
     it('should return a selector if the ruleset has declarations', function() {
@@ -56,8 +56,8 @@ describe('getSelectors function', function() {
       descendant.append([hover, state]);
       componentRoot.append(descendant);
 
-      assert.deepEqual(getSelectors(componentRoot), null);
-      assert.deepEqual(getSelectors(descendant), null);
+      assert.deepEqual(getSelectors(componentRoot), []);
+      assert.deepEqual(getSelectors(descendant), []);
       assert.deepEqual(getSelectors(hover), ['.Component .Component-d:hover']);
       assert.deepEqual(getSelectors(state), ['.Component .Component-d.is-active']);
     });
@@ -70,7 +70,7 @@ describe('getSelectors function', function() {
         componentRoot.append([hover, state]);
         root.append(componentRoot);
 
-        assert.deepEqual(getSelectors(componentRoot), null);
+        assert.deepEqual(getSelectors(componentRoot), []);
         assert.deepEqual(getSelectors(hover), ['.Component:hover', '.Component-d:hover']);
         assert.deepEqual(getSelectors(state), ['.Component.is-active', '.Component-d.is-active']);
       });
@@ -97,7 +97,7 @@ describe('getSelectors function', function() {
       componentRoot.append(rule);
       media.append(componentRoot);
 
-      assert.deepEqual(getSelectors(componentRoot), null);
+      assert.deepEqual(getSelectors(componentRoot), []);
       assert.deepEqual(getSelectors(rule), ['.Component .Component-d']);
     });
   });
@@ -110,7 +110,7 @@ describe('getSelectors function', function() {
       componentRoot.append(media);
 
       assert.deepEqual(getSelectors(rule), ['.Component .Component-d']);
-      assert.deepEqual(getSelectors(componentRoot), null);
+      assert.deepEqual(getSelectors(componentRoot), []);
     });
 
     it('should return a selector for a ruleset with declarations and nested media query', function() {
