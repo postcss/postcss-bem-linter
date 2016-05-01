@@ -1,3 +1,7 @@
+=== 2.5.1 (May 1, 2016)
+
+* Add support for nested selectors in utility stylesheets.
+
 === 2.5.0 (April 27, 2016)
 
 * Add support for nested selectors.
