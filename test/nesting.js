@@ -1,10 +1,8 @@
 var assert = require('assert');
-var rewire = require('rewire');
 var postcss = require('postcss');
-var validateSelectors = rewire('../lib/validate-selectors');
+var getSelectors = require('../lib/get-selectors');
 
-describe('getSelectors function', function() {
-  var getSelectors = validateSelectors.__get__('getSelectors');
+describe('getSelectors', function() {
   var root, componentRoot;
 
   beforeEach(function() {
