@@ -235,6 +235,47 @@ describe('selector validation', function() {
     }
   );
 
+  describe(
+    'with different `initial` ("^\\.prefix$") and ' +
+    '`combined` ("^\\.prefix-" + cmpt + "(?:-[a-z]+)?$") selector patterns, ' +
+    'where the initial selector does not contain the component name',
+    function() {
+      describe('as regular expressions', function() {
+        runTests({
+          initial: function(cmpt) {
+            return new RegExp('^\\.prefix$');
+          },
+          combined: function(cmpt) {
+            return new RegExp('^\\.prefix-' + cmpt + '(?:-[a-z]+)?$');
+          },
+        });
+      });
+      describe('as strings', function() {
+        runTests({
+          initial: '^\\.prefix$',
+          combined: '^\\.prefix-{componentName}(?:-[a-z]+)?$',
+        });
+      });
+
+      function runTests(componentSelectors) {
+        var patternB = { componentSelectors: componentSelectors };
+        var s = selectorTester('/** @define foo */');
+
+        it('accepts `.prefix .prefix-foo`', function() {
+          assertSuccess(s('.prefix .prefix-foo'), patternB);
+        });
+
+        it('rejects `.prefix-foo`', function() {
+          assertSingleFailure(s('.prefix-foo'), patternB);
+        });
+
+        it('rejects `.prefix .foo`', function() {
+          assertSingleFailure(s('.prefix .foo'), patternB);
+        });
+      }
+    }
+  );
+
   describe('with @keyframes rule', function() {
     it('does not complain about keyframe selectors', function() {
       assertSuccess('/** @define Foo */ @keyframes fade { 0% { opacity: 0; } 100% { opacity: 1; } }');
