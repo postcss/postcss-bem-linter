@@ -1,3 +1,7 @@
+=== 2.6.0 (September 26, 2016)
+
+* Allow component selector patterns without `{componentName}` interpolation.
+
 === 2.5.1 (May 1, 2016)
 
 * Add support for nested selectors in utility stylesheets.
