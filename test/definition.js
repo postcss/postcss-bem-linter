@@ -25,3 +25,41 @@ describe('`@define` notation', function() {
     });
   });
 });
+
+describe('Implicit @define', function() {
+  describe('based on filename', function() {
+    var filename = process.cwd() + '/css/c/implicit-component.css';
+    var css = '.implicit-component-broken {}';
+
+    it('must complain when true', function() {
+      util.assertSingleFailure(css, {implicitComponents: true, preset: 'bem'}, null, filename);
+    });
+
+    it('must complain when string', function() {
+      util.assertSingleFailure(css, {implicitComponents: 'css/**/*.css', preset: 'bem'}, null, filename);
+    });
+
+    it('must complain when array', function() {
+      util.assertSingleFailure(css, {implicitComponents: ['css/c/*.css'], preset: 'bem'}, null, filename);
+    });
+
+    it('must complain about component name', function() {
+      util.assertSingleFailure(
+        css,
+        {
+          implicitComponents: true,
+          componentName: /[A-Z]+/,
+          componentSelectors: function() { return /.*/; },
+        },
+        null,
+        filename
+      );
+    });
+  });
+
+  describe('utilities', function() {
+    it('must complain', function() {
+      util.assertSingleFailure('.foo-bar {}', {implicitUtilities: ['utils/*.css'], preset: 'suit'}, null, 'utils/foo-bar.css');
+    });
+  });
+});

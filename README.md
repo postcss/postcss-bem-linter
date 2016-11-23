@@ -257,15 +257,28 @@ bemLinter({
 ### Defining a component
 
 The plugin will only run if it finds special comments that
-define a named component or a group of utilities.
+define a named component or a group of utilities,
+or the implicit config option is set.
 
-These definitions can be provided in two syntaxes: concise and verbose.
+These comment definitions can be provided in two syntaxes: concise and verbose.
 
 - Concise definition syntax: `/** @define ComponentName */` or `/** @define utilities */`
 - Verbose definition syntax: `/* postcss-bem-linter: define ComponentName */` or `/* postcss-bem-linter: define utilities */`.
 
 Weak mode is turned on by adding `; weak` to a definition,
 e.g. `/** @define ComponentName; weak */` or `/* postcss-bem-linter: define ComponentName; weak */`.
+
+The config options for implicit component definitions takes the following values:
+
+- Enable it for all files: `implicitComponents: true`
+- Enable it for files that match glob pattern: `implicitComponents: 'components/**/*.css'`
+- Enable it for files that match one of multiple glob patterns: `implicitComponents: ['components/**/*.css', 'others/**/*.css']`
+
+The config options for implicit utilities:
+
+- Enable it for files that match glob pattern: `implicitUtilities: 'utils/*.css'`
+- Enable it for files that match one of multiple glob patterns: `implicitUtilities: ['util/*.css', 'bar/**/*.css']`
+
 
 Concise syntax:
 
@@ -308,6 +321,17 @@ Weak mode:
 
 .MyComponent .other {}
 ```
+
+Implicit:
+
+```javascript
+bemLinter({
+  preset: 'bem',
+  implicitComponents: 'components/**/*.css',
+  implicitUtilities: 'utils/*.css'
+});
+```
+
 
 Utilities:
 

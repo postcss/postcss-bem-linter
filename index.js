@@ -4,6 +4,8 @@ var validateUtilities = require('./lib/validate-utilities');
 var validateSelectors = require('./lib/validate-selectors');
 var generateConfig = require('./lib/generate-config');
 var toRegexp = require('./lib/to-regexp');
+var path = require('path');
+var minimatch = require('minimatch');
 
 var DEFINE_VALUE = '([-_a-zA-Z0-9]+)\\s*(?:;\\s*(weak))?';
 var DEFINE_DIRECTIVE = new RegExp(
@@ -86,8 +88,64 @@ module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, s
       });
     }
 
+    function checkGlob(file, globs) {
+      if (file.indexOf(process.cwd()) === 0) {
+        file = file.substr(process.cwd().length);
+
+        if (file.charAt(0) === path.sep) {
+          file = file.substr(1);
+        }
+      }
+
+      return globs.reduce(function (accumulator, pattern) {
+        return accumulator || minimatch(file, pattern);
+      }, false);
+    }
+
+    function isImplicitComponent(file) {
+      if (config.implicitComponents === true) {
+        return true;
+
+      } else if (Array.isArray(config.implicitComponents)) {
+        return checkGlob(file, config.implicitComponents);
+      }
+
+      return false;
+    }
+
+    function isImplicitUtilities(file) {
+      if (Array.isArray(config.implicitUtilities)) {
+        return checkGlob(file, config.implicitUtilities);
+      }
+
+      return false;
+    }
+
     function findRanges(root) {
       var ranges = [];
+
+      var filename = root.source.input.file;
+      if (isImplicitUtilities(filename)) {
+        ranges.push({
+          defined: 'utilities',
+          start: 0,
+          weakMode: false,
+        });
+      } else if (isImplicitComponent(filename)) {
+        var defined = path.basename(filename).split('.')[0]
+
+        if (defined !== UTILITIES_IDENT && !toRegexp(config.componentNamePattern).test(defined)) {
+          result.warn(
+            'Invalid component name from implicit conversion from filename ' + filename
+          );
+        }
+        ranges.push({
+          defined: defined,
+          start: 0,
+          weakMode: false,
+        });
+      }
+
       root.walkComments(function(comment) {
         var commentStartLine = (comment.source) ? comment.source.start.line : null;
         if (!commentStartLine) return;
