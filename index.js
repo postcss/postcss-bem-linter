@@ -124,26 +124,28 @@ module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, s
     function findRanges(root) {
       var ranges = [];
 
-      var filename = root.source.input.file;
-      if (isImplicitUtilities(filename)) {
-        ranges.push({
-          defined: 'utilities',
-          start: 0,
-          weakMode: false,
-        });
-      } else if (isImplicitComponent(filename)) {
-        var defined = path.basename(filename).split('.')[0]
+      if (root.source && root.source.input && root.source.input.file) {
+        var filename = root.source.input.file;
+        if (isImplicitUtilities(filename)) {
+          ranges.push({
+            defined: 'utilities',
+            start: 0,
+            weakMode: false,
+          });
+        } else if (isImplicitComponent(filename)) {
+          var defined = path.basename(filename).split('.')[0]
 
-        if (defined !== UTILITIES_IDENT && !toRegexp(config.componentNamePattern).test(defined)) {
-          result.warn(
-            'Invalid component name from implicit conversion from filename ' + filename
-          );
+          if (defined !== UTILITIES_IDENT && !toRegexp(config.componentNamePattern).test(defined)) {
+            result.warn(
+              'Invalid component name from implicit conversion from filename ' + filename
+            );
+          }
+          ranges.push({
+            defined: defined,
+            start: 0,
+            weakMode: false,
+          });
         }
-        ranges.push({
-          defined: defined,
-          start: 0,
-          weakMode: false,
-        });
       }
 
       root.walkComments(function(comment) {
