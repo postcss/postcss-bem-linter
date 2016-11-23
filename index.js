@@ -103,14 +103,11 @@ module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, s
     }
 
     function isImplicitComponent(file) {
-      if (config.implicitComponents === true) {
-        return true;
-
-      } else if (Array.isArray(config.implicitComponents)) {
+      if (Array.isArray(config.implicitComponents)) {
         return checkGlob(file, config.implicitComponents);
       }
 
-      return false;
+      return Boolean(config.implicitComponents);
     }
 
     function isImplicitUtilities(file) {
