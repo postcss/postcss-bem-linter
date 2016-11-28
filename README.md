@@ -254,11 +254,30 @@ bemLinter({
 });
 ```
 
-### Defining a component
+### Defining a component and utilities
 
-The plugin will only run if it finds special comments that
-define a named component or a group of utilities,
-or the implicit config option is set.
+The plugin will only lint the CSS if it knows the context of the CSS: is it a utility or a
+component. To define the context, use the configuration options to define it based on the filename
+(`css/components/*.css`) or use a special comment to define context for the CSS after it.
+When defining a component, the component name is needed.
+
+#### Define components and utilities implicitly based on their filename
+
+When defining a component base on the filename, the name of the file (minus the extension) will be
+used implicitly as the component name for linting.
+The configuration option for implicit components take:
+
+- Enable it for all files: `implicitComponents: true`
+- Enable it for files that match a glob pattern: `implicitComponents: 'components/**/*.css'`
+- Enable it for files that match one of multiple glob patterns: `implicitComponents: ['components/**/*.css', 'others/**/*.css']`
+
+The CSS will implicitly be linted as utilities in files marked as such by their filename.
+The configuration option for implicit utilities take:
+
+- Enable it for files that match a glob pattern: `implicitUtilities: 'utils/*.css'`
+- Enable it for files that match one of multiple glob patterns: `implicitUtilities: ['util/*.css', 'bar/**/*.css']`
+
+#### Define components/utilities with a comment
 
 These comment definitions can be provided in two syntaxes: concise and verbose.
 
@@ -267,18 +286,6 @@ These comment definitions can be provided in two syntaxes: concise and verbose.
 
 Weak mode is turned on by adding `; weak` to a definition,
 e.g. `/** @define ComponentName; weak */` or `/* postcss-bem-linter: define ComponentName; weak */`.
-
-The config options for implicit component definitions takes the following values:
-
-- Enable it for all files: `implicitComponents: true`
-- Enable it for files that match glob pattern: `implicitComponents: 'components/**/*.css'`
-- Enable it for files that match one of multiple glob patterns: `implicitComponents: ['components/**/*.css', 'others/**/*.css']`
-
-The config options for implicit utilities:
-
-- Enable it for files that match glob pattern: `implicitUtilities: 'utils/*.css'`
-- Enable it for files that match one of multiple glob patterns: `implicitUtilities: ['util/*.css', 'bar/**/*.css']`
-
 
 Concise syntax:
 
