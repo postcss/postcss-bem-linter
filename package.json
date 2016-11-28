@@ -7,7 +7,7 @@
     "lib"
   ],
   "dependencies": {
-    "minimatch": "^3.0.3",
+    "minimatch-list": "0.0.1",
     "postcss": "^5.0.0",
     "postcss-resolve-nested-selector": "^0.1.1"
   },

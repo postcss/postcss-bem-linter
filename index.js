@@ -5,7 +5,7 @@ var validateSelectors = require('./lib/validate-selectors');
 var generateConfig = require('./lib/generate-config');
 var toRegexp = require('./lib/to-regexp');
 var path = require('path');
-var minimatch = require('minimatch');
+var minimatchList = require('minimatch-list');
 
 var DEFINE_VALUE = '([-_a-zA-Z0-9]+)\\s*(?:;\\s*(weak))?';
 var DEFINE_DIRECTIVE = new RegExp(
@@ -89,17 +89,9 @@ module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, s
     }
 
     function checkGlob(file, globs) {
-      if (file.indexOf(process.cwd()) === 0) {
-        file = file.substr(process.cwd().length);
-
-        if (file.charAt(0) === path.sep) {
-          file = file.substr(1);
-        }
-      }
-
-      return globs.reduce(function (accumulator, pattern) {
-        return accumulator || minimatch(file, pattern);
-      }, false);
+      // PostCSS turns relative paths into absolute paths
+      file = path.relative(process.cwd(), file);
+      return minimatchList(file, globs);
     }
 
     function isImplicitComponent(file) {
