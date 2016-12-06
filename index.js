@@ -95,7 +95,7 @@ module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, s
     }
 
     function isImplicitComponent(file) {
-      if (Array.isArray(config.implicitComponents)) {
+      if (config.implicitComponents instanceof Array) {
         return checkGlob(file, config.implicitComponents);
       }
 
@@ -103,7 +103,7 @@ module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, s
     }
 
     function isImplicitUtilities(file) {
-      if (Array.isArray(config.implicitUtilities)) {
+      if (config.implicitUtilities instanceof Array) {
         return checkGlob(file, config.implicitUtilities);
       }
 
