@@ -5,7 +5,7 @@ var validateSelectors = require('./lib/validate-selectors');
 var generateConfig = require('./lib/generate-config');
 var toRegexp = require('./lib/to-regexp');
 var path = require('path');
-var minimatchList = require('minimatch-list');
+var checkImplicit = require('./lib/check-implicit');
 
 var DEFINE_VALUE = '([-_a-zA-Z0-9]+)\\s*(?:;\\s*(weak))?';
 var DEFINE_DIRECTIVE = new RegExp(
@@ -88,40 +88,18 @@ module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, s
       });
     }
 
-    function checkGlob(file, globs) {
-      // PostCSS turns relative paths into absolute paths
-      file = path.relative(process.cwd(), file);
-      return minimatchList(file, globs);
-    }
-
-    function isImplicitComponent(file) {
-      if (config.implicitComponents instanceof Array) {
-        return checkGlob(file, config.implicitComponents);
-      }
-
-      return Boolean(config.implicitComponents);
-    }
-
-    function isImplicitUtilities(file) {
-      if (config.implicitUtilities instanceof Array) {
-        return checkGlob(file, config.implicitUtilities);
-      }
-
-      return false;
-    }
-
     function findRanges(root) {
       var ranges = [];
 
       if (root.source && root.source.input && root.source.input.file) {
         var filename = root.source.input.file;
-        if (isImplicitUtilities(filename)) {
+        if (checkImplicit.isImplicitUtilities(config.implicitUtilities, filename)) {
           ranges.push({
             defined: 'utilities',
             start: 0,
             weakMode: false,
           });
-        } else if (isImplicitComponent(filename)) {
+        } else if (checkImplicit.isImplicitComponent(config.implicitComponents, filename)) {
           var defined = path.basename(filename).split('.')[0]
 
           if (defined !== UTILITIES_IDENT && !toRegexp(config.componentNamePattern).test(defined)) {
