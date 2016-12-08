@@ -82,6 +82,30 @@ describe('using SUIT pattern (default)', function() {
     it('accepts `u-16by9`', function() {
       assertSuccess(sUtil('.u-16by9'));
     });
+
+    it('accepts `u-sm-fooBar`', function() {
+      assertSuccess(sUtil('.u-sm-fooBar'));
+    });
+
+    it('accepts `u-md-fooBar`', function() {
+      assertSuccess(sUtil('.u-md-fooBar'));
+    });
+
+    it('accepts `u-lg-fooBar`', function() {
+      assertSuccess(sUtil('.u-lg-fooBar'));
+    });
+
+    it('rejects `u-sm-Foo`', function() {
+      assertSingleFailure(sUtil('.u-sm-FooBar'));
+    });
+
+    it('rejects `u-foo-bar`', function() {
+      assertSingleFailure(sUtil('.u-foo-bar'));
+    });
+
+    it('rejects `u-sm-foo-bar`', function() {
+      assertSingleFailure(sUtil('.u-sm-foo-bar'));
+    });
   });
 
   it('accepts chained modifier selectors', function() {
