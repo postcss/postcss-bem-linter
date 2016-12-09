@@ -1,5 +1,4 @@
 var util = require('./test-util');
-var assertSingleFailure = util.assertSingleFailure;
 var assertSuccess = util.assertSuccess;
 
 var primaryRegexOnly = {
