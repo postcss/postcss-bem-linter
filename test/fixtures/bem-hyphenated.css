@@ -13,9 +13,3 @@
 .block-name__elem-name .block-name__elem-name {}
 .block-name__elem-name--mod-name--mod-val .block-name__elem-name--mod-name--mod-val {}
 .block-name__elem--mod .block-name__elem--mod {}
-.block-name__camelCase {}
-
-.block-name__camelCase:nth-child(3n) {}
-.block-name__camelCase:nth-child(3n+1) {}
-.block-name[disabled] {}
-.block-name__elem--mod[disabled] {}
