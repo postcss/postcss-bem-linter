@@ -25,7 +25,7 @@ Version 1.0.0+ is compatible with PostCSS 5+. (Earlier versions are compatible w
 
 This plugin registers warnings via PostCSS. Therefore, you'll want to use it with a PostCSS runner that prints warnings (e.g. [`gulp-postcss`](https://github.com/postcss/gulp-postcss)) or another PostCSS plugin that prints warnings (e.g. [`postcss-reporter`](https://github.com/postcss/postcss-reporter)).
 
-**Throughout this document, terms like "selector", "selector sequence", and "simple selector" are used according to the definitions in the [Selectors Level 3 spec](http://www.w3.org/TR/css3-selectors/#selector-syntax).**  
+**Throughout this document, terms like "selector", "selector sequence", and "simple selector" are used according to the definitions in the [Selectors Level 3 spec](http://www.w3.org/TR/css3-selectors/#selector-syntax).**
 
 ### stylelint plugin
 
@@ -105,16 +105,20 @@ Describes valid component names in one of the following forms:
 Describes all valid selector sequences for the stylesheet in one of the following forms:
 
 - A *single function* that accepts a component name and returns a regular expression, e.g.
-  ```js
-  componentSelectors: function(componentName) {
-    return new RegExp('^\\.ns-' + componentName + '(?:-[a-zA-Z]+)?$');
-  }
-  ```
+
+```js
+componentSelectors: function(componentName) {
+  return new RegExp('^\\.ns-' + componentName + '(?:-[a-zA-Z]+)?$');
+}
+```
+
 - A *single string* that provides a valid pattern for the `RegExp()` constructor *when
   `{componentName}` is interpolated with the defined component's name*, e.g.
-  ```js
-  componentSelectors: '^\\.ns-{componentName}(?:-[a-zA-Z]+)?$'
-  ```
+
+```js
+componentSelectors: '^\\.ns-{componentName}(?:-[a-zA-Z]+)?$'
+```
+
 - An *object consisting of two properties*, `initial` and `combined`. Both properties accept the
   same two forms described above: a function accepting a component name and returning a regular
   expression; or a string, interpolating the component name with `{componentName}`, that will
