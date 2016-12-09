@@ -4,7 +4,7 @@ var assertSuccess = util.assertSuccess;
 var primaryRegexOnly = {
   componentName: '[a-z0-9]+(?:-[a-z0-9]+)*',
   componentSelectors: {
-    initial: '^\\.(?:no-)?js|\\.(?:is|has)-[a-z0-9]+(?:-[a-z0-9]+)*|\\.[a-z0-9]+(?:-[a-z0-9]+)*(?:__[a-z0-9]+(?:-[a-z0-9]+)*)*(?:--[a-z0-9]+(?:-[a-z0-9]+)*)?$',
+    initial: '^\\.[a-z0-9]+(?:-[a-z0-9]+)*(?:__[a-z0-9]+(?:-[a-z0-9]+)*)*(?:--[a-z0-9]+(?:-[a-z0-9]+)*)*$',
     combined: '^\\.[a-z0-9]+(?:-[a-z0-9]+)*(?:__[a-z0-9]+(?:-[a-z0-9]+)*)*(?:--[a-z0-9]+(?:-[a-z0-9]+)*)?|\\.(?:is|has)-[a-z0-9]+(?:-[a-z0-9]+)*$',
   },
 }
@@ -12,7 +12,7 @@ var primaryRegexOnly = {
 var primaryInterpolated = {
   componentName: '[a-z0-9]+(?:-[a-z0-9]+)*',
   componentSelectors: {
-    initial: '^\\.(?:no-)?js|\\.(?:is|has)-{componentName}|\\.{componentName}(?:__{componentName})*(?:--{componentName})?$',
+    initial: '^\\.{componentName}(?:__{componentName})*(?:--{componentName})*$',
     combined: '^\\.{componentName}(?:__{componentName})*(?:--{componentName})?|\\.(?:is|has)-{componentName}$',
   },
 }
