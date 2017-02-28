@@ -1,3 +1,7 @@
+=== 2.7.0 (February 28, 2017)
+
+* Add implicitComponents and implicitUtilities option ([#93](https://github.com/postcss/postcss-bem-linter/pull/93))
+
 === 2.6.0 (September 26, 2016)
 
 * Allow component selector patterns without `{componentName}` interpolation.
