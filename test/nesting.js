@@ -15,6 +15,14 @@ describe('getSelectors', function() {
     assert.deepEqual(getSelectors(componentRoot), ['.Component']);
   });
 
+  it('should check for the existence of child nodes', function() {
+    var rule = postcss.rule({selector: '.Component-d'});
+    rule.nodes = undefined;
+    componentRoot.append(rule);
+
+    assert.deepEqual(getSelectors(rule), ['.Component .Component-d']);
+  });
+
   describe('ruleset declarations with nested rulesets', function() {
     it('should ignore a ruleset that has no declarations', function() {
       componentRoot.append({selector: '.Component-d'});
