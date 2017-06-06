@@ -1,0 +1,15 @@
+/** @define block-name */
+
+.block-name {}
+.block-name--mod-name--mod-val {}
+.block-name--mod {}
+.block-name__elem-name {}
+.block-name__elem-name--mod-name--mod-val {}
+.block-name__elem--mod {}
+
+.block-name .block-name {}
+.block-name--mod-name--mod-val .block-name--mod-name--mod-val {}
+.block-name--mod .block-name--mod {}
+.block-name__elem-name .block-name__elem-name {}
+.block-name__elem-name--mod-name--mod-val .block-name__elem-name--mod-name--mod-val {}
+.block-name__elem--mod .block-name__elem--mod {}

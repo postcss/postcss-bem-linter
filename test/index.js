@@ -1,4 +1,5 @@
 require('./bem-pattern');
+require('./bem-hyphenated-pattern');
 require('./definition');
 require('./ignore-custom-properties');
 require('./ignore-selectors');
