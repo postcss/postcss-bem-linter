@@ -29,18 +29,22 @@ describe('`@define` notation', function() {
 describe('Implicit @define', function() {
   describe('based on filename', function() {
     var filename = process.cwd() + '/css/c/implicit-component.css';
+    var filenameWithUnderscore = process.cwd() + '/css/c/_implicit-component.scss';
     var css = '.implicit-component-broken {}';
 
     it('must complain when true', function() {
       util.assertSingleFailure(css, {implicitComponents: true, preset: 'bem'}, null, filename);
+      util.assertSingleFailure(css, {implicitComponents: true, preset: 'bem'}, null, filenameWithUnderscore);
     });
 
     it('must complain when string', function() {
       util.assertSingleFailure(css, {implicitComponents: 'css/**/*.css', preset: 'bem'}, null, filename);
+      util.assertSingleFailure(css, {implicitComponents: 'css/**/*.scss', preset: 'bem'}, null, filenameWithUnderscore);
     });
 
     it('must complain when array', function() {
       util.assertSingleFailure(css, {implicitComponents: ['css/c/*.css'], preset: 'bem'}, null, filename);
+      util.assertSingleFailure(css, {implicitComponents: ['css/c/*.scss'], preset: 'bem'}, null, filenameWithUnderscore);
     });
 
     it('must complain about component name', function() {
@@ -53,6 +57,16 @@ describe('Implicit @define', function() {
         },
         null,
         filename
+      );
+      util.assertSingleFailure(
+        css,
+        {
+          implicitComponents: true,
+          componentName: /[A-Z]+/,
+          componentSelectors: function() { return /.*/; },
+        },
+        null,
+        filenameWithUnderscore
       );
     });
   });
