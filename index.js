@@ -100,7 +100,7 @@ module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, s
             weakMode: false,
           });
         } else if (checkImplicit.isImplicitComponent(config.implicitComponents, filename)) {
-          var defined = path.basename(filename).split('.')[0]
+          var defined = path.basename(filename).split('.')[0].replace(/^_/, '');
 
           if (defined !== UTILITIES_IDENT && !toRegexp(config.componentNamePattern).test(defined)) {
             result.warn(
