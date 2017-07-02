@@ -1,3 +1,7 @@
+=== HEAD
+
+* Use parent directory for implicitComponent if filename is 'index.css'
+
 === 2.7.1 (June 06, 2017)
 
 * Fix issue with nested rules when using LESS syntax [#114](https://github.com/postcss/postcss-bem-linter/pull/114)

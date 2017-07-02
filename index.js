@@ -19,6 +19,10 @@ var END_DIRECTIVE = new RegExp(
 var UTILITIES_IDENT = 'utilities';
 var WEAK_IDENT = 'weak';
 
+function stripUnderscore(str) {
+  return str.replace(/^_/, '');
+}
+
 /**
  * Set things up and call the validators.
  *
@@ -100,7 +104,10 @@ module.exports = postcss.plugin('postcss-bem-linter', function(primaryOptions, s
             weakMode: false,
           });
         } else if (checkImplicit.isImplicitComponent(config.implicitComponents, filename)) {
-          var defined = path.basename(filename).split('.')[0].replace(/^_/, '');
+          var defined = stripUnderscore(path.basename(filename).split('.')[0]);
+          if (defined === 'index') {
+            defined = path.basename(path.join(filename, '..'));
+          }
 
           if (defined !== UTILITIES_IDENT && !toRegexp(config.componentNamePattern).test(defined)) {
             result.warn(
