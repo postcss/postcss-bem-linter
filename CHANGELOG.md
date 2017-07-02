@@ -1,5 +1,6 @@
 === HEAD
 
+* Ignore underscore on implicitComponent to allow Scss partials
 * Use parent directory for implicitComponent if filename is 'index.css'
 
 === 2.7.1 (June 06, 2017)
