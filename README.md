@@ -366,23 +366,23 @@ for *multiple definitions within a single file*, you can do that.
 Successive definitions override each other. So the following works:
 
 ```css
-/* @define Foo */
+/** @define Foo */
 .Foo {}
 
-/* @define Bar */
+/** @define Bar */
 .Bar {}
 
-/* @define utilities */
+/** @define utilities */
 .u-something {}
 ```
 
 You can also deliberately *end the enforcement of a definition* with the following special comments:
-`/* @end */` or `/* postcss-bem-linter: end */`.
+`/** @end */` or `/* postcss-bem-linter: end */`.
 
 ```css
-/* @define Foo */
+/** @define Foo */
 .Foo {}
-/* @end */
+/** @end */
 
 .something-something-something {}
 ```
