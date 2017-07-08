@@ -23,6 +23,15 @@ describe('getSelectors', function() {
     assert.deepEqual(getSelectors(rule), ['.Component .Component-d']);
   });
 
+  it('should return selector if selector contains @extend without other declarations', function() {
+    var rule = postcss.rule({selector: '.Component-d'});
+    var extend = postcss.atRule({name: 'extend'});
+    rule.append(extend);
+    componentRoot.append(rule);
+
+    assert.deepEqual(getSelectors(rule), ['.Component .Component-d']);
+  });
+
   describe('ruleset declarations with nested rulesets', function() {
     it('should ignore a ruleset that has no declarations', function() {
       componentRoot.append({selector: '.Component-d'});
