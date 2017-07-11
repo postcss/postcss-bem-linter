@@ -1,5 +1,6 @@
 === HEAD
 
+* Update PostCSS to `^6.0.6` - Drops support for Node 0.12
 * Ignore underscore on implicitComponent to allow Scss partials [#115](https://github.com/postcss/postcss-bem-linter/pull/115)
 * Use parent directory for implicitComponent if filename is 'index.css' [commit](https://github.com/postcss/postcss-bem-linter/commit/ad0bd56ea0721a3522067dfcc6aec0d0880bbe2d)
 * Lint rulesets that only have an @extend keyword [#119](https://github.com/postcss/postcss-bem-linter/pull/119)
