@@ -107,10 +107,13 @@ describe('getSelectors', function() {
 
   describe('ruleset within an atrule block', function() {
     it('should unwrap selectors as normal', function() {
+      var root = postcss.root();
+      var componentRoot = postcss.rule({selector: '.Component'});
       var rule = postcss.rule({selector: '.Component-d'});
       var media = postcss.atRule({name: 'media'});
       componentRoot.append(rule);
       media.append(componentRoot);
+      root.append(media);
 
       assert.deepEqual(getSelectors(componentRoot), []);
       assert.deepEqual(getSelectors(rule), ['.Component .Component-d']);
