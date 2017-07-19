@@ -36,7 +36,7 @@ describe('ignoring selectors', () => {
 
     function runTests(ignoreSelectors) {
       const s = selectorTester('/** @define Foo */');
-      const config = { preset: 'suit', ignoreSelectors: ignoreSelectors };
+      const config = { preset: 'suit', ignoreSelectors };
 
       it(
         'ignores selectors that match the `ignoreSelectors` pattern',
@@ -71,7 +71,7 @@ describe('ignoring selectors', () => {
 
     function runTests(ignoreSelectors) {
       const s = selectorTester('/** @define Foo */');
-      const config = { preset: 'suit', ignoreSelectors: ignoreSelectors };
+      const config = { preset: 'suit', ignoreSelectors };
 
       it(
         'ignores selectors that match any of the `ignoreSelectors` pattern',
@@ -141,7 +141,7 @@ describe('ignoring selectors', () => {
     function runTests(ignoreSelectors) {
       const configWithIgnore = {
         utilitySelectors: /\.[A-Z]+/,
-        ignoreSelectors: ignoreSelectors,
+        ignoreSelectors,
       };
 
       it('accepts valid selectors', () => {

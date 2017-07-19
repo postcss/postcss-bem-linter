@@ -22,7 +22,7 @@ describe('utility validation', () => {
     });
 
     function runTests(utilitySelectors) {
-      const config = { utilitySelectors: utilitySelectors };
+      const config = { utilitySelectors };
 
       it('accepts valid selectors', () => {
         util.assertSuccess('/** @define utilities */ .foo {}', config);

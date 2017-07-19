@@ -63,10 +63,10 @@ module.exports = postcss.plugin('postcss-bem-linter', (primaryOptions, secondary
           );
         }
         validateUtilities({
-          rule: rule,
+          rule,
           utilityPattern: toRegexp(patterns.utilitySelectors),
           ignorePattern: toRegexp(patterns.ignoreSelectors),
-          result: result,
+          result,
         });
         return;
       }
@@ -78,19 +78,19 @@ module.exports = postcss.plugin('postcss-bem-linter', (primaryOptions, secondary
         );
       }
       validateCustomProperties({
-        rule: rule,
+        rule,
         componentName: range.defined,
-        result: result,
+        result,
         ignorePattern: toRegexp(patterns.ignoreCustomProperties),
       });
       validateSelectors({
-        rule: rule,
+        rule,
         componentName: range.defined,
         weakMode: range.weakMode,
         selectorPattern: patterns.componentSelectors,
         selectorPatternOptions: config.presetOptions,
         ignorePattern: toRegexp(patterns.ignoreSelectors),
-        result: result,
+        result,
       });
     }
 
@@ -117,7 +117,7 @@ module.exports = postcss.plugin('postcss-bem-linter', (primaryOptions, secondary
             );
           }
           ranges.push({
-            defined: defined,
+            defined,
             start: 0,
             weakMode: false,
           });
@@ -144,7 +144,7 @@ module.exports = postcss.plugin('postcss-bem-linter', (primaryOptions, secondary
         }
         endCurrentRange(commentStartLine);
         ranges.push({
-          defined: defined,
+          defined,
           start: commentStartLine,
           weakMode: directiveMatch[2] === WEAK_IDENT,
         });

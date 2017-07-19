@@ -37,10 +37,10 @@ function selectorTester(def) {
 }
 
 module.exports = {
-  fixture: fixture,
-  assertSuccess: assertSuccess,
-  assertFailure: assertFailure,
-  assertSingleFailure: assertSingleFailure,
-  selectorTester: selectorTester,
+  fixture,
+  assertSuccess,
+  assertFailure,
+  assertSingleFailure,
+  selectorTester,
   test: getPostcssResult,
 };

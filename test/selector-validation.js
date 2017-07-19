@@ -24,7 +24,7 @@ describe('selector validation', () => {
 
     function runTests(componentName) {
       const p1 = {
-        componentName: componentName,
+        componentName,
         componentSelectors() { return /.*/; },
       };
 
@@ -48,7 +48,7 @@ describe('selector validation', () => {
 
     function runTests(componentName) {
       const p2 = {
-        componentName: componentName,
+        componentName,
         componentSelectors() { return /.*/; },
       };
 
@@ -74,7 +74,7 @@ describe('selector validation', () => {
       });
 
       function runTests(componentSelectors) {
-        const patternA = { componentSelectors: componentSelectors };
+        const patternA = { componentSelectors };
         const s = selectorTester('/** @define Foo */');
 
         it('accepts valid initial componentSelectors', () => {
@@ -179,7 +179,7 @@ describe('selector validation', () => {
       });
 
       function runTests(componentSelectors) {
-        const patternB = { componentSelectors: componentSelectors };
+        const patternB = { componentSelectors };
         const s = selectorTester('/** @define Foo */');
 
         it('accepts `.Foo .c-Foo`', () => {
@@ -256,7 +256,7 @@ describe('selector validation', () => {
       });
 
       function runTests(componentSelectors) {
-        const patternB = { componentSelectors: componentSelectors };
+        const patternB = { componentSelectors };
         const s = selectorTester('/** @define foo */');
 
         it('accepts `.prefix .prefix-foo`', () => {
