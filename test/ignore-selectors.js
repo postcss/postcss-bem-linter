@@ -1,11 +1,13 @@
-var util = require('./test-util');
-var assertSuccess = util.assertSuccess;
-var assertSingleFailure = util.assertSingleFailure;
-var selectorTester = util.selectorTester;
+'use strict';
+
+const util = require('./test-util');
+const assertSuccess = util.assertSuccess;
+const assertSingleFailure = util.assertSingleFailure;
+const selectorTester = util.selectorTester;
 
 describe('ignoring selectors', () => {
   describe('ignore a selector with a comment', () => {
-    var s = selectorTester('/** @define Foo */');
+    const s = selectorTester('/** @define Foo */');
 
     it(
       'ignores selectors after special comments a line before',
@@ -33,8 +35,8 @@ describe('ignoring selectors', () => {
     });
 
     function runTests(ignoreSelectors) {
-      var s = selectorTester('/** @define Foo */');
-      var config = { preset: 'suit', ignoreSelectors: ignoreSelectors };
+      const s = selectorTester('/** @define Foo */');
+      const config = { preset: 'suit', ignoreSelectors: ignoreSelectors };
 
       it(
         'ignores selectors that match the `ignoreSelectors` pattern',
@@ -68,8 +70,8 @@ describe('ignoring selectors', () => {
     });
 
     function runTests(ignoreSelectors) {
-      var s = selectorTester('/** @define Foo */');
-      var config = { preset: 'suit', ignoreSelectors: ignoreSelectors };
+      const s = selectorTester('/** @define Foo */');
+      const config = { preset: 'suit', ignoreSelectors: ignoreSelectors };
 
       it(
         'ignores selectors that match any of the `ignoreSelectors` pattern',
@@ -109,12 +111,12 @@ describe('ignoring selectors', () => {
   });
 
   describe('ignore utility selectors with a comment', () => {
-    var config = { utilitySelectors: /\.[a-z]+/ };
+    const config = { utilitySelectors: /\.[a-z]+/ };
 
     it(
       'ignores selectors after special comments a line before',
       () => {
-        var css = '/** @define utilities */\n/* postcss-bem-linter: ignore */\n.394 {}'
+        const css = '/** @define utilities */\n/* postcss-bem-linter: ignore */\n.394 {}';
         util.assertSuccess(css, config);
       }
     );
@@ -122,7 +124,7 @@ describe('ignoring selectors', () => {
     it(
       'ignores selectors after special comments a line before',
       () => {
-        var css = '/** @define utilities */ /* postcss-bem-linter: ignore */ .394 {}'
+        const css = '/** @define utilities */ /* postcss-bem-linter: ignore */ .394 {}';
         util.assertSuccess(css, config);
       }
     );
@@ -137,7 +139,7 @@ describe('ignoring selectors', () => {
     })
 
     function runTests(ignoreSelectors) {
-      var configWithIgnore = {
+      const configWithIgnore = {
         utilitySelectors: /\.[A-Z]+/,
         ignoreSelectors: ignoreSelectors,
       };

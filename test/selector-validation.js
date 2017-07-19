@@ -1,8 +1,8 @@
-var assert = require('assert');
-var util = require('./test-util');
-var assertSuccess = util.assertSuccess;
-var assertSingleFailure = util.assertSingleFailure;
-var selectorTester = util.selectorTester;
+const assert = require('assert');
+const util = require('./test-util');
+const assertSuccess = util.assertSuccess;
+const assertSingleFailure = util.assertSingleFailure;
+const selectorTester = util.selectorTester;
 
 describe('selector validation', () => {
   describe('with no `componentSelectors` pattern', () => {
@@ -23,7 +23,7 @@ describe('selector validation', () => {
     });
 
     function runTests(componentName) {
-      var p1 = {
+      const p1 = {
         componentName: componentName,
         componentSelectors: function() { return /.*/; },
       };
@@ -47,7 +47,7 @@ describe('selector validation', () => {
     });
 
     function runTests(componentName) {
-      var p2 = {
+      const p2 = {
         componentName: componentName,
         componentSelectors: function() { return /.*/; },
       };
@@ -74,11 +74,11 @@ describe('selector validation', () => {
       });
 
       function runTests(componentSelectors) {
-        var patternA = { componentSelectors: componentSelectors };
-        var s = selectorTester('/** @define Foo */');
+        const patternA = { componentSelectors: componentSelectors };
+        const s = selectorTester('/** @define Foo */');
 
         it('accepts valid initial componentSelectors', () => {
-          var valid = util.fixture('patternA-valid');
+          const valid = util.fixture('patternA-valid');
           assertSuccess(valid, patternA);
         });
 
@@ -135,7 +135,7 @@ describe('selector validation', () => {
         });
 
         describe('in weak mode', () => {
-          var sWeak = selectorTester('/** @define Foo; weak */');
+          const sWeak = selectorTester('/** @define Foo; weak */');
 
           it('accepts `.f-Foo .f-Foo`', () => {
             assertSuccess(sWeak('.f-Foo .f-Foo'), patternA);
@@ -179,8 +179,8 @@ describe('selector validation', () => {
       });
 
       function runTests(componentSelectors) {
-        var patternB = { componentSelectors: componentSelectors };
-        var s = selectorTester('/** @define Foo */');
+        const patternB = { componentSelectors: componentSelectors };
+        const s = selectorTester('/** @define Foo */');
 
         it('accepts `.Foo .c-Foo`', () => {
           assertSuccess(s('.Foo .c-Foo'), patternB);
@@ -207,7 +207,7 @@ describe('selector validation', () => {
         });
 
         describe('in weak mode', () => {
-          var sWeak = selectorTester('/** @define Foo; weak*/');
+          const sWeak = selectorTester('/** @define Foo; weak*/');
 
           it('accepts `.Foo .c-Foo`', () => {
             assertSuccess(sWeak('.Foo .c-Foo'), patternB);
@@ -256,8 +256,8 @@ describe('selector validation', () => {
       });
 
       function runTests(componentSelectors) {
-        var patternB = { componentSelectors: componentSelectors };
-        var s = selectorTester('/** @define foo */');
+        const patternB = { componentSelectors: componentSelectors };
+        const s = selectorTester('/** @define foo */');
 
         it('accepts `.prefix .prefix-foo`', () => {
           assertSuccess(s('.prefix .prefix-foo'), patternB);

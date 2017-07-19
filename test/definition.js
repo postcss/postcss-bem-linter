@@ -1,4 +1,6 @@
-var util = require('./test-util');
+'use strict';
+
+const util = require('./test-util');
 
 describe('`@define` notation', () => {
   describe('empty CSS', () => {
@@ -28,9 +30,9 @@ describe('`@define` notation', () => {
 
 describe('Implicit @define', () => {
   describe('based on filename', () => {
-    var filename = process.cwd() + '/css/c/implicit-component.css';
-    var filenameWithUnderscore = process.cwd() + '/css/c/_implicit-component.scss';
-    var css = '.implicit-component-broken {}';
+    const filename = process.cwd() + '/css/c/implicit-component.css';
+    const filenameWithUnderscore = process.cwd() + '/css/c/_implicit-component.scss';
+    const css = '.implicit-component-broken {}';
 
     it('must complain when true', () => {
       util.assertSingleFailure(css, {implicitComponents: true, preset: 'bem'}, null, filename);

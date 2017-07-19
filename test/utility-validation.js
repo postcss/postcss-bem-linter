@@ -1,5 +1,7 @@
-var assert = require('assert');
-var util = require('./test-util');
+'use strict';
+
+const assert = require('assert');
+const util = require('./test-util');
 
 describe('utility validation', () => {
   describe('with no `utilitySelectors` pattern', () => {
@@ -20,7 +22,7 @@ describe('utility validation', () => {
     });
 
     function runTests(utilitySelectors) {
-      var config = { utilitySelectors: utilitySelectors };
+      const config = { utilitySelectors: utilitySelectors };
 
       it('accepts valid selectors', () => {
         util.assertSuccess('/** @define utilities */ .foo {}', config);

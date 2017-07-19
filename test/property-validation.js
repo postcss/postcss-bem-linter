@@ -1,7 +1,7 @@
-var util = require('./test-util');
-var assertSuccess = util.assertSuccess;
-var assertSingleFailure = util.assertSingleFailure;
-var fixture = util.fixture;
+const util = require('./test-util');
+const assertSuccess = util.assertSuccess;
+const assertSingleFailure = util.assertSingleFailure;
+const fixture = util.fixture;
 
 describe('property validation', () => {
   it(
@@ -11,7 +11,7 @@ describe('property validation', () => {
     }
   );
 
-  var invDef = '/** @define InvalidRootVars */';
+  const invDef = '/** @define InvalidRootVars */';
 
   it('accepts an empty root', () => {
     assertSuccess(invDef + ':root {}');

@@ -1,9 +1,11 @@
-var assert = require('assert');
-var postcss = require('postcss');
-var getSelectors = require('../lib/get-selectors');
+'use strict';
+
+const assert = require('assert');
+const postcss = require('postcss');
+const getSelectors = require('../lib/get-selectors');
 
 describe('getSelectors', () => {
-  var root, componentRoot;
+  let root, componentRoot;
 
   beforeEach(() => {
     root = postcss.root();
@@ -16,7 +18,7 @@ describe('getSelectors', () => {
   });
 
   it('should check for the existence of child nodes', () => {
-    var rule = postcss.rule({selector: '.Component-d'});
+    const rule = postcss.rule({selector: '.Component-d'});
     rule.nodes = undefined;
     componentRoot.append(rule);
 
@@ -24,8 +26,8 @@ describe('getSelectors', () => {
   });
 
   it('should return selector if selector contains @extend without other declarations', () => {
-    var rule = postcss.rule({selector: '.Component-d'});
-    var extend = postcss.atRule({name: 'extend'});
+    const rule = postcss.rule({selector: '.Component-d'});
+    const extend = postcss.atRule({name: 'extend'});
     rule.append(extend);
     componentRoot.append(rule);
 
@@ -51,23 +53,23 @@ describe('getSelectors', () => {
 
   describe('nested rulesets', () => {
     it('should unwrap selectors down from the parent to the current rule', () => {
-      var rule = postcss.rule({selector: '.Component-d'});
+      const rule = postcss.rule({selector: '.Component-d'});
       componentRoot.append(rule);
 
       assert.deepEqual(getSelectors(rule), ['.Component .Component-d']);
     });
 
     it('should unwrap `&` selectors', () => {
-      var rule = postcss.rule({selector: '&.is-active'});
+      const rule = postcss.rule({selector: '&.is-active'});
       componentRoot.append(rule);
 
       assert.deepEqual(getSelectors(rule), ['.Component.is-active']);
     });
 
     it('should unwrap multiple levels of nested rulesets and skip rules with no declarations', () => {
-      var descendant = postcss.rule({selector: '.Component-d'});
-      var hover = postcss.rule({selector: '&:hover'});
-      var state = postcss.rule({selector: '&.is-active'});
+      const descendant = postcss.rule({selector: '.Component-d'});
+      const hover = postcss.rule({selector: '&:hover'});
+      const state = postcss.rule({selector: '&.is-active'});
       descendant.append([hover, state]);
       componentRoot.append(descendant);
 
@@ -79,9 +81,9 @@ describe('getSelectors', () => {
 
     describe('grouped selectors', () => {
       it('should unwrap grouped selectors without declarations', () => {
-        var componentRoot = postcss.rule({selector: '.Component, .Component-d'});
-        var hover = postcss.rule({selector: '&:hover'});
-        var state = postcss.rule({selector: '&.is-active'});
+        const componentRoot = postcss.rule({selector: '.Component, .Component-d'});
+        const hover = postcss.rule({selector: '&:hover'});
+        const state = postcss.rule({selector: '&.is-active'});
         componentRoot.append([hover, state]);
         root.append(componentRoot);
 
@@ -91,9 +93,9 @@ describe('getSelectors', () => {
       });
 
       it('should unwrap grouped selectors with declarations', () => {
-        var componentRoot = postcss.rule({selector: '.Component, .Component-d'});
-        var hover = postcss.rule({selector: '&:hover'});
-        var state = postcss.rule({selector: '&.is-active'});
+        const componentRoot = postcss.rule({selector: '.Component, .Component-d'});
+        const hover = postcss.rule({selector: '&:hover'});
+        const state = postcss.rule({selector: '&.is-active'});
         componentRoot.append({prop: 'color', value: 'green'});
         componentRoot.append([hover, state]);
         root.append(componentRoot);
@@ -107,10 +109,10 @@ describe('getSelectors', () => {
 
   describe('ruleset within an atrule block', () => {
     it('should unwrap selectors as normal', () => {
-      var root = postcss.root();
-      var componentRoot = postcss.rule({selector: '.Component'});
-      var rule = postcss.rule({selector: '.Component-d'});
-      var media = postcss.atRule({name: 'media'});
+      const root = postcss.root();
+      const componentRoot = postcss.rule({selector: '.Component'});
+      const rule = postcss.rule({selector: '.Component-d'});
+      const media = postcss.atRule({name: 'media'});
       componentRoot.append(rule);
       media.append(componentRoot);
       root.append(media);
@@ -122,8 +124,8 @@ describe('getSelectors', () => {
 
   describe('media queries nested in a ruleset', () => {
     it('should return a selector for a child rule inside a nested media query', () => {
-      var rule = postcss.rule({selector: '.Component-d'});
-      var media = postcss.atRule({name: 'media'});
+      const rule = postcss.rule({selector: '.Component-d'});
+      const media = postcss.atRule({name: 'media'});
       media.append(rule);
       componentRoot.append(media);
 
@@ -133,8 +135,8 @@ describe('getSelectors', () => {
 
     it('should return a selector for a ruleset with declarations and nested media query', () => {
       componentRoot.append({prop: 'color', value: 'green'});
-      var rule = postcss.rule({selector: '.Component-d'});
-      var media = postcss.atRule({name: 'media'});
+      const rule = postcss.rule({selector: '.Component-d'});
+      const media = postcss.atRule({name: 'media'});
       media.append(rule);
       componentRoot.append(media);
 

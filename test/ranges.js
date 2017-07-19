@@ -1,8 +1,10 @@
-var util = require('./test-util');
-var assertSuccess = util.assertSuccess;
-var assertSingleFailure = util.assertSingleFailure;
-var selectorTester = util.selectorTester;
-var fixture = util.fixture;
+'use strict';
+
+const util = require('./test-util');
+const assertSuccess = util.assertSuccess;
+const assertSingleFailure = util.assertSingleFailure;
+const selectorTester = util.selectorTester;
+const fixture = util.fixture;
 
 describe('ranges', () => {
   it('two valid', () => {

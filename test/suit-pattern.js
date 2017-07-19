@@ -1,17 +1,19 @@
-var util = require('./test-util');
-var assertSuccess = util.assertSuccess;
-var assertFailure = util.assertFailure;
-var assertSingleFailure = util.assertSingleFailure;
-var selectorTester = util.selectorTester;
-var fixture = util.fixture;
-var assert = require('assert');
+'use strict';
+
+const util = require('./test-util');
+const assertSuccess = util.assertSuccess;
+const assertFailure = util.assertFailure;
+const assertSingleFailure = util.assertSingleFailure;
+const selectorTester = util.selectorTester;
+const fixture = util.fixture;
+const assert = require('assert');
 
 describe('using SUIT pattern (default)', () => {
   it('accepts valid component classes', () => {
     assertSuccess(fixture('suit-valid'));
   });
 
-  var s = selectorTester('/** @define Foo */');
+  const s = selectorTester('/** @define Foo */');
 
   describe('selectors must begin with the component name', () => {
     it('rejects `.potentialFalseMatch`', () => {
@@ -52,12 +54,12 @@ describe('using SUIT pattern (default)', () => {
   });
 
   it('rejects invalid combined classes', () => {
-    var sInvalid = selectorTester('/** @define StrictInvalidSelector */');
+    const sInvalid = selectorTester('/** @define StrictInvalidSelector */');
     assertSingleFailure(sInvalid('.StrictInvalidSelector .Another'));
   });
 
   describe('deals fairly with utility classes', () => {
-    var sUtil = util.selectorTester('/** @define utilities */');
+    const sUtil = util.selectorTester('/** @define utilities */');
 
     it('accepts `u-foo`', () => {
       assertSuccess(sUtil('.u-foo'));
@@ -143,18 +145,18 @@ describe('using SUIT pattern (default)', () => {
     });
 
     it('rejects with multiple warnings if the parent has declarations', () => {
-      var result = util.test('/** @define Component */ \n .component { color:red; &--modifier {} }');
+      const result = util.test('/** @define Component */ \n .component { color:red; &--modifier {} }');
       assert.equal(result.warnings().length, 2);
     });
 
     it('correctly reports line number', () => {
-      var result = util.test('/** @define Component */ \n .Component {\n &--modifier {}\n .component-element {} \n}');
+      const result = util.test('/** @define Component */ \n .Component {\n &--modifier {}\n .component-element {} \n}');
       assert.equal(result.warnings()[0].line, 4);
     });
   });
 
   describe('strict SUIT syntax', () => {
-    var sComponent = util.selectorTester('/** @define Component */');
+    const sComponent = util.selectorTester('/** @define Component */');
 
     it('accepts `Component--modifier`', () => {
       assertSuccess(sComponent('.Component--modifier'));
@@ -211,7 +213,7 @@ describe('using SUIT pattern (default)', () => {
 
   describe('in weak mode', () => {
     it('accepts arbitrary combined classes', () => {
-      var sWeak = selectorTester('/** @define ValidRules; weak */');
+      const sWeak = selectorTester('/** @define ValidRules; weak */');
       assertSuccess(sWeak('.ValidRules .Another'));
     });
   });

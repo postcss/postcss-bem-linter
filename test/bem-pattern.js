@@ -1,6 +1,8 @@
-var util = require('./test-util');
-var assertSingleFailure = util.assertSingleFailure;
-var assertSuccess = util.assertSuccess;
+'use strict';
+
+const util = require('./test-util');
+const assertSingleFailure = util.assertSingleFailure;
+const assertSuccess = util.assertSuccess;
 
 describe('using BEM pattern', () => {
   it('accepts valid selectors', () => {
@@ -14,7 +16,7 @@ describe('using BEM pattern', () => {
   });
 
   describe('when given invalid selectors', () => {
-    var s = util.selectorTester('/** @define block */');
+    const s = util.selectorTester('/** @define block */');
 
     // mirroring tests from https://goo.gl/G0VZHZ
     it('should not validate elem without block', () => {
@@ -57,7 +59,7 @@ describe('using BEM pattern', () => {
   });
 
   describe('understands namespaces', () => {
-    var s = util.selectorTester('/** @define block */');
+    const s = util.selectorTester('/** @define block */');
 
     it('and with namespace `ns` accepts `ns-block`', () => {
       assertSuccess(s('.ns-block'), 'bem', { namespace: 'ns' });
@@ -73,7 +75,7 @@ describe('using BEM pattern', () => {
   });
 
   describe('in weak mode', () => {
-    var sWeak = util.selectorTester('/** @define block; weak */');
+    const sWeak = util.selectorTester('/** @define block; weak */');
 
     it('accepts `block__elem #foo`', () => {
       assertSuccess(sWeak('.block__elem #foo'), 'bem');
