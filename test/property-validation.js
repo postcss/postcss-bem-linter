@@ -14,13 +14,13 @@ describe('property validation', () => {
   const invDef = '/** @define InvalidRootVars */';
 
   it('accepts an empty root', () => {
-    assertSuccess(invDef + ':root {}');
+    assertSuccess(`${invDef}:root {}`);
   });
 
   it(
     'rejects custom properties that do not being with the component name',
     () => {
-      assertSingleFailure(invDef + ':root { --invalid-InvalidRootVars-color: green; }');
+      assertSingleFailure(`${invDef}:root { --invalid-InvalidRootVars-color: green; }`);
     }
   );
 });

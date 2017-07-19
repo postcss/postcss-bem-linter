@@ -11,8 +11,7 @@ const checkImplicit = require('./lib/check-implicit');
 
 const DEFINE_VALUE = '([-_a-zA-Z0-9]+)\\s*(?:;\\s*(weak))?';
 const DEFINE_DIRECTIVE = new RegExp(
-  '(?:\\*\\s*@define ' + DEFINE_VALUE + ')|' +
-  '(?:\\s*postcss-bem-linter: define ' + DEFINE_VALUE + ')\\s*'
+  `(?:\\*\\s*@define ${DEFINE_VALUE})|(?:\\s*postcss-bem-linter: define ${DEFINE_VALUE})\\s*`
 );
 const END_DIRECTIVE = new RegExp(
   '(?:\\*\\s*@end\\s*)|' +
@@ -113,7 +112,7 @@ module.exports = postcss.plugin('postcss-bem-linter', (primaryOptions, secondary
 
           if (defined !== UTILITIES_IDENT && !toRegexp(config.componentNamePattern).test(defined)) {
             result.warn(
-              'Invalid component name from implicit conversion from filename ' + filename
+              `Invalid component name from implicit conversion from filename ${filename}`
             );
           }
           ranges.push({
@@ -138,7 +137,7 @@ module.exports = postcss.plugin('postcss-bem-linter', (primaryOptions, secondary
         const defined = (directiveMatch[1] || directiveMatch[3]).trim();
         if (defined !== UTILITIES_IDENT && !toRegexp(config.componentNamePattern).test(defined)) {
           result.warn(
-            'Invalid component name in definition /*' + comment + '*/',
+            `Invalid component name in definition /*${comment}*/`,
             { node: comment }
           );
         }

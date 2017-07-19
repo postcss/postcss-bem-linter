@@ -67,7 +67,7 @@ describe('selector validation', () => {
     'RegExp("^\\.[a-z]+-" + cmpt + "(?:_[a-z]+)?$")',
     () => {
       describe('as a regular expression', () => {
-        runTests(cmpt => new RegExp('^\\.[a-z]+-' + cmpt + '(?:_[a-z]+)?$'));
+        runTests(cmpt => new RegExp(`^\\.[a-z]+-${cmpt}(?:_[a-z]+)?$`));
       });
       describe('as a string', () => {
         runTests('^\\.[a-z]+-{componentName}(?:_[a-z]+)?$');
@@ -164,10 +164,10 @@ describe('selector validation', () => {
       describe('as regular expressions', () => {
         runTests({
           initial(cmpt) {
-            return new RegExp('^\\.' + cmpt + '(?:-[a-z]+)?$');
+            return new RegExp(`^\\.${cmpt}(?:-[a-z]+)?$`);
           },
           combined(cmpt) {
-            return new RegExp('^\\.c-' + cmpt + '(?:-[a-z]+)?$');
+            return new RegExp(`^\\.c-${cmpt}(?:-[a-z]+)?$`);
           },
         });
       });
@@ -244,7 +244,7 @@ describe('selector validation', () => {
             return new RegExp('^\\.prefix$');
           },
           combined(cmpt) {
-            return new RegExp('^\\.prefix-' + cmpt + '(?:-[a-z]+)?$');
+            return new RegExp(`^\\.prefix-${cmpt}(?:-[a-z]+)?$`);
           },
         });
       });

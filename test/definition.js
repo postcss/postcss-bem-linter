@@ -30,8 +30,8 @@ describe('`@define` notation', () => {
 
 describe('Implicit @define', () => {
   describe('based on filename', () => {
-    const filename = process.cwd() + '/css/c/implicit-component.css';
-    const filenameWithUnderscore = process.cwd() + '/css/c/_implicit-component.scss';
+    const filename = `${process.cwd()}/css/c/implicit-component.css`;
+    const filenameWithUnderscore = `${process.cwd()}/css/c/_implicit-component.scss`;
     const css = '.implicit-component-broken {}';
 
     it('must complain when true', () => {
@@ -53,11 +53,11 @@ describe('Implicit @define', () => {
       util.assertSuccess('.implicit-component {}', {
         implicitComponents: true,
         preset: 'bem',
-      }, null, process.cwd() + '/css/implicit-component/index.css');
+      }, null, `${process.cwd()}/css/implicit-component/index.css`);
       util.assertSuccess('.implicit-component {}', {
         implicitComponents: true,
         preset: 'bem',
-      }, null, process.cwd() + '/css/implicit-component/_index.css');
+      }, null, `${process.cwd()}/css/implicit-component/_index.css`);
     });
 
     it('must complain about component name', () => {

@@ -14,7 +14,7 @@ function getPostcssResult(css, primary, secondary, filename) {
 }
 
 function fixture(name) {
-  return fs.readFileSync(path.join(__dirname, 'fixtures', name + '.css'), 'utf8').trim();
+  return fs.readFileSync(path.join(__dirname, 'fixtures', `${name}.css`), 'utf8').trim();
 }
 
 function assertSuccess(css, primary, secondary, filename) {
@@ -33,7 +33,7 @@ function assertFailure(css, primary, secondary, filename) {
 }
 
 function selectorTester(def) {
-  return selector => def + '\n' + selector + ' {}';
+  return selector => `${def}\n${selector} {}`;
 }
 
 module.exports = {
