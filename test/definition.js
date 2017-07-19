@@ -66,7 +66,7 @@ describe('Implicit @define', () => {
         {
           implicitComponents: true,
           componentName: /[A-Z]+/,
-          componentSelectors: function() { return /.*/; },
+          componentSelectors() { return /.*/; },
         },
         null,
         filename
@@ -76,7 +76,7 @@ describe('Implicit @define', () => {
         {
           implicitComponents: true,
           componentName: /[A-Z]+/,
-          componentSelectors: function() { return /.*/; },
+          componentSelectors() { return /.*/; },
         },
         null,
         filenameWithUnderscore

@@ -25,7 +25,7 @@ describe('selector validation', () => {
     function runTests(componentName) {
       const p1 = {
         componentName: componentName,
-        componentSelectors: function() { return /.*/; },
+        componentSelectors() { return /.*/; },
       };
 
       it('rejects component name Foo', () => {
@@ -49,7 +49,7 @@ describe('selector validation', () => {
     function runTests(componentName) {
       const p2 = {
         componentName: componentName,
-        componentSelectors: function() { return /.*/; },
+        componentSelectors() { return /.*/; },
       };
 
       it('rejects component name foo2', () => {
@@ -163,10 +163,10 @@ describe('selector validation', () => {
     () => {
       describe('as regular expressions', () => {
         runTests({
-          initial: function(cmpt) {
+          initial(cmpt) {
             return new RegExp('^\\.' + cmpt + '(?:-[a-z]+)?$');
           },
-          combined: function(cmpt) {
+          combined(cmpt) {
             return new RegExp('^\\.c-' + cmpt + '(?:-[a-z]+)?$');
           },
         });
@@ -240,10 +240,10 @@ describe('selector validation', () => {
     () => {
       describe('as regular expressions', () => {
         runTests({
-          initial: function(cmpt) {
+          initial(cmpt) {
             return new RegExp('^\\.prefix$');
           },
-          combined: function(cmpt) {
+          combined(cmpt) {
             return new RegExp('^\\.prefix-' + cmpt + '(?:-[a-z]+)?$');
           },
         });
