@@ -1,39 +1,39 @@
 var assert = require('assert');
 var util = require('./test-util');
 
-describe('utility validation', function() {
-  describe('with no `utilitySelectors` pattern', function() {
-    it('throws an error', function() {
+describe('utility validation', () => {
+  describe('with no `utilitySelectors` pattern', () => {
+    it('throws an error', () => {
       util.test('/** @define utilities */ .foo {}', {})
-        .catch(function(err) {
+        .catch(err => {
           assert.equal(err.message.indexOf('You tried to `@define utilities`'), 0);
         });
     });
   });
 
-  describe('with a `utilitySelectors` pattern', function() {
-    describe('as a regular expression', function() {
+  describe('with a `utilitySelectors` pattern', () => {
+    describe('as a regular expression', () => {
       runTests(/\.[a-z]+/);
     });
-    describe('as a string', function() {
+    describe('as a string', () => {
       runTests('.[a-z]+');
     });
 
     function runTests(utilitySelectors) {
       var config = { utilitySelectors: utilitySelectors };
 
-      it('accepts valid selectors', function() {
+      it('accepts valid selectors', () => {
         util.assertSuccess('/** @define utilities */ .foo {}', config);
       });
 
-      it('rejects valid selectors', function() {
+      it('rejects valid selectors', () => {
         util.assertSingleFailure('/** @define utilities */ .FOO {}', config);
       });
     }
   });
 
-  describe('with @keyframes rule', function() {
-    it('does not complain about keyframe selectors', function() {
+  describe('with @keyframes rule', () => {
+    it('does not complain about keyframe selectors', () => {
       util.assertSuccess('/** @define utilities */ @keyframes fade { 0% { opacity: 0; } 100% { opacity: 1; } }');
     });
   });

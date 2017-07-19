@@ -31,9 +31,7 @@ function assertFailure(css, primary, secondary, filename) {
 }
 
 function selectorTester(def) {
-  return function(selector) {
-    return def + '\n' + selector + ' {}';
-  };
+  return selector => def + '\n' + selector + ' {}';
 }
 
 module.exports = {
