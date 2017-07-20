@@ -1,31 +1,33 @@
-var util = require('./test-util');
-var assertSuccess = util.assertSuccess;
-var assertSingleFailure = util.assertSingleFailure;
-var selectorTester = util.selectorTester;
-var fixture = util.fixture;
+'use strict';
 
-describe('ranges', function() {
-  it('two valid', function() {
+const util = require('./test-util');
+const assertSuccess = util.assertSuccess;
+const assertSingleFailure = util.assertSingleFailure;
+const selectorTester = util.selectorTester;
+const fixture = util.fixture;
+
+describe('ranges', () => {
+  it('two valid', () => {
     assertSuccess(fixture('ranges-two-valid'));
   });
 
-  it('one valid, one invalid', function() {
+  it('one valid, one invalid', () => {
     assertSingleFailure(fixture('ranges-one-valid-one-invalid'));
   });
 
-  it('two valid, one invalid', function() {
+  it('two valid, one invalid', () => {
     assertSingleFailure(fixture('ranges-two-valid-one-invalid'));
   });
 
-  it('one valid that is ended, then some extra stuff', function() {
+  it('one valid that is ended, then some extra stuff', () => {
     assertSuccess(fixture('ranges-one-ended-valid'));
   });
 
-  it('one valid that is ended, then some extra stuff, then one invalid', function() {
+  it('one valid that is ended, then some extra stuff, then one invalid', () => {
     assertSingleFailure(fixture('ranges-one-ended-valid-one-invalid'));
   });
 
-  it('with verbose directives', function() {
+  it('with verbose directives', () => {
     assertSuccess(fixture('verbose-directives'));
   });
 });

@@ -1,22 +1,22 @@
-var util = require('./test-util');
-var assertSuccess = util.assertSuccess;
-var assertSingleFailure = util.assertSingleFailure;
-var selectorTester = util.selectorTester;
+const util = require('./test-util');
+const assertSuccess = util.assertSuccess;
+const assertSingleFailure = util.assertSingleFailure;
+const selectorTester = util.selectorTester;
 
-describe('ignoring custom properties', function() {
-  it('without ignore, fails', function() {
-    var css = '/** @define Foo */ :root { --Bar: 2px; }';
+describe('ignoring custom properties', () => {
+  it('without ignore, fails', () => {
+    const css = '/** @define Foo */ :root { --Bar: 2px; }';
     assertSingleFailure(css);
   });
 
-  it('ignore a custom property with a comment', function() {
-    var css = '/** @define Foo */ :root { /* postcss-bem-linter: ignore */ --Bar: 2px; }';
+  it('ignore a custom property with a comment', () => {
+    const css = '/** @define Foo */ :root { /* postcss-bem-linter: ignore */ --Bar: 2px; }';
     assertSuccess(css);
   });
 
-  it('ignore a custom property with an ignoreCustomProperties pattern', function() {
-    var config = { preset: 'suit', ignoreCustomProperties: /Bar/ };
-    var css = '/** @define Foo */ :root { --Bar: 2px; }';
+  it('ignore a custom property with an ignoreCustomProperties pattern', () => {
+    const config = { preset: 'suit', ignoreCustomProperties: /Bar/ };
+    const css = '/** @define Foo */ :root { --Bar: 2px; }';
     assertSuccess(css, config);
   });
 });
