@@ -12,11 +12,15 @@
     "postcss-resolve-nested-selector": "^0.1.1"
   },
   "devDependencies": {
-    "eslint": "1.7.3",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.0.2",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.1.0",
     "jest": "^20.0.4"
   },
   "scripts": {
-    "lint": "eslint .",
+    "lint": "eslint lib test index.js",
     "start": "jest --watch",
     "test": "jest",
     "posttest": "npm run lint"

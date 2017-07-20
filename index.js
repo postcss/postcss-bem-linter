@@ -41,16 +41,16 @@ module.exports = postcss.plugin('postcss-bem-linter', (primaryOptions, secondary
   return (root, result) => {
     const ranges = findRanges(root);
 
-    root.walkRules(rule => {
+    root.walkRules((rule) => {
       if (rule.parent && rule.parent.name === 'keyframes') return;
       if (!rule.source) return;
 
       const ruleStartLine = rule.source.start.line;
-      ranges.forEach(range => {
+      ranges.forEach((range) => {
         if (ruleStartLine < range.start) return;
         if (range.end && ruleStartLine > range.end) return;
         checkRule(rule, range);
-      })
+      });
     });
 
     function checkRule(rule, range) {
@@ -123,7 +123,7 @@ module.exports = postcss.plugin('postcss-bem-linter', (primaryOptions, secondary
         }
       }
 
-      root.walkComments(comment => {
+      root.walkComments((comment) => {
         const commentStartLine = (comment.source) ? comment.source.start.line : null;
         if (!commentStartLine) return;
 
@@ -138,7 +138,7 @@ module.exports = postcss.plugin('postcss-bem-linter', (primaryOptions, secondary
         if (defined !== UTILITIES_IDENT && !toRegexp(config.componentNamePattern).test(defined)) {
           result.warn(
             `Invalid component name in definition /*${comment}*/`,
-            { node: comment }
+            {node: comment}
           );
         }
         endCurrentRange(commentStartLine);

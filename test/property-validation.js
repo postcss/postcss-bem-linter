@@ -1,4 +1,5 @@
 const util = require('./test-util');
+
 const assertSuccess = util.assertSuccess;
 const assertSingleFailure = util.assertSingleFailure;
 const fixture = util.fixture;

@@ -1,7 +1,7 @@
 const util = require('./test-util');
+
 const assertSuccess = util.assertSuccess;
 const assertSingleFailure = util.assertSingleFailure;
-const selectorTester = util.selectorTester;
 
 describe('ignoring custom properties', () => {
   it('without ignore, fails', () => {
@@ -15,7 +15,7 @@ describe('ignoring custom properties', () => {
   });
 
   it('ignore a custom property with an ignoreCustomProperties pattern', () => {
-    const config = { preset: 'suit', ignoreCustomProperties: /Bar/ };
+    const config = {preset: 'suit', ignoreCustomProperties: /Bar/};
     const css = '/** @define Foo */ :root { --Bar: 2px; }';
     assertSuccess(css, config);
   });

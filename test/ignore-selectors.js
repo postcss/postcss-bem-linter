@@ -1,6 +1,7 @@
 'use strict';
 
 const util = require('./test-util');
+
 const assertSuccess = util.assertSuccess;
 const assertSingleFailure = util.assertSingleFailure;
 const selectorTester = util.selectorTester;
@@ -36,7 +37,7 @@ describe('ignoring selectors', () => {
 
     function runTests(ignoreSelectors) {
       const s = selectorTester('/** @define Foo */');
-      const config = { preset: 'suit', ignoreSelectors };
+      const config = {preset: 'suit', ignoreSelectors};
 
       it(
         'ignores selectors that match the `ignoreSelectors` pattern',
@@ -71,7 +72,7 @@ describe('ignoring selectors', () => {
 
     function runTests(ignoreSelectors) {
       const s = selectorTester('/** @define Foo */');
-      const config = { preset: 'suit', ignoreSelectors };
+      const config = {preset: 'suit', ignoreSelectors};
 
       it(
         'ignores selectors that match any of the `ignoreSelectors` pattern',
@@ -111,7 +112,7 @@ describe('ignoring selectors', () => {
   });
 
   describe('ignore utility selectors with a comment', () => {
-    const config = { utilitySelectors: /\.[a-z]+/ };
+    const config = {utilitySelectors: /\.[a-z]+/};
 
     it(
       'ignores selectors after special comments a line before',
@@ -136,7 +137,7 @@ describe('ignoring selectors', () => {
     });
     describe('that is a string', () => {
       runTests('.isok-[a-z]+$');
-    })
+    });
 
     function runTests(ignoreSelectors) {
       const configWithIgnore = {

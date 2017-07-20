@@ -1,6 +1,7 @@
 'use strict';
 
 const util = require('./test-util');
+
 const assertSingleFailure = util.assertSingleFailure;
 const assertSuccess = util.assertSuccess;
 
@@ -62,15 +63,15 @@ describe('using BEM pattern', () => {
     const s = util.selectorTester('/** @define block */');
 
     it('and with namespace `ns` accepts `ns-block`', () => {
-      assertSuccess(s('.ns-block'), 'bem', { namespace: 'ns' });
+      assertSuccess(s('.ns-block'), 'bem', {namespace: 'ns'});
     });
 
     it('and with namespace `Ho04` accepts `Ho04-block`', () => {
-      assertSuccess(s('.Ho04-block'), 'bem', { namespace: 'Ho04' });
+      assertSuccess(s('.Ho04-block'), 'bem', {namespace: 'Ho04'});
     });
 
     it('and with namespace `ns` rejects `.block`', () => {
-      assertSingleFailure(s('.block'), 'bem', { namespace: 'ns' });
+      assertSingleFailure(s('.block'), 'bem', {namespace: 'ns'});
     });
   });
 

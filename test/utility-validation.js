@@ -7,7 +7,7 @@ describe('utility validation', () => {
   describe('with no `utilitySelectors` pattern', () => {
     it('throws an error', () => {
       util.test('/** @define utilities */ .foo {}', {})
-        .catch(err => {
+        .catch((err) => {
           assert.equal(err.message.indexOf('You tried to `@define utilities`'), 0);
         });
     });
@@ -22,7 +22,7 @@ describe('utility validation', () => {
     });
 
     function runTests(utilitySelectors) {
-      const config = { utilitySelectors };
+      const config = {utilitySelectors};
 
       it('accepts valid selectors', () => {
         util.assertSuccess('/** @define utilities */ .foo {}', config);

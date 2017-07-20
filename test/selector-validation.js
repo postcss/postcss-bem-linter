@@ -1,5 +1,6 @@
 const assert = require('assert');
 const util = require('./test-util');
+
 const assertSuccess = util.assertSuccess;
 const assertSingleFailure = util.assertSingleFailure;
 const selectorTester = util.selectorTester;
@@ -8,7 +9,7 @@ describe('selector validation', () => {
   describe('with no `componentSelectors` pattern', () => {
     it('throws an error', () => {
       util.test('/** @define Foo */ .Foo {}', {})
-        .catch(err => {
+        .catch((err) => {
           assert.equal(err.message.indexOf('You tried to `@define` a component'), 0);
         });
     });
@@ -25,7 +26,7 @@ describe('selector validation', () => {
     function runTests(componentName) {
       const p1 = {
         componentName,
-        componentSelectors() { return /.*/; },
+        componentSelectors() {return /.*/;},
       };
 
       it('rejects component name Foo', () => {
@@ -49,7 +50,7 @@ describe('selector validation', () => {
     function runTests(componentName) {
       const p2 = {
         componentName,
-        componentSelectors() { return /.*/; },
+        componentSelectors() {return /.*/;},
       };
 
       it('rejects component name foo2', () => {
@@ -74,7 +75,7 @@ describe('selector validation', () => {
       });
 
       function runTests(componentSelectors) {
-        const patternA = { componentSelectors };
+        const patternA = {componentSelectors};
         const s = selectorTester('/** @define Foo */');
 
         it('accepts valid initial componentSelectors', () => {
@@ -179,7 +180,7 @@ describe('selector validation', () => {
       });
 
       function runTests(componentSelectors) {
-        const patternB = { componentSelectors };
+        const patternB = {componentSelectors};
         const s = selectorTester('/** @define Foo */');
 
         it('accepts `.Foo .c-Foo`', () => {
@@ -240,7 +241,7 @@ describe('selector validation', () => {
     () => {
       describe('as regular expressions', () => {
         runTests({
-          initial(cmpt) {
+          initial() {
             return new RegExp('^\\.prefix$');
           },
           combined(cmpt) {
@@ -256,7 +257,7 @@ describe('selector validation', () => {
       });
 
       function runTests(componentSelectors) {
-        const patternB = { componentSelectors };
+        const patternB = {componentSelectors};
         const s = selectorTester('/** @define foo */');
 
         it('accepts `.prefix .prefix-foo`', () => {

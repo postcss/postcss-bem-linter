@@ -1,9 +1,9 @@
 'use strict';
 
 const util = require('./test-util');
+
 const assertSuccess = util.assertSuccess;
 const assertSingleFailure = util.assertSingleFailure;
-const selectorTester = util.selectorTester;
 const fixture = util.fixture;
 
 describe('ranges', () => {

@@ -5,7 +5,8 @@ const postcss = require('postcss');
 const getSelectors = require('../lib/get-selectors');
 
 describe('getSelectors', () => {
-  let root, componentRoot;
+  let root;
+  let componentRoot;
 
   beforeEach(() => {
     root = postcss.root();
@@ -143,5 +144,5 @@ describe('getSelectors', () => {
       assert.deepEqual(getSelectors(rule), ['.Component .Component-d']);
       assert.deepEqual(getSelectors(componentRoot), ['.Component']);
     });
-  })
+  });
 });

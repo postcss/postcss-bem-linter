@@ -1,12 +1,12 @@
 'use strict';
 
 const util = require('./test-util');
+const assert = require('assert');
+
 const assertSuccess = util.assertSuccess;
-const assertFailure = util.assertFailure;
 const assertSingleFailure = util.assertSingleFailure;
 const selectorTester = util.selectorTester;
 const fixture = util.fixture;
-const assert = require('assert');
 
 describe('using SUIT pattern (default)', () => {
   it('accepts valid component classes', () => {
@@ -31,25 +31,25 @@ describe('using SUIT pattern (default)', () => {
 
   describe('understands namespaces', () => {
     it('and with namespace `ns` accepts `ns-Foo`', () => {
-      assertSuccess(s('.ns-Foo'), 'suit', { namespace: 'ns' });
+      assertSuccess(s('.ns-Foo'), 'suit', {namespace: 'ns'});
     });
 
     it('and with namespace `Ho04__d` accepts `Ho04__d-Foo`', () => {
-      assertSuccess(s('.Ho04__d-Foo'), 'suit', { namespace: 'Ho04__d' });
+      assertSuccess(s('.Ho04__d-Foo'), 'suit', {namespace: 'Ho04__d'});
     });
 
     it('and with namespace `ns` rejects `.Foo`', () => {
-      assertSingleFailure(s('.Foo'), 'suit', { namespace: 'ns' });
+      assertSingleFailure(s('.Foo'), 'suit', {namespace: 'ns'});
     });
   });
 
   describe('understands alternate preset/presetOptions signature', () => {
     it('and with namespace `ns` accepts `ns-Foo`', () => {
-      assertSuccess(s('.ns-Foo'), { preset: 'suit', presetOptions: { namespace: 'ns' }});
+      assertSuccess(s('.ns-Foo'), {preset: 'suit', presetOptions: {namespace: 'ns'}});
     });
 
     it('and with namespace `ns` rejects `.Foo`', () => {
-      assertSingleFailure(s('.Foo'), { preset: 'suit', presetOptions: { namespace: 'ns' }});
+      assertSingleFailure(s('.Foo'), {preset: 'suit', presetOptions: {namespace: 'ns'}});
     });
   });
 
@@ -114,7 +114,6 @@ describe('using SUIT pattern (default)', () => {
     assertSuccess(s('.Foo--big.Foo--colored'));
     assertSuccess(s('.Foo--big.Foo--colored .Foo-input'));
     assertSuccess(s('.Foo-input--big.Foo-input--colored'));
-
   });
 
   it('accepts chained state selectors', () => {
