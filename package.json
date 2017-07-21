@@ -1,6 +1,6 @@
 {
   "name": "postcss-bem-linter",
-  "version": "2.7.1",
+  "version": "3.0.0",
   "description": "A BEM linter for postcss",
   "files": [
     "index.js",
