@@ -11,7 +11,7 @@ const checkImplicit = require('./lib/check-implicit');
 
 const DEFINE_VALUE = '([-_a-zA-Z0-9]+)\\s*(?:;\\s*(weak))?';
 const DEFINE_DIRECTIVE = new RegExp(
-  `(?:\\*\\s*@define ${DEFINE_VALUE})|(?:\\s*postcss-bem-linter: define ${DEFINE_VALUE})\\s*`
+  `(?:\\*?\\s*@define ${DEFINE_VALUE})|(?:\\s*postcss-bem-linter: define ${DEFINE_VALUE})\\s*`
 );
 const END_DIRECTIVE = new RegExp(
   '(?:\\*\\s*@end\\s*)|' +
