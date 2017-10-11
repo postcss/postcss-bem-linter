@@ -21,6 +21,13 @@ describe('`@define` notation', () => {
     });
   });
 
+  describe('CSS with a rule violating defintion', () => {
+    it('should complain', () => {
+      util.assertFailure('/** @define Foo */ .Bar { color: pink; }');
+      util.assertFailure('/* @define Foo */ .Bar { color: pink; }');
+    });
+  });
+
   describe('CSS with a definition violating the `componentName` pattern', () => {
     it('must complain', () => {
       util.assertSingleFailure('/** @define my-_-__Component */ .my-_-__Component { color: pink; }');
