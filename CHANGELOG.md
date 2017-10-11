@@ -1,5 +1,9 @@
 === HEAD
 
+=== 3.1.0 (October 11, 2017)
+
+* Allow both `/**` and `/*` for module definitions [#125](https://github.com/postcss/postcss-bem-linter/pull/125)
+
 === 3.0.0 (July 21, 2017)
 
 * Update PostCSS to `^6.0.6` - Drops support for Node 0.12
