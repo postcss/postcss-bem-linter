@@ -184,7 +184,7 @@ bemLinter({ preset: 'suit', presetOptions: { namespace: 'twt' }});
 // use 'bem' conventions
 bemLinter('bem');
 bemLinter('bem', { namespace: 'ydx' });
-bemLinter({ present: 'bem', presetOptions: { namespace: 'ydx' }});
+bemLinter({ preset: 'bem', presetOptions: { namespace: 'ydx' }});
 
 // define a pattern for component names
 bemLinter({
