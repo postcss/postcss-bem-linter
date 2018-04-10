@@ -10,7 +10,8 @@ describe('ignoring custom properties', () => {
   });
 
   it('ignore a custom property with a comment', () => {
-    const css = '/** @define Foo */ :root { /* postcss-bem-linter: ignore */ --Bar: 2px; }';
+    const css =
+      '/** @define Foo */ :root { /* postcss-bem-linter: ignore */ --Bar: 2px; }';
     assertSuccess(css);
   });
 

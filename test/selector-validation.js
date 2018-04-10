@@ -8,10 +8,12 @@ const selectorTester = util.selectorTester;
 describe('selector validation', () => {
   describe('with no `componentSelectors` pattern', () => {
     it('throws an error', () => {
-      util.test('/** @define Foo */ .Foo {}', {})
-        .catch((err) => {
-          assert.equal(err.message.indexOf('You tried to `@define` a component'), 0);
-        });
+      util.test('/** @define Foo */ .Foo {}', {}).catch(err => {
+        assert.equal(
+          err.message.indexOf('You tried to `@define` a component'),
+          0
+        );
+      });
     });
   });
 
@@ -26,7 +28,9 @@ describe('selector validation', () => {
     function runTests(componentName) {
       const p1 = {
         componentName,
-        componentSelectors() {return /.*/;},
+        componentSelectors() {
+          return /.*/;
+        },
       };
 
       it('rejects component name Foo', () => {
@@ -50,7 +54,9 @@ describe('selector validation', () => {
     function runTests(componentName) {
       const p2 = {
         componentName,
-        componentSelectors() {return /.*/;},
+        componentSelectors() {
+          return /.*/;
+        },
       };
 
       it('rejects component name foo2', () => {
@@ -65,7 +71,7 @@ describe('selector validation', () => {
 
   describe(
     'with a single `componentSelectors` pattern ' +
-    'RegExp("^\\.[a-z]+-" + cmpt + "(?:_[a-z]+)?$")',
+      'RegExp("^\\.[a-z]+-" + cmpt + "(?:_[a-z]+)?$")',
     () => {
       describe('as a regular expression', () => {
         runTests(cmpt => new RegExp(`^\\.[a-z]+-${cmpt}(?:_[a-z]+)?$`));
@@ -87,14 +93,9 @@ describe('selector validation', () => {
           assertSingleFailure(s('.Foo'), patternA);
         });
 
-        it(
-          'rejects initial componentSelectors in media queries',
-          () => {
-            assertSingleFailure(
-              '/** @define Foo */ @media all { .Bar {} }'
-            );
-          }
-        );
+        it('rejects initial componentSelectors in media queries', () => {
+          assertSingleFailure('/** @define Foo */ @media all { .Bar {} }');
+        });
 
         describe('with pseudo-selectors', () => {
           it('ignores `:hover` at the end of a sequence', () => {
@@ -105,12 +106,9 @@ describe('selector validation', () => {
             assertSuccess(s('.f-Foo::before'), patternA);
           });
 
-          it(
-            'ignores `:not(".is-open")` at the end of a sequence',
-            () => {
-              assertSuccess(s('.f-Foo:not(\'.is-open\')'), patternA);
-            }
-          );
+          it('ignores `:not(".is-open")` at the end of a sequence', () => {
+            assertSuccess(s(".f-Foo:not('.is-open')"), patternA);
+          });
         });
 
         describe('with combining', () => {
@@ -160,7 +158,7 @@ describe('selector validation', () => {
 
   describe(
     'with different `initial` ("^\\." + cmpt + "(?:-[a-z]+)?$") and ' +
-    '`combined` ("^\\.c-" + cmpt + "(?:-[a-z]+)?$") selector patterns',
+      '`combined` ("^\\.c-" + cmpt + "(?:-[a-z]+)?$") selector patterns',
     () => {
       describe('as regular expressions', () => {
         runTests({
@@ -236,8 +234,8 @@ describe('selector validation', () => {
 
   describe(
     'with different `initial` ("^\\.prefix$") and ' +
-    '`combined` ("^\\.prefix-" + cmpt + "(?:-[a-z]+)?$") selector patterns, ' +
-    'where the initial selector does not contain the component name',
+      '`combined` ("^\\.prefix-" + cmpt + "(?:-[a-z]+)?$") selector patterns, ' +
+      'where the initial selector does not contain the component name',
     () => {
       describe('as regular expressions', () => {
         runTests({
@@ -277,7 +275,9 @@ describe('selector validation', () => {
 
   describe('with @keyframes rule', () => {
     it('does not complain about keyframe selectors', () => {
-      assertSuccess('/** @define Foo */ @keyframes fade { 0% { opacity: 0; } 100% { opacity: 1; } }');
+      assertSuccess(
+        '/** @define Foo */ @keyframes fade { 0% { opacity: 0; } 100% { opacity: 1; } }'
+      );
     });
   });
 });

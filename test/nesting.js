@@ -77,33 +77,54 @@ describe('getSelectors', () => {
       assert.deepEqual(getSelectors(componentRoot), []);
       assert.deepEqual(getSelectors(descendant), []);
       assert.deepEqual(getSelectors(hover), ['.Component .Component-d:hover']);
-      assert.deepEqual(getSelectors(state), ['.Component .Component-d.is-active']);
+      assert.deepEqual(getSelectors(state), [
+        '.Component .Component-d.is-active',
+      ]);
     });
 
     describe('grouped selectors', () => {
       it('should unwrap grouped selectors without declarations', () => {
-        const componentRoot = postcss.rule({selector: '.Component, .Component-d'});
+        const componentRoot = postcss.rule({
+          selector: '.Component, .Component-d',
+        });
         const hover = postcss.rule({selector: '&:hover'});
         const state = postcss.rule({selector: '&.is-active'});
         componentRoot.append([hover, state]);
         root.append(componentRoot);
 
         assert.deepEqual(getSelectors(componentRoot), []);
-        assert.deepEqual(getSelectors(hover), ['.Component:hover', '.Component-d:hover']);
-        assert.deepEqual(getSelectors(state), ['.Component.is-active', '.Component-d.is-active']);
+        assert.deepEqual(getSelectors(hover), [
+          '.Component:hover',
+          '.Component-d:hover',
+        ]);
+        assert.deepEqual(getSelectors(state), [
+          '.Component.is-active',
+          '.Component-d.is-active',
+        ]);
       });
 
       it('should unwrap grouped selectors with declarations', () => {
-        const componentRoot = postcss.rule({selector: '.Component, .Component-d'});
+        const componentRoot = postcss.rule({
+          selector: '.Component, .Component-d',
+        });
         const hover = postcss.rule({selector: '&:hover'});
         const state = postcss.rule({selector: '&.is-active'});
         componentRoot.append({prop: 'color', value: 'green'});
         componentRoot.append([hover, state]);
         root.append(componentRoot);
 
-        assert.deepEqual(getSelectors(componentRoot), ['.Component', '.Component-d']);
-        assert.deepEqual(getSelectors(hover), ['.Component:hover', '.Component-d:hover']);
-        assert.deepEqual(getSelectors(state), ['.Component.is-active', '.Component-d.is-active']);
+        assert.deepEqual(getSelectors(componentRoot), [
+          '.Component',
+          '.Component-d',
+        ]);
+        assert.deepEqual(getSelectors(hover), [
+          '.Component:hover',
+          '.Component-d:hover',
+        ]);
+        assert.deepEqual(getSelectors(state), [
+          '.Component.is-active',
+          '.Component-d.is-active',
+        ]);
       });
     });
   });

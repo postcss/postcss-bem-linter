@@ -6,10 +6,12 @@ const util = require('./test-util');
 describe('utility validation', () => {
   describe('with no `utilitySelectors` pattern', () => {
     it('throws an error', () => {
-      util.test('/** @define utilities */ .foo {}', {})
-        .catch((err) => {
-          assert.equal(err.message.indexOf('You tried to `@define utilities`'), 0);
-        });
+      util.test('/** @define utilities */ .foo {}', {}).catch(err => {
+        assert.equal(
+          err.message.indexOf('You tried to `@define utilities`'),
+          0
+        );
+      });
     });
   });
 
@@ -36,7 +38,9 @@ describe('utility validation', () => {
 
   describe('with @keyframes rule', () => {
     it('does not complain about keyframe selectors', () => {
-      util.assertSuccess('/** @define utilities */ @keyframes fade { 0% { opacity: 0; } 100% { opacity: 1; } }');
+      util.assertSuccess(
+        '/** @define utilities */ @keyframes fade { 0% { opacity: 0; } 100% { opacity: 1; } }'
+      );
     });
   });
 });

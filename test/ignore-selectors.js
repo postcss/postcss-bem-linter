@@ -10,21 +10,13 @@ describe('ignoring selectors', () => {
   describe('ignore a selector with a comment', () => {
     const s = selectorTester('/** @define Foo */');
 
-    it(
-      'ignores selectors after special comments a line before',
-      () => {
-        assertSuccess(s('/* postcss-bem-linter: ignore */\n.Foo a'));
-      }
-    );
+    it('ignores selectors after special comments a line before', () => {
+      assertSuccess(s('/* postcss-bem-linter: ignore */\n.Foo a'));
+    });
 
-    it(
-      'ignores selectors after special comments inline with the selector',
-      () => {
-        assertSuccess(s(
-          '/* postcss-bem-linter: ignore */ .no-flexbox .Foo'
-        ));
-      }
-    );
+    it('ignores selectors after special comments inline with the selector', () => {
+      assertSuccess(s('/* postcss-bem-linter: ignore */ .no-flexbox .Foo'));
+    });
   });
 
   describe('ignore a selector with an `ignoreSelectors` pattern', () => {
@@ -39,26 +31,17 @@ describe('ignoring selectors', () => {
       const s = selectorTester('/** @define Foo */');
       const config = {preset: 'suit', ignoreSelectors};
 
-      it(
-        'ignores selectors that match the `ignoreSelectors` pattern',
-        () => {
-          assertSuccess(s('.isok-BLERGH'), config);
-        }
-      );
+      it('ignores selectors that match the `ignoreSelectors` pattern', () => {
+        assertSuccess(s('.isok-BLERGH'), config);
+      });
 
-      it(
-        'ignores grouped selectors that match the `ignoreSelectors` pattern',
-        () => {
-          assertSuccess(s('.Foo .isok-BLERGH'), config);
-        }
-      );
+      it('ignores grouped selectors that match the `ignoreSelectors` pattern', () => {
+        assertSuccess(s('.Foo .isok-BLERGH'), config);
+      });
 
-      it(
-        'rejects selectors that do not match valid pattern or `ignoreSelectors` pattern',
-        () => {
-          assertSingleFailure(s('.blergh'), config);
-        }
-      );
+      it('rejects selectors that do not match valid pattern or `ignoreSelectors` pattern', () => {
+        assertSingleFailure(s('.blergh'), config);
+      });
     }
   });
 
@@ -74,61 +57,42 @@ describe('ignoring selectors', () => {
       const s = selectorTester('/** @define Foo */');
       const config = {preset: 'suit', ignoreSelectors};
 
-      it(
-        'ignores selectors that match any of the `ignoreSelectors` pattern',
-        () => {
-          assertSuccess(s('.isok-BLERGH'), config);
-        }
-      );
+      it('ignores selectors that match any of the `ignoreSelectors` pattern', () => {
+        assertSuccess(s('.isok-BLERGH'), config);
+      });
 
-      it(
-        'ignores selectors that match any of the `ignoreSelectors` pattern (take 2)',
-        () => {
-          assertSuccess(s('#fine'), config);
-        }
-      );
+      it('ignores selectors that match any of the `ignoreSelectors` pattern (take 2)', () => {
+        assertSuccess(s('#fine'), config);
+      });
 
-      it(
-        'ignores grouped selectors that match any of the `ignoreSelectors` pattern',
-        () => {
-          assertSuccess(s('.Foo .isok-BLERGH'), config);
-        }
-      );
+      it('ignores grouped selectors that match any of the `ignoreSelectors` pattern', () => {
+        assertSuccess(s('.Foo .isok-BLERGH'), config);
+      });
 
-      it(
-        'ignores grouped selectors that match any of the `ignoreSelectors` pattern (take 2)',
-        () => {
-          assertSuccess(s('.Foo #fine'), config);
-        }
-      );
+      it('ignores grouped selectors that match any of the `ignoreSelectors` pattern (take 2)', () => {
+        assertSuccess(s('.Foo #fine'), config);
+      });
 
-      it(
-        'rejects selectors that do not match valid pattern or `ignoreSelectors` pattern',
-        () => {
-          assertSingleFailure(s('.blergh'), config);
-        }
-      );
+      it('rejects selectors that do not match valid pattern or `ignoreSelectors` pattern', () => {
+        assertSingleFailure(s('.blergh'), config);
+      });
     }
   });
 
   describe('ignore utility selectors with a comment', () => {
     const config = {utilitySelectors: /\.[a-z]+/};
 
-    it(
-      'ignores selectors after special comments a line before',
-      () => {
-        const css = '/** @define utilities */\n/* postcss-bem-linter: ignore */\n.394 {}';
-        util.assertSuccess(css, config);
-      }
-    );
+    it('ignores selectors after special comments a line before', () => {
+      const css =
+        '/** @define utilities */\n/* postcss-bem-linter: ignore */\n.394 {}';
+      util.assertSuccess(css, config);
+    });
 
-    it(
-      'ignores selectors after special comments a line before',
-      () => {
-        const css = '/** @define utilities */ /* postcss-bem-linter: ignore */ .394 {}';
-        util.assertSuccess(css, config);
-      }
-    );
+    it('ignores selectors after special comments a line before', () => {
+      const css =
+        '/** @define utilities */ /* postcss-bem-linter: ignore */ .394 {}';
+      util.assertSuccess(css, config);
+    });
   });
 
   describe('ignore utility selectors with an `ignoreSelectors` pattern', () => {
@@ -146,15 +110,24 @@ describe('ignoring selectors', () => {
       };
 
       it('accepts valid selectors', () => {
-        util.assertSuccess('/** @define utilities */ .FOO {}', configWithIgnore);
+        util.assertSuccess(
+          '/** @define utilities */ .FOO {}',
+          configWithIgnore
+        );
       });
 
       it('rejected invalid selectors that do not match ignore pattern', () => {
-        util.assertSingleFailure('/** @define utilities */ .foo {}', configWithIgnore);
+        util.assertSingleFailure(
+          '/** @define utilities */ .foo {}',
+          configWithIgnore
+        );
       });
 
       it('ignores selectors that match ignore pattern', () => {
-        util.assertSuccess('/** @define utilities */ .isok-bar {}', configWithIgnore);
+        util.assertSuccess(
+          '/** @define utilities */ .isok-bar {}',
+          configWithIgnore
+        );
       });
     }
   });

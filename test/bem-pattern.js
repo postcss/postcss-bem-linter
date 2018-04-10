@@ -36,12 +36,9 @@ describe('using BEM pattern', () => {
       assertSingleFailure(s('__elem_mod_val'), 'bem');
     });
 
-    it(
-      'should not validate boolean mod of elem without block',
-      () => {
-        assertSingleFailure(s('__elem_mod'), 'bem');
-      }
-    );
+    it('should not validate boolean mod of elem without block', () => {
+      assertSingleFailure(s('__elem_mod'), 'bem');
+    });
 
     it('should not validate nested elem', () => {
       assertSingleFailure(s('block__elem1__elem2'), 'bem');
@@ -51,12 +48,9 @@ describe('using BEM pattern', () => {
       assertSingleFailure(s('block_mod_val__elem_mod_val'), 'bem');
     });
 
-    it(
-      'should not validate block name with illegal literals',
-      () => {
-        assertSingleFailure(s('^_^'), 'bem');
-      }
-    );
+    it('should not validate block name with illegal literals', () => {
+      assertSingleFailure(s('^_^'), 'bem');
+    });
   });
 
   describe('understands namespaces', () => {

@@ -1,5 +1,6 @@
 ### HEAD
 
+* Move to Prettier
 * Switch to Yarn
 
 ### 3.1.0 (October 11, 2017)

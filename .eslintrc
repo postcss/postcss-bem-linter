@@ -4,21 +4,17 @@
     "es6": true,
     "jest": true
   },
-  "extends": "airbnb",
-  "rules": {
-    "block-spacing": ["error", "never"],
-    "comma-dangle": ["error", "always-multiline"],
-    "max-len": "off",
-    "no-continue": "off",
-    "no-param-reassign": "off",
-    "no-plusplus": "off",
-    "no-restricted-syntax": "off",
-    "no-shadow": "off",
-    "no-use-before-define": ["error", "nofunc"],
-    "object-curly-spacing": ["error", "never"],
-    "quotes": ["error", "single"],
-    "strict": "off",
-    "function-paren-newline": "off",
-    "prefer-destructuring": "off"
+    "extends": ["airbnb", "plugin:prettier/recommended"],
+    "plugins": ["prettier"],
+    "rules": {
+      "no-continue": "off",
+      "no-param-reassign": "off",
+      "no-plusplus": "off",
+      "no-restricted-syntax": "off",
+      "no-shadow": "off",
+      "no-use-before-define": ["error", "nofunc"],
+      "no-useless-concat": "off",
+      "prefer-destructuring": "off",
+      "strict": "off"
   }
 }

@@ -45,11 +45,17 @@ describe('using SUIT pattern (default)', () => {
 
   describe('understands alternate preset/presetOptions signature', () => {
     it('and with namespace `ns` accepts `ns-Foo`', () => {
-      assertSuccess(s('.ns-Foo'), {preset: 'suit', presetOptions: {namespace: 'ns'}});
+      assertSuccess(s('.ns-Foo'), {
+        preset: 'suit',
+        presetOptions: {namespace: 'ns'},
+      });
     });
 
     it('and with namespace `ns` rejects `.Foo`', () => {
-      assertSingleFailure(s('.Foo'), {preset: 'suit', presetOptions: {namespace: 'ns'}});
+      assertSingleFailure(s('.Foo'), {
+        preset: 'suit',
+        presetOptions: {namespace: 'ns'},
+      });
     });
   });
 
@@ -135,21 +141,31 @@ describe('using SUIT pattern (default)', () => {
     });
 
     it('rejects an incorrect nested ruleset', () => {
-      assertSingleFailure('/** @define Component */ \n .Component { &--Modifier {} }');
-      assertSingleFailure('/** @define Component */ \n .Component { .component-elem {} }');
+      assertSingleFailure(
+        '/** @define Component */ \n .Component { &--Modifier {} }'
+      );
+      assertSingleFailure(
+        '/** @define Component */ \n .Component { .component-elem {} }'
+      );
     });
 
     it('rejects with a single warning when the parent has no declarations', () => {
-      assertSingleFailure('/** @define Component */ \n .component { &--modifier {} }');
+      assertSingleFailure(
+        '/** @define Component */ \n .component { &--modifier {} }'
+      );
     });
 
     it('rejects with multiple warnings if the parent has declarations', () => {
-      const result = util.test('/** @define Component */ \n .component { color:red; &--modifier {} }');
+      const result = util.test(
+        '/** @define Component */ \n .component { color:red; &--modifier {} }'
+      );
       assert.equal(result.warnings().length, 2);
     });
 
     it('correctly reports line number', () => {
-      const result = util.test('/** @define Component */ \n .Component {\n &--modifier {}\n .component-element {} \n}');
+      const result = util.test(
+        '/** @define Component */ \n .Component {\n &--modifier {}\n .component-element {} \n}'
+      );
       assert.equal(result.warnings()[0].line, 4);
     });
   });

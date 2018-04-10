@@ -30,7 +30,9 @@ describe('`@define` notation', () => {
 
   describe('CSS with a definition violating the `componentName` pattern', () => {
     it('must complain', () => {
-      util.assertSingleFailure('/** @define my-_-__Component */ .my-_-__Component { color: pink; }');
+      util.assertSingleFailure(
+        '/** @define my-_-__Component */ .my-_-__Component { color: pink; }'
+      );
     });
   });
 });
@@ -42,29 +44,69 @@ describe('Implicit @define', () => {
     const css = '.implicit-component-broken {}';
 
     it('must complain when true', () => {
-      util.assertSingleFailure(css, {implicitComponents: true, preset: 'bem'}, null, filename);
-      util.assertSingleFailure(css, {implicitComponents: true, preset: 'bem'}, null, filenameWithUnderscore);
+      util.assertSingleFailure(
+        css,
+        {implicitComponents: true, preset: 'bem'},
+        null,
+        filename
+      );
+      util.assertSingleFailure(
+        css,
+        {implicitComponents: true, preset: 'bem'},
+        null,
+        filenameWithUnderscore
+      );
     });
 
     it('must complain when string', () => {
-      util.assertSingleFailure(css, {implicitComponents: 'css/**/*.css', preset: 'bem'}, null, filename);
-      util.assertSingleFailure(css, {implicitComponents: 'css/**/*.scss', preset: 'bem'}, null, filenameWithUnderscore);
+      util.assertSingleFailure(
+        css,
+        {implicitComponents: 'css/**/*.css', preset: 'bem'},
+        null,
+        filename
+      );
+      util.assertSingleFailure(
+        css,
+        {implicitComponents: 'css/**/*.scss', preset: 'bem'},
+        null,
+        filenameWithUnderscore
+      );
     });
 
     it('must complain when array', () => {
-      util.assertSingleFailure(css, {implicitComponents: ['css/c/*.css'], preset: 'bem'}, null, filename);
-      util.assertSingleFailure(css, {implicitComponents: ['css/c/*.scss'], preset: 'bem'}, null, filenameWithUnderscore);
+      util.assertSingleFailure(
+        css,
+        {implicitComponents: ['css/c/*.css'], preset: 'bem'},
+        null,
+        filename
+      );
+      util.assertSingleFailure(
+        css,
+        {implicitComponents: ['css/c/*.scss'], preset: 'bem'},
+        null,
+        filenameWithUnderscore
+      );
     });
 
     it('must use the parent directory if the file name is index.css', () => {
-      util.assertSuccess('.implicit-component {}', {
-        implicitComponents: true,
-        preset: 'bem',
-      }, null, `${process.cwd()}/css/implicit-component/index.css`);
-      util.assertSuccess('.implicit-component {}', {
-        implicitComponents: true,
-        preset: 'bem',
-      }, null, `${process.cwd()}/css/implicit-component/_index.css`);
+      util.assertSuccess(
+        '.implicit-component {}',
+        {
+          implicitComponents: true,
+          preset: 'bem',
+        },
+        null,
+        `${process.cwd()}/css/implicit-component/index.css`
+      );
+      util.assertSuccess(
+        '.implicit-component {}',
+        {
+          implicitComponents: true,
+          preset: 'bem',
+        },
+        null,
+        `${process.cwd()}/css/implicit-component/_index.css`
+      );
     });
 
     it('must complain about component name', () => {
@@ -73,7 +115,9 @@ describe('Implicit @define', () => {
         {
           implicitComponents: true,
           componentName: /[A-Z]+/,
-          componentSelectors() {return /.*/;},
+          componentSelectors() {
+            return /.*/;
+          },
         },
         null,
         filename
@@ -83,7 +127,9 @@ describe('Implicit @define', () => {
         {
           implicitComponents: true,
           componentName: /[A-Z]+/,
-          componentSelectors() {return /.*/;},
+          componentSelectors() {
+            return /.*/;
+          },
         },
         null,
         filenameWithUnderscore
@@ -93,7 +139,12 @@ describe('Implicit @define', () => {
 
   describe('utilities', () => {
     it('must complain', () => {
-      util.assertSingleFailure('.foo-bar {}', {implicitUtilities: ['utils/*.css'], preset: 'suit'}, null, 'utils/foo-bar.css');
+      util.assertSingleFailure(
+        '.foo-bar {}',
+        {implicitUtilities: ['utils/*.css'], preset: 'suit'},
+        null,
+        'utils/foo-bar.css'
+      );
     });
   });
 });
