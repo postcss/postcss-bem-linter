@@ -30,7 +30,8 @@
     "testPathIgnorePatterns": [
       "/node_modules/",
       "test-util"
-    ]
+    ],
+    "testEnvironment": "node"
   },
   "license": "MIT",
   "repository": {

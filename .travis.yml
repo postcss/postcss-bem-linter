@@ -3,3 +3,5 @@ sudo: false
 node_js:
   - "stable"
   - "4"
+install:
+  - YARN_IGNORE_ENGINES=true yarn
