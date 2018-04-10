@@ -91,7 +91,7 @@ describe('selector validation', () => {
           'rejects initial componentSelectors in media queries',
           () => {
             assertSingleFailure(
-                          '/** @define Foo */ @media all { .Bar {} }'
+              '/** @define Foo */ @media all { .Bar {} }'
             );
           }
         );

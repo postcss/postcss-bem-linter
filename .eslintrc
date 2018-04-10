@@ -17,6 +17,8 @@
     "no-use-before-define": ["error", "nofunc"],
     "object-curly-spacing": ["error", "never"],
     "quotes": ["error", "single"],
-    "strict": "off"
+    "strict": "off",
+    "function-paren-newline": "off",
+    "prefer-destructuring": "off"
   }
 }

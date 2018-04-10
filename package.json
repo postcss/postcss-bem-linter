@@ -12,12 +12,12 @@
     "postcss-resolve-nested-selector": "^0.1.1"
   },
   "devDependencies": {
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb": "^15.0.2",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.1.0",
-    "jest": "^20.0.4"
+    "jest": "^22.4.3"
   },
   "scripts": {
     "lint": "eslint lib test index.js",
