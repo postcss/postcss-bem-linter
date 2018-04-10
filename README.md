@@ -107,7 +107,7 @@ Describes all valid selector sequences for the stylesheet in one of the followin
 - A *single function* that accepts a component name and returns a regular expression, e.g.
 
 ```js
-componentSelectors: function(componentName) {
+componentSelectors(componentName) {
   return new RegExp('^\\.ns-' + componentName + '(?:-[a-zA-Z]+)?$');
 }
 ```
@@ -196,7 +196,7 @@ bemLinter({
 
 // define a single pattern for all selector sequences, initial or combined
 bemLinter({
-  componentSelectors: function(componentName) {
+  componentSelectors(componentName) {
     return new RegExp('^\\.' + componentName + '(?:-[a-z]+)?$');
   }
 });
@@ -208,10 +208,10 @@ bemLinter({
 bemLinter({
   componentName: /^[A-Z]+$/,
   componentSelectors: {
-    initial: function(componentName) {
+    initial(componentName) {
       return new RegExp('^\\.' + componentName + '(?:-[a-z]+)?$');
     },
-    combined: function(componentName) {
+    combined(componentName) {
       return new RegExp('^\\.combined-' + componentName + '-[a-z]+$');
     }
   },
@@ -425,17 +425,17 @@ conformance failures, which you can print to the console using
 on a PostCSS runner (such as [`gulp-postcss`](https://github.com/postcss/gulp-postcss)).
 
 ```js
-var postcss = require('postcss');
-var bemLinter = require('postcss-bem-linter');
-var reporter = require('postcss-reporter');
+const postcss = require('postcss');
+const bemLinter = require('postcss-bem-linter');
+const reporter = require('postcss-reporter');
 
-files.forEach(function(file) {
-  var css = fs.readFileSync(file, 'utf-8');
+files.forEach(file => {
+  const css = fs.readFileSync(file, 'utf-8');
   postcss()
     .use(bemLinter())
     .use(reporter())
     .process(css)
-    .then(function(result) { .. });
+    .then(result => { .. });
 });
 ```
 
@@ -445,20 +445,20 @@ Please note that this project is released with a Contributor Code of Conduct. By
 
 ### Development
 
-Install the dependencies.
+Install the dependencies. Requires [Yarn](https://yarnpkg.com/)
 
 ```
-npm install
+yarn
 ```
 
 Run the tests.
 
 ```
-npm test
+yarn test
 ```
 
 Watch and automatically re-run the unit tests.
 
 ```
-npm start
+yarn start
 ```
