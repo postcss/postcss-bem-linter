@@ -13,7 +13,7 @@ describe('nodes without sources', () => {
     sourcelessAST.append(rule);
     postcss()
       .use(linter({preset: 'suit'}))
-      .process(sourcelessAST)
+      .process(sourcelessAST, {from: undefined})
       .then((result) => {
         const warnings = result.warnings();
         assert.equal(warnings.length, 0);
