@@ -1,5 +1,7 @@
 === HEAD
 
+* Switch to Yarn
+
 === 3.1.0 (October 11, 2017)
 
 * Allow both `/**` and `/*` for module definitions [#125](https://github.com/postcss/postcss-bem-linter/pull/125)

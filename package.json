@@ -23,7 +23,7 @@
     "lint": "eslint lib test index.js",
     "start": "jest --watch",
     "test": "jest",
-    "posttest": "npm run lint"
+    "posttest": "yarn run lint"
   },
   "jest": {
     "testRegex": "test/.*\\.js",
