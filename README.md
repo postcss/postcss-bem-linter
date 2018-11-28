@@ -18,7 +18,7 @@ warnings if it finds CSS that does not follow the specified conventions.
 ## Installation
 
 ```
-npm install postcss-bem-linter
+npm install postcss-bem-linter --save-dev
 ```
 
 Version 1.0.0+ is compatible with PostCSS 5+. (Earlier versions are compatible with PostCSS 4.)
