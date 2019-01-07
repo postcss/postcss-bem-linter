@@ -6,7 +6,9 @@
   .block-name__element {}
   &__element {}
   &__element-modifier {}
+  &__element--modifier {}
   &_modifier {}
+  &--modifier {}
   &:pseudo-class {}
   &:pseudo-element {}
   &::pseudo-element {}

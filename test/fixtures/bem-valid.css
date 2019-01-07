@@ -1,5 +1,5 @@
 /** @define block-name; use strict */
-
+/* default bem style */
 .block-name {}
 .block-name_mod-name_mod-val {}
 .block-name_mod {}
@@ -19,3 +19,7 @@
 .block-name__camelCase:nth-child(3n+1) {}
 .block-name[disabled] {}
 .block-name__elem_mod[disabled] {}
+
+/* Harry Roberts bem style additions */
+.block-name--mod {}
+.block-name__elem-name--mod {}
