@@ -1,5 +1,10 @@
 ### HEAD
 
+### 3.2.0 (January 07, 2019)
+
+* Fix issue with with multiple components in same file
+  [#138](https://github.com/postcss/postcss-bem-linter/issues/138)
+* Allow double dash modifier [#136](https://github.com/postcss/postcss-bem-linter/pull/136)
 * Move to Prettier
 * Switch to Yarn
 
