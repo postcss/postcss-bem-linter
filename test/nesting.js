@@ -152,7 +152,7 @@ describe('getSelectors', () => {
       componentRoot.append(media);
 
       assert.deepEqual(getSelectors(rule), ['.Component .Component-d']);
-      assert.deepEqual(getSelectors(componentRoot), []);
+      assert.deepEqual(getSelectors(componentRoot), ['.Component']);
     });
 
     it('should return a selector for a ruleset with declarations and nested media query', () => {
@@ -164,6 +164,26 @@ describe('getSelectors', () => {
 
       assert.deepEqual(getSelectors(rule), ['.Component .Component-d']);
       assert.deepEqual(getSelectors(componentRoot), ['.Component']);
+    });
+
+    it('should return selector if selector contains @media without other declarations', () => {
+      const rule = postcss.rule({selector: '.Component-d'});
+      const media = postcss.atRule({name: 'media'});
+      rule.append(media);
+      componentRoot.append(rule);
+
+      assert.deepEqual(getSelectors(rule), ['.Component .Component-d']);
+    });
+
+    it('should return selector if selector contains @media and comment', () => {
+      const rule = postcss.rule({selector: '.Component-d'});
+      const comment = postcss.comment({text: 'comment'});
+      const media = postcss.atRule({name: 'media'});
+      rule.append(comment);
+      rule.append(media);
+      componentRoot.append(rule);
+
+      assert.deepEqual(getSelectors(rule), ['.Component .Component-d']);
     });
   });
 });
