@@ -2,6 +2,6 @@ language: node_js
 sudo: false
 node_js:
   - "stable"
-  - "4"
+  - "6"
 install:
   - YARN_IGNORE_ENGINES=true yarn
