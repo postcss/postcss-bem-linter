@@ -67,6 +67,20 @@ describe('getSelectors', () => {
       assert.deepEqual(getSelectors(rule), ['.Component.is-active']);
     });
 
+    it('should unwrap selector only once', () => {
+      const firstRule = postcss.rule({selector: '.Component-d'});
+      const secondRule = postcss.rule({selector: '&.is-active'});
+      const firstHover = postcss.rule({selector: '&:hover'});
+      const secondHover = postcss.rule({selector: '&:hover'});
+      firstRule.append(firstHover);
+      secondRule.append(secondHover);
+      componentRoot.append(firstRule);
+      componentRoot.append(secondRule);
+      assert.deepEqual(getSelectors(firstHover), [
+        '.Component .Component-d:hover',
+      ]);
+    });
+
     it('should unwrap multiple levels of nested rulesets and skip rules with no declarations', () => {
       const descendant = postcss.rule({selector: '.Component-d'});
       const hover = postcss.rule({selector: '&:hover'});
