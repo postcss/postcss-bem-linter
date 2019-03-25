@@ -1,5 +1,10 @@
 ### HEAD
 
+### 3.3.0 (March 25, 2019)
+
+* Allow lint rule that contains `@media` [#140](https://github.com/postcss/postcss-bem-linter/pull/140)
+* Fix duplicate warnings [#141](https://github.com/postcss/postcss-bem-linter/pull/141)
+
 ### 3.2.0 (January 07, 2019)
 
 * Fix issue with with multiple components in same file
