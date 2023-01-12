@@ -7,8 +7,7 @@
     "lib"
   ],
   "dependencies": {
-    "minimatch": "^3.0.3",
-    "postcss": "^7.0.14",
+    "minimatch": "^3.1.2",
     "postcss-resolve-nested-selector": "^0.1.1"
   },
   "devDependencies": {
@@ -20,7 +19,11 @@
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.1.0",
     "jest": "^24.5.0",
-    "prettier": "^1.11.1"
+    "postcss": "^8.4.21",
+    "prettier": "^1.13.7"
+  },
+  "peerDependencies": {
+    "postcss": "^8.4.21"
   },
   "scripts": {
     "lint": "eslint lib test index.js",
