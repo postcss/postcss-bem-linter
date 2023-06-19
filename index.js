@@ -7,6 +7,7 @@ const generateConfig = require('./lib/generate-config');
 const toRegexp = require('./lib/to-regexp');
 const path = require('path');
 const checkImplicit = require('./lib/check-implicit');
+const getComponentNameFromFilename = require('./lib/get-component-name-from-filename');
 
 const DEFINE_VALUE = '([-_a-zA-Z0-9]+)\\s*(?:;\\s*(weak))?';
 const DEFINE_DIRECTIVE = new RegExp(
@@ -120,6 +121,8 @@ const plugin = (primaryOptions, secondaryOptions) => {
             );
             if (defined === 'index') {
               defined = path.basename(path.join(filename, '..'));
+            } else {
+              defined = getComponentNameFromFilename(defined, config);
             }
 
             if (
@@ -127,9 +130,10 @@ const plugin = (primaryOptions, secondaryOptions) => {
               !toRegexp(config.componentNamePattern).test(defined)
             ) {
               result.warn(
-                `Invalid component name from implicit conversion from filename ${filename}`
+                `Invalid component name ${defined} from implicit conversion from filename ${filename}`
               );
             }
+
             ranges.push({
               defined,
               start: 0,
