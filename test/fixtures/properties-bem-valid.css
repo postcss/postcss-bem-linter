@@ -1,0 +1,17 @@
+/** @define component-name */
+
+.component-name {
+  --component-name--color: green;
+}
+
+.component-name_boolean-mod {
+  --component-name--color: red;
+}
+
+.component-name_mod_value {
+  --component-name--color: red;
+}
+
+.component-name__element {
+  --component-name--color: red;
+}
