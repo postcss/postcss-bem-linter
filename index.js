@@ -1,6 +1,5 @@
 'use strict';
 
-const postcss = require('postcss');
 const validateCustomProperties = require('./lib/validate-custom-properties');
 const validateUtilities = require('./lib/validate-utilities');
 const validateSelectors = require('./lib/validate-selectors');
@@ -33,13 +32,13 @@ function stripUnderscore(str) {
  * @param {Object|String} primaryOptions
  * @param {Object} [secondaryOptions]
  */
-module.exports = postcss.plugin(
-  'postcss-bem-linter',
-  (primaryOptions, secondaryOptions) => {
-    const config = generateConfig(primaryOptions, secondaryOptions);
-    const patterns = config.patterns;
+const plugin = (primaryOptions, secondaryOptions) => {
+  const config = generateConfig(primaryOptions, secondaryOptions);
+  const patterns = config.patterns;
 
-    return (root, result) => {
+  return {
+    postcssPlugin: 'postcss-bem-linter',
+    Once(root, {result}) {
       const ranges = findRanges(root);
 
       root.walkRules(rule => {
@@ -177,6 +176,9 @@ module.exports = postcss.plugin(
           lastRange.end = line;
         }
       }
-    };
-  }
-);
+    },
+  };
+};
+
+plugin.postcss = true;
+module.exports = plugin;
