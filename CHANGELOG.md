@@ -1,5 +1,10 @@
 ### HEAD
 
+### 4.0.0 (June 27, 2023)
+
+* Update PostCSS to 8.x (breaking change) [#170](https://github.com/postcss/postcss-bem-linter/pull/170)
+* Fix CSS properties check in BEM mod files [#172](https://github.com/postcss/postcss-bem-linter/pull/172)
+
 ### 3.3.0 (March 25, 2019)
 
 * Allow lint rule that contains `@media` [#140](https://github.com/postcss/postcss-bem-linter/pull/140)
