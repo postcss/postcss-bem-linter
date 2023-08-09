@@ -41,7 +41,9 @@ describe('Implicit @define', () => {
   describe('based on filename', () => {
     const filename = `${process.cwd()}/css/c/implicit-component.css`;
     const filenameWithUnderscore = `${process.cwd()}/css/c/_implicit-component.scss`;
+    const validFileName = `${process.cwd()}/css/c/IMPLICITCOMPONENT.css`;
     const css = '.implicit-component-broken {}';
+    const validCss = '.IMPLICITCOMPONENT {}';
 
     it('must complain when true', () => {
       util.assertSingleFailure(
@@ -133,6 +135,36 @@ describe('Implicit @define', () => {
         },
         null,
         filenameWithUnderscore
+      );
+    });
+
+    it('must complain about component name with componentName pattern as a string', () => {
+      util.assertSingleFailure(
+        css,
+        {
+          implicitComponents: true,
+          componentName: '[A-Z]+',
+          componentSelectors() {
+            return /.*/;
+          },
+        },
+        null,
+        filename
+      );
+    });
+
+    it('must pass valid component name with componentName pattern as a string', () => {
+      util.assertSuccess(
+        validCss,
+        {
+          implicitComponents: true,
+          componentName: '[A-Z]+',
+          componentSelectors() {
+            return /.*/;
+          },
+        },
+        null,
+        validFileName
       );
     });
   });
