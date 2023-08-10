@@ -445,7 +445,7 @@ Please note that this project is released with a Contributor Code of Conduct. By
 
 ### Development
 
-Install the dependencies. Requires [Yarn](https://yarnpkg.com/)
+Install dependencies. Requires [Yarn 1.x (Classic)](https://classic.yarnpkg.com/)
 
 ```
 yarn
