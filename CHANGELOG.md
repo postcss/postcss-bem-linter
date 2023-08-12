@@ -1,5 +1,9 @@
 ### HEAD
 
+### 4.0.1 (August 12, 2023)
+
+* Fix `implicitComponents` with a string `componentName` pattern [#175](https://github.com/postcss/postcss-bem-linter/pull/175)
+
 ### 4.0.0 (June 27, 2023)
 
 * Update PostCSS to 8.x (breaking change) [#170](https://github.com/postcss/postcss-bem-linter/pull/170)
